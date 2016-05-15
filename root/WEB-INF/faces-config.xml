@@ -36,6 +36,10 @@
 			<from-outcome>index</from-outcome>
 			<to-view-id>/index.jsf</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.jsf</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/login.jsf</from-view-id>
