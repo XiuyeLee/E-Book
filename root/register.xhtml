@@ -76,8 +76,8 @@
 
 			<p:row>
 				<h:panelGrid columns="2">
-					<p:selectBooleanCheckbox >
-
+					<p:selectBooleanCheckbox value="#{registerView.checkProtocol}" required="true">
+						<p:ajax update="confirm"></p:ajax>
 					</p:selectBooleanCheckbox>
 					<p:link value="我已经阅读并同意注册协议"></p:link>
 				</h:panelGrid>
@@ -85,7 +85,7 @@
 
 			<p:row>
 				<h:panelGrid columns="2">
-					<p:commandButton action="index"  value="确认注册" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton id="confirm" disabled="#{registerView.checkAgreeProtocol()}" action="index"  value="确认注册" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton value="取消" process="@this" action="index"></p:commandButton>
 				</h:panelGrid>
 			</p:row>
