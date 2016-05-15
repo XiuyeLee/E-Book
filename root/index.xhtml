@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:x="http://java.sun.com/jsp/jstl/xml"
+	xmlns:sql="http://java.sun.com/jsp/jstl/sql"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- <ui:composition template="">
+	</ui:composition> -->
+<h:head>
+	<title>开源书店（Open Source Bookstore）</title>
+	<link href="icon/favicon.png" rel="icon" />
+	<h:outputStylesheet>
+		.customRight{
+			float:right;
+		}
+		.customClearFloatRight{
+			clear:right;
+		}
+		.customMarginCenter{
+			margin:auto;
+		}
+		
+	</h:outputStylesheet>
+
+</h:head>
+<h:body>
+	<p:growl id="info" autoUpdate="true"></p:growl>
+	<h:form>
+		<h:panelGrid columns="2" styleClass="customRight">
+			<p:column>
+				<p:commandButton action="login" value="登录"></p:commandButton>
+				<p:commandButton action="register" value="注册"></p:commandButton>
+				<!-- <p:link outcome="login" target="_parent" value="登录"
+					styleClass="ui-button"></p:link>
+				<p:link outcome="register" target="_parent" value="注册" styleClass="ui-button"></p:link>
+ -->
+			</p:column>
+			<p:column>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="界面主题:"></p:outputLabel>
+					<p:themeSwitcher>
+						<f:selectItems value="#{allThemes.themes}" />
+					</p:themeSwitcher>
+				</p:panelGrid>
+			</p:column>
+		</h:panelGrid>
+
+		<h:panelGrid columns="2"
+			styleClass="customClearFloatRight customMarginCenter">
+			<p:column>
+				<p:graphicImage url="icon/books.png"></p:graphicImage>
+			</p:column>
+			<p:column>
+				<!-- <p:inputText size="50" placeholder="搜索" value=""></p:inputText> -->
+				<p:autoComplete size="50" placeholder="搜索"></p:autoComplete>
+				<p:commandButton value="搜索" icon="ui-icon-search"></p:commandButton>
+			</p:column>
+		</h:panelGrid>
+		<p:menubar>
+
+			<p:menuitem value="首页" url="/" ></p:menuitem>			
+			<p:submenu label="编程语言">
+				<p:menuitem value="全部" action="#{events.programming}"></p:menuitem>
+				<p:menuitem value="C/C++" action="#{events.c_cpp}"></p:menuitem>
+				<p:menuitem value="Java" action="#{events.java}"></p:menuitem>
+				<p:menuitem value="C#" action="#{events.csharp}"></p:menuitem>
+				<p:menuitem value="Python" action="#{events.python}"></p:menuitem>
+				<p:menuitem value="JavaScript" action="#{events.js}"></p:menuitem>
+				<p:menuitem value="Objective-c" action="#{events.oc}"></p:menuitem>
+				<p:menuitem value="Swift" action="#{events.swift}"></p:menuitem>
+				<p:menuitem value="Nodejs" action="#{events.nodejs}"></p:menuitem>
+				<p:menuitem value="Shell"></p:menuitem>
+				<p:menuitem value="PHP" action="#{events.php}"></p:menuitem>
+				<p:menuitem value="ASP.NET" action="#{events.asp}"></p:menuitem>
+				<p:menuitem value="Fortran"></p:menuitem>
+				<p:menuitem value="Erlang" action="#{events.erlang}"></p:menuitem>
+				<p:menuitem value="VB" action="#{events.vb}"></p:menuitem>
+				<p:menuitem value="Delphi" action="#{events.delphi}"></p:menuitem>
+				<p:menuitem value="Matlab" action="#{events.matlab}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="编程进阶">
+				<p:menuitem value="全部"></p:menuitem>
+				<p:menuitem value="编程进阶杂书"></p:menuitem>
+				<p:menuitem value="C++编程进阶"></p:menuitem>
+				<p:menuitem value="Java编程进阶"></p:menuitem>
+				<p:menuitem value="数据结构和算法"
+					action="#{events.dataStructureAndAlgorithm}"></p:menuitem>
+				<p:menuitem value="开发实战"></p:menuitem>
+				<p:menuitem value="人工智能"></p:menuitem>
+				<p:menuitem value="图表绘制"></p:menuitem>
+				<p:menuitem value="数学" action="#{events.math}" />
+				<p:menuitem value="物理" action="#{events.phisics}"></p:menuitem>
+				<p:menuitem value="英语" action="#{events.english}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="开发库">
+				<p:menuitem value="全部"></p:menuitem>
+				<p:menuitem value="Boost" action="#{events.boost}"></p:menuitem>
+				<p:menuitem value="MFC" action="#{events.mfc}"></p:menuitem>
+				<p:menuitem value="QT" action="#{events.qt}"></p:menuitem>
+				<p:menuitem value="SWT"></p:menuitem>
+				<p:menuitem value="OpenCV"></p:menuitem>
+				<p:menuitem value="ICE" action="#{events.ice}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Web开发">
+				<p:menuitem value="全部"></p:menuitem>
+				<p:submenu label="JavaEE">
+					<p:menuitem value="全部"></p:menuitem>
+					<p:menuitem value="JavaEE基础"></p:menuitem>
+					<p:menuitem value="Servlet"></p:menuitem>
+					<p:menuitem value="XML"></p:menuitem>
+					<p:menuitem value="Spring" action="#{events.spring}"></p:menuitem>
+					<p:menuitem value="Mybatis" action="#{events.mybatis}"></p:menuitem>
+					<p:menuitem value="Hibernate" action="#{events.hibernate}"></p:menuitem>
+					<p:menuitem value="Struts" action="#{events.struts}"></p:menuitem>
+					<p:menuitem value="JSF"></p:menuitem>
+					<p:menuitem value="JFinal" action="#{events.jfinal}"></p:menuitem>
+					<p:menuitem value="EJB"></p:menuitem>
+					<p:menuitem value="JNDI"></p:menuitem>
+					<p:menuitem value="JMS"></p:menuitem>
+					<p:menuitem value="RMI"></p:menuitem>
+					<p:menuitem value="JDBC"></p:menuitem>
+					<p:menuitem value="JavaMail"></p:menuitem>
+					<p:menuitem value="IDL/CORBA"></p:menuitem>
+				</p:submenu>
+				<p:submenu label="浏览器前端">
+					<p:menuitem value="全部"></p:menuitem>
+					<p:menuitem value="Html" action="#{events.html}"></p:menuitem>
+					<p:menuitem value="CSS" action="#{events.css}"></p:menuitem>
+					<p:menuitem value="Ajax"></p:menuitem>
+					<p:menuitem value="JQuery" action="#{events.jquery}"></p:menuitem>
+					<p:menuitem value="Boostrap" action="#{events.bootstrap}"></p:menuitem>
+					<p:menuitem value="Angularjs" action="#{events.angularjs}"></p:menuitem>
+					<p:menuitem value="Reactjs" action="#{events.reactjs}"></p:menuitem>
+					<p:menuitem value="Extjs" action="#{events.extjs}"></p:menuitem>
+				</p:submenu>
+			</p:submenu>
+			<p:submenu label="游戏开发">
+				<p:menuitem value="全部" action="#{events.gameDevelopment}"></p:menuitem>
+				<p:menuitem value="游戏开发基础"></p:menuitem>
+				<p:menuitem value="OpenGL" action="#{events.opengl}"></p:menuitem>
+				<p:menuitem value="DirectX" action="#{events.directX}"></p:menuitem>
+				<p:menuitem value="Cocos2D" action="#{events.cocos2d}"></p:menuitem>
+				<p:menuitem value="Unity3D" action="#{events.unity3d}"></p:menuitem>
+				<p:menuitem value="CryEngine"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="数据库">
+				<p:menuitem value="全部" action="#{events.DB}"></p:menuitem>
+				<p:menuitem value="Oracle" action="#{events.oracle}"></p:menuitem>
+				<p:menuitem value="Mysql" action="#{events.mysql}"></p:menuitem>
+				<p:menuitem value="Sql Server" action="#{events.sqlServer}"></p:menuitem>
+				<p:menuitem value="Sybase" action="#{events.sybase}"></p:menuitem>
+				<p:menuitem value="SQL" action="#{events.sql}"></p:menuitem>
+				<p:menuitem value="BigData"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="操作系统">
+				<p:menuitem value="全部" action="#{events.OS}"></p:menuitem>
+				<p:menuitem value="Android" action="#{events.android}"></p:menuitem>
+				<p:menuitem value="Windows" action="#{events.windows}"></p:menuitem>
+				<p:menuitem value="Linux" action="#{events.linux}"></p:menuitem>
+				<p:menuitem value="Unix" action="#{events.unix}"></p:menuitem>
+				<p:menuitem value="MacOS" action="#{events.mac}"></p:menuitem>
+				<p:menuitem value="IPhone"></p:menuitem>
+				<p:menuitem value="JVM"></p:menuitem>
+				<p:submenu label="Parallel">
+					<p:menuitem value="全部"></p:menuitem>
+					<p:menuitem value="CPUParallel"></p:menuitem>
+					<p:menuitem value="C++Parallel"></p:menuitem>
+					<p:menuitem value="JavaParallel"></p:menuitem>
+					<p:menuitem value="LinuxParallel" action="#{events.linuxParallel}"></p:menuitem>
+				<p:menuitem value="WindowsParallel" action="#{events.windowsParallel}"></p:menuitem>
+				<p:menuitem value="AndroidParallel" action="#{events.androidParallel}"></p:menuitem>
+				</p:submenu>
+				<p:menuitem value="编译原理"></p:menuitem>
+				<p:menuitem value="多媒体"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="网络">
+				<p:menuitem value="全部" action="#{events.network}"></p:menuitem>
+				<p:menuitem value="网络基础"></p:menuitem>
+				<p:menuitem value="网络协议" ></p:menuitem>
+				<p:menuitem value="网络应用" action="#{events.networkApply}"></p:menuitem>
+				<p:menuitem value="网络编程" action="#{events.networkProgramming}"></p:menuitem>
+			</p:submenu>			
+			<p:submenu label="底层开发">
+				<p:menuitem value="全部" action="#{events.hardwareLowLevel}"></p:menuitem>
+				<p:menuitem value="汇编基础" ></p:menuitem>
+				<p:menuitem value="Intel" action="#{events.intel}"></p:menuitem>
+				<p:menuitem value="Arm" action="#{events.arm}"></p:menuitem>
+				<p:menuitem value="驱动" action="#{events.driver}"></p:menuitem>			
+				<p:menuitem value="电路" action="#{events.circuit}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="应用软件">
+				<p:menuitem value="全部"></p:menuitem>
+				<p:menuitem value="PhotoShop" action="#{events.photoShop}"></p:menuitem>
+				<p:menuitem value="Flash" action="#{events.flash}"></p:menuitem>
+				<p:menuitem value="Dreamweaver" action="#{events.dreamweaver}"></p:menuitem>
+				<p:menuitem value="Word" action="#{events.word}"></p:menuitem>
+				<p:menuitem value="Excel" action="#{events.excel}"></p:menuitem>
+				<p:menuitem value="PPT" action="#{events.ppt}"></p:menuitem>
+				<p:menuitem value="Visio" action="#{events.visio}"></p:menuitem>
+				<p:menuitem value="Xmind" action="#{events.xmind}"></p:menuitem>
+				<p:menuitem value="CAD" action="#{events.cad}"></p:menuitem>
+				<p:menuitem value="3DMax" action="#{events.threeDMax}"></p:menuitem>
+				<p:menuitem value="PowerDesigner" action="#{events.powerDesigner}"></p:menuitem>
+			</p:submenu>
+
+			<p:submenu label="资源下载">
+				<p:menuitem value="全部"></p:menuitem>
+				<p:menuitem value="参考手册"></p:menuitem>
+				<p:menuitem value="代码示例"></p:menuitem>
+				<p:menuitem value="资源网站"></p:menuitem>
+				<p:menuitem value="课程资料"></p:menuitem>
+			</p:submenu>
+			
+		</p:menubar>
+
+
+
+		<p:contextMenu for="display" widgetVar="menu">
+			<p:menuitem value="阅读" icon="ui-icon-search"></p:menuitem>
+			<p:menuitem value="下载" icon="ui-icon-arrowthick-1-s" />
+			<p:menuitem value="首页" url="/" icon="ui-icon-extlink" />
+		</p:contextMenu>
+
+		<p:panel id="display" style="height:1000;">
+
+			<object data="exam.pdf" width="100%" height="100%"></object>
+
+		</p:panel>
+
+		<!-- <p:stack icon="icon/stack.png" expanded="true">
+			<p:menuitem value="客户端下载" icon="icon/windows-client-download.png"></p:menuitem>
+			<p:menuitem value="帮助" icon="icon/notice.png"></p:menuitem>
+			<p:menuitem value="反馈" icon="icon/feedback.png" />
+			<p:menuitem value="首页" icon="icon/home.png" url="/" />
+		</p:stack> -->
+
+		<p:dock>
+			<p:menuitem style="color:black;" value="首页" icon="icon/home.png"
+				url="/" />
+			<p:menuitem style="color:black;" value="windows客户端下载"
+				icon="icon/windows-client-download.png"></p:menuitem>
+			<p:menuitem style="color:black;" value="android客户端下载"
+				icon="icon/android.png"></p:menuitem>
+			<p:menuitem style="color:black;" value="反馈" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" value="帮助" icon="icon/notice.png"></p:menuitem>
+
+		</p:dock>
+	</h:form>
+
+
+
+</h:body>
+</html>
