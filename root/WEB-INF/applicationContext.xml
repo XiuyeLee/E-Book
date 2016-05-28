@@ -21,6 +21,8 @@
 	
 	<context:component-scan base-package="com.xiuye"></context:component-scan>
 	
+	
+	
 	<util:properties id="jdbcConfig" location="classpath:jdbc.properties"></util:properties>
 	
 	<bean id="dbcp2" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -47,5 +49,24 @@
 	    <property name="basePackage" value="com.xiuye.dao"></property>
 	    
 	</bean>
+	
+	<bean id="testController" class="com.xiuye.controller.TestController"></bean>
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	
+		<property name="mappings">
+			<props>
+				<prop key="userinfo.do">testController</prop>
+			</props>
+		</property>
+	
+	</bean>
+	
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- <mvc:default-servlet-handler/> -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+       <property name="prefix" value="/WEB-INF/pages/"></property>
+       <property name="suffix" value=".xhtml"></property>
+   </bean>
 	
 </beans>

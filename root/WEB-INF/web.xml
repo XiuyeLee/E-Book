@@ -4,18 +4,14 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 	<display-name>E-Book</display-name>
-	<!-- <context-param>
-	    <param-name>primefaces.THEME</param-name>
-	    <param-value>swanky-purse</param-value>
-	</context-param> -->
-	<!-- <context-param>
-	    <param-name>primefaces.THEME</param-name>
-	    <param-value>bluesky</param-value>
-	</context-param> -->
+	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>swanky-purse</param-value> 
+		</context-param> -->
+	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>bluesky</param-value> 
+		</context-param> -->
 	<!-- 默认主题 -->
 	<context-param>
-	    <param-name>primefaces.THEME</param-name>
-	    <param-value>swanky-purse</param-value>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>swanky-purse</param-value>
 	</context-param>
 	<!-- 保存状态在客户区 -->
 	<context-param>
@@ -25,18 +21,20 @@
 	<welcome-file-list>
 
 		<welcome-file>index.jsf</welcome-file>
-		<welcome-file>faces/index.xhtml</welcome-file>		
+		<welcome-file>faces/index.xhtml</welcome-file>
 		<welcome-file>index.face</welcome-file>
 		<welcome-file>index.xhtml</welcome-file>
-		
+
 	</welcome-file-list>
 	<!-- 必须写以下监听器，否则报错 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
+
+
 	<!-- 准备监听器实现单点登录 -->
-	
+
 	<!-- 配置jsf入口 -->
 	<servlet>
 		<servlet-name>facesServelet</servlet-name>
@@ -63,19 +61,21 @@
 		<servlet-name>facesServelet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+
 	<!-- 以下代码可以注释掉，因为spring入口不会干扰jsf入口 -->
-	<!-- <servlet>
-	    <servlet-name>springDispatcher</servlet-name>
-	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	    <init-param>
-	         <param-name>contextConfigLocation</param-name>
-          <param-value>classpath:applicationContext.xml</param-value>
-	    </init-param>
-	    <load-on-startup>1</load-on-startup>
+	<servlet>
+		<servlet-name>springDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/applicationContext.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-	    <servlet-name>springDispatcher</servlet-name>
-	    <url-pattern>*.do</url-pattern>
-	</servlet-mapping> -->
+		<servlet-name>springDispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

@@ -29,6 +29,7 @@
 			<from-outcome>register</from-outcome>
 			<to-view-id>/register.jsf</to-view-id>
 		</navigation-case>
+		
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/register.jsf</from-view-id>
