@@ -1,8 +1,10 @@
 package com.xiuye.views;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 @ManagedBean
+@RequestScoped
 public class RegisterView {
 
 	private boolean checkProtocol = true;

@@ -26,7 +26,7 @@ public class Logger {
 	
 	public static Logger getLogger(Class clazz){
 		
-		Logger log = getDefault();
+		Logger log = new Logger();
 		log.setClazz(clazz);
 		
 		return log;
@@ -34,13 +34,13 @@ public class Logger {
 		
 	}
 	
-	private static Logger getDefault(){
-		return LoggerHoler.instance;
-	}
-	private static class LoggerHoler{
-		private static final Logger instance = new Logger();
-	}
-	public synchronized void info(String message){
+//	private static Logger getDefault(){
+//		return LoggerHoler.instance;
+//	}
+//	private static class LoggerHoler{
+//		private static final Logger instance = new Logger();
+//	}
+	public void info(String message){
 		
 		System.out.println("INFO: 时间:"+new Date(System.currentTimeMillis())+" 类对象:"+clazz+" 内容:"+message);
 		

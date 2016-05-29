@@ -45,11 +45,11 @@
 			</h:panelGrid>
 			<h:panelGrid columns="2" cellpadding="10" >
 				<p:column>
-					<p:selectBooleanCheckbox value="#{loginView.remember}"></p:selectBooleanCheckbox>
-					<p:outputLabel value="记住密码"></p:outputLabel>
+					<p:selectBooleanCheckbox immediate="true" value="#{loginView.remember}"></p:selectBooleanCheckbox>
+					<p:outputLabel value="记住密码" ></p:outputLabel>
 				</p:column>
 				<p:column>
-					<p:link value="忘记密码"></p:link>
+					<p:link value="忘记密码" ></p:link>
 				</p:column>
 			</h:panelGrid>
 			<h:panelGrid columns="2">

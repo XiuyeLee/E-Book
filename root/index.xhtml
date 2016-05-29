@@ -36,7 +36,7 @@
 	<h:form>
 		<h:panelGrid columns="2" styleClass="customRight">
 			<p:column>
-				<p:commandButton action="login" value="登录"></p:commandButton>
+				<p:commandButton action="login"  value="登录"></p:commandButton>
 				<p:commandButton action="register" value="注册"></p:commandButton>
 				<!-- <p:link outcome="login" target="_parent" value="登录"
 					styleClass="ui-button"></p:link>
@@ -46,7 +46,8 @@
 			<p:column>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="界面主题:"></p:outputLabel>
-					<p:themeSwitcher>
+					<p:themeSwitcher  value="#{indexView.currentTheme}">
+						<p:ajax immediate="true"></p:ajax>
 						<f:selectItems value="#{allThemes.themes}" />
 					</p:themeSwitcher>
 				</p:panelGrid>

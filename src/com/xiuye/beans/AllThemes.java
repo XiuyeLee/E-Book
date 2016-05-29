@@ -15,7 +15,7 @@ public class AllThemes {
 			"trontastic", "twitter bootstrap", "ui-darkness", "ui-lightness",
 			"vader" };
 
-	
+	public static final String DEFAULT_THEME = "swanky-purse"; 
 	
 	public String[] getThemes() {
 		return POSSIBLE_THEMES;
