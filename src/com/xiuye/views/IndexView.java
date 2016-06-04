@@ -1,5 +1,7 @@
 package com.xiuye.views;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -11,7 +13,13 @@ import com.xiuye.logger.Logger;
 
 @ManagedBean(name="indexView")
 @SessionScoped
-public class IndexView {
+public class IndexView implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8648377152613800918L;
+
 
 	private Logger log = Logger.getLogger(IndexView.class);
 	

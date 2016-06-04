@@ -25,12 +25,12 @@
 <h:body>
 
 	<p:growl autoUpdate="true"></p:growl>
-	<p:commandLink process="@this" style="float:right;margin-right:100px;"
-		value="注册" action="register"></p:commandLink>
-	<h1 align="center" style="clear: right;">用户登录</h1>
+
 
 	<h:form>
-
+		<p:commandLink process="@this" style="float:right;margin-right:100px;"
+			value="注册" action="register"></p:commandLink>
+		<h1 align="center" style="clear: right;">用户登录</h1>
 		<p:panelGrid columns="1" styleClass="customMarginCenter">
 			<h:panelGrid columns="2">
 
@@ -43,13 +43,14 @@
 
 
 			</h:panelGrid>
-			<h:panelGrid columns="2" cellpadding="10" >
+			<h:panelGrid columns="2" cellpadding="10">
 				<p:column>
-					<p:selectBooleanCheckbox immediate="true" value="#{loginView.remember}"></p:selectBooleanCheckbox>
-					<p:outputLabel value="记住密码" ></p:outputLabel>
+					<p:selectBooleanCheckbox immediate="true"
+						value="#{loginView.remember}"></p:selectBooleanCheckbox>
+					<p:outputLabel value="记住密码"></p:outputLabel>
 				</p:column>
 				<p:column>
-					<p:link value="忘记密码" ></p:link>
+					<p:link value="忘记密码" href="/forgot_passwd.jsf" target="_blank"></p:link>
 				</p:column>
 			</h:panelGrid>
 			<h:panelGrid columns="2">

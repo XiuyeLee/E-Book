@@ -21,28 +21,30 @@
 	</h:outputStylesheet>
 </h:head>
 <h:body>
-	<p:commandLink process="@this" style="float:right;margin-right:100px;" value="直接登录" action="login"></p:commandLink>
-	<h1 align="center" style="clear:right;">用户注册</h1>
+
 	<p:growl autoUpdate="true"></p:growl>
 	<h:form>
+		<p:commandLink process="@this" style="float:right;margin-right:100px;"
+			value="直接登录" action="login"></p:commandLink>
+		<h1 align="center" style="clear: right;">用户注册</h1>
 		<p:panelGrid id="p1" columns="1" styleClass="customMarginCenter">
 
 			<p:row>
 				<h:panelGrid columns="2" id="matchGrid">
 					<p:outputLabel value="用户名:" for="username"></p:outputLabel>
-					<p:inputText id="username" placeholder="汉字或者英语不超过20"
-						maxlength="20" required="true">
+					<p:inputText id="username" placeholder="汉字或者英语不超过20" maxlength="20"
+						required="true">
 
 					</p:inputText>
 
 					<p:outputLabel for="pwd1" value="密码:" />
-					<p:password id="pwd1" validatorMessage="两次密码不一致"
-						maxlength="20" placeholder="最大20位" match="pwd2" label="Password 1"
+					<p:password id="pwd1" validatorMessage="两次密码不一致" maxlength="20"
+						placeholder="最大20位" match="pwd2" label="Password 1"
 						required="true" feedback="true" weakLabel="密码强度弱"
 						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强" />
 
 					<p:outputLabel for="pwd2" value="确认密码:" />
-					<p:password id="pwd2"  maxlength="20" placeholder="请再次输入密码"
+					<p:password id="pwd2" maxlength="20" placeholder="请再次输入密码"
 						label="Password 2" required="true" promptLabel="密码必须和上面一致"
 						feedback="true" />
 					<p:outputLabel value="性别:"></p:outputLabel>
@@ -60,32 +62,33 @@
 					</p:calendar>
 
 					<p:outputLabel value="邮箱:" for="email"></p:outputLabel>
-					<p:inputText id="email" required="true" 
-						 maxlength="50" placeholder="请输入邮箱"
-						validatorMessage="邮箱: 输入邮箱格式错误">
+					<p:inputText id="email" required="true" maxlength="50"
+						placeholder="请输入邮箱" validatorMessage="邮箱: 输入邮箱格式错误">
 						<f:validateRegex pattern=".+@.+" />
 					</p:inputText>
 					<p:outputLabel value="QQ:" for="qq"></p:outputLabel>
-					<p:inputText id="qq"  maxlength="20" placeholder="请输入qq号码"></p:inputText>
+					<p:inputText id="qq" maxlength="20" placeholder="请输入qq号码"></p:inputText>
 					<p:outputLabel value="手机号码:" for="phone"></p:outputLabel>
-					<p:inputText id="phone"  maxlength="20"
-						placeholder="请输入手机号码"></p:inputText>
+					<p:inputText id="phone" maxlength="20" placeholder="请输入手机号码"></p:inputText>
 
 				</h:panelGrid>
 			</p:row>
 
 			<p:row>
 				<h:panelGrid columns="2">
-					<p:selectBooleanCheckbox value="#{registerView.checkProtocol}" required="true">
+					<p:selectBooleanCheckbox value="#{registerView.checkProtocol}"
+						required="true">
 						<p:ajax update="confirm"></p:ajax>
 					</p:selectBooleanCheckbox>
-					<p:link value="我已经阅读并同意注册协议" href="https://www.baidu.com"></p:link>
+					<p:link value="我已经阅读并同意注册协议" href="/register_protocol.jsf" target="_blank"></p:link>
 				</h:panelGrid>
 			</p:row>
 
 			<p:row>
 				<h:panelGrid columns="2">
-					<p:commandButton id="confirm" disabled="#{registerView.checkAgreeProtocol()}" action="index"  value="确认注册" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton id="confirm"
+						disabled="#{registerView.checkAgreeProtocol()}" action="index"
+						value="确认注册" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton value="取消" process="@this" action="index"></p:commandButton>
 				</h:panelGrid>
 			</p:row>

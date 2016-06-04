@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiuye.dao.UserDao">
+
+	<select id="findAll" resultType="com.xiuye.orm.User">
+
+		select * from user
+
+	</select>
+
+	<select id="findByUserid" resultType="com.xiuye.orm.User"
+		parameterType="string">
+		select * from user where userid = #{userid}
+	</select>
+
+	<select id="findUserByNameAndPasswd" resultType="com.xiuye.orm.User"
+		parameterType="string">
+		select * from user where username = #{username} and
+		password=#{password}
+	</select>
+
+	<select id="findUserByPhoneAndPasswd" resultType="com.xiuye.orm.User"
+		parameterType="string">
+		select * from user where phone = #{phone} and
+		password=#{password}
+	</select>
+
+	<select id="findUserByEmailAndPasswd" resultType="com.xiuye.orm.User"
+		parameterType="string">
+		select * from user where email = #{email} and
+		password=#{password}
+	</select>
+
+	<insert id="insertOneUser" parameterType="com.xiuye.orm.User">
+		insert into
+		user(userid,username,password,sex,birthday,email,qq,phone,isAdmin)
+		values(#{userid},#{username},#{password},#{sex},#{birthday},#{email},#{qq},#{phone},#{isAdmin})
+	</insert>
+
+</mapper>

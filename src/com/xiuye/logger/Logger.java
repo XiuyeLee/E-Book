@@ -1,8 +1,9 @@
 package com.xiuye.logger;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Logger {
+public class Logger implements Serializable{
 
 	private Class clazz;
 	
@@ -16,9 +17,9 @@ public class Logger {
 	}
 
 
-	private Logger(){
+	private Logger(Class clazz){
 	
-		
+		this.clazz = clazz;
 		
 		
 	}
@@ -26,12 +27,8 @@ public class Logger {
 	
 	public static Logger getLogger(Class clazz){
 		
-		Logger log = new Logger();
-		log.setClazz(clazz);
-		
-		return log;
-		
-		
+		return  new Logger(clazz);
+			
 	}
 	
 //	private static Logger getDefault(){
