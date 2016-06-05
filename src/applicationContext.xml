@@ -55,7 +55,7 @@
 	
 		<property name="mappings">
 			<props>
-				<prop key="userinfo.do">testController</prop>
+				<prop key="test.do">testController</prop>
 			</props>
 		</property>
 	

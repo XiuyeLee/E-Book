@@ -14,21 +14,47 @@ import com.xiuye.orm.User;
 @Service
 public class UserService implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4106557236366334532L;
 	@Resource
 	private UserDao userDao;
-	
-	public List<User> findAllUsers(){
-		
+
+	public List<User> findAllUsers() {
+
 		return userDao.findAll();
-		
+
 	}
-	
+
 	@Transactional
-	public void insertUser(User user){
-		
+	public void insertUser(User user) {
+
 		userDao.insertOneUser(user);
-		
+
 	}
-	
-	
+
+	public User validate(String name, String password) {
+
+		if (name != null && !name.isEmpty() && password != null
+				&& !password.isEmpty()) {
+			User user = userDao.findUserByPhoneAndPasswd(name, password);
+
+			if (user != null) {
+				return user;
+			}
+			user = userDao.findUserByEmailAndPasswd(name, password);
+			if (user != null) {
+				return user;
+			}
+			user = userDao.findUserByNameAndPasswd(name, password);
+			if (user != null) {
+				return user;
+			}
+
+		}
+		return null;
+
+	}
+
 }

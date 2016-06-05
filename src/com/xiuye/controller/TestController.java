@@ -14,7 +14,7 @@ public class TestController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		System.out.println("userinfo.do test");
-		return new ModelAndView("userinfo");
+		return new ModelAndView("test");
 		
 		
 	}

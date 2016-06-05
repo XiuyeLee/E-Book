@@ -19,20 +19,19 @@
 
 	<select id="findUserByNameAndPasswd" resultType="com.xiuye.orm.User"
 		parameterType="string">
-		select * from user where username = #{username} and
-		password=#{password}
+		select * from user where username = #{0} and
+		password=#{1}
 	</select>
 
 	<select id="findUserByPhoneAndPasswd" resultType="com.xiuye.orm.User"
 		parameterType="string">
-		select * from user where phone = #{phone} and
-		password=#{password}
+		select * from user where phone = #{0} and password = #{1}
 	</select>
 
 	<select id="findUserByEmailAndPasswd" resultType="com.xiuye.orm.User"
 		parameterType="string">
-		select * from user where email = #{email} and
-		password=#{password}
+		select * from user where email = #{0} and
+		password=#{1}
 	</select>
 
 	<insert id="insertOneUser" parameterType="com.xiuye.orm.User">

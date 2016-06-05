@@ -34,11 +34,11 @@
 		<p:panelGrid columns="1" styleClass="customMarginCenter">
 			<h:panelGrid columns="2">
 
-				<p:outputLabel value="用户名:" for="username"></p:outputLabel>
-				<p:inputText id="username" required="true" maxlength="20"
+				<p:outputLabel value="用户名:" for="name"></p:outputLabel>
+				<p:inputText id="name" value="#{loginView.name}" required="true" requiredMessage="必须输入账号" maxlength="50"
 					placeholder="用户名/邮箱/手机号"></p:inputText>
 				<p:outputLabel value="密码:" for="password"></p:outputLabel>
-				<p:inputText id="password" maxlength="20" required="true"
+				<p:inputText id="password" value="#{loginView.password}" requiredMessage="必须输入密码" maxlength="20" required="true"
 					placeholder="密码"></p:inputText>
 
 
@@ -54,7 +54,7 @@
 				</p:column>
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton value="立即登录" action="index"></p:commandButton>
+				<p:commandButton value="立即登录" action="#{loginView.validateUserAccount}"></p:commandButton>
 				<p:commandButton process="@this" value="取消" action="index"></p:commandButton>
 			</h:panelGrid>
 		</p:panelGrid>

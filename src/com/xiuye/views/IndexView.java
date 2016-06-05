@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 
 import com.xiuye.beans.AllThemes;
 import com.xiuye.logger.Logger;
@@ -35,6 +33,16 @@ public class IndexView implements Serializable{
 		log.info("当前的主题:"+currentTheme);
 				
 	}
+
+		
+	public String personInfo(){
+		
+		return "/WEB-INF/pages/userinfo.jsf";
+		
+	}
 	
-	
+	public String managerInfo(){
+		return "/WEB-INF/pages/manager.jsf";
+	}
+
 }

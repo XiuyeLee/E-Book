@@ -17,6 +17,6 @@ public interface UserDao {
 	
 	User findUserByPhoneAndPasswd(String phone,String password);
 	
-	void insertOneUser(User user);
+	int insertOneUser(User user);
 	
 }

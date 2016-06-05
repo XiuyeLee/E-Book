@@ -22,14 +22,19 @@ public class TestMybatisDB {
 		
 		UserDao dao1 = ac.getBean(UserDao.class);
 		System.out.println(dao1);
-		System.out.println(dao1.findByUserid("231"));
+		System.out.println(dao1.findByUserid("12101010423"));
 		
 		BookDao dao2 = ac.getBean(BookDao.class);
 		System.out.println(dao2.findAll().get(0).getBookname());
 		
-		LoginView login = ac.getBean(LoginView.class);
+		System.out.println(dao1.findUserByNameAndPasswd("xiuye", "123456"));
+		System.out.println(dao1.findUserByEmailAndPasswd("xiuye_engineer@outlook.com", "123456"));
+		System.out.println(dao1.findUserByPhoneAndPasswd("18381334381", "123456"));
 		
-		System.out.println(login);
+		//jsf的类无法让spring管理
+//		LoginView login = ac.getBean(LoginView.class);
+//		
+//		System.out.println(login);
 		
 	}
 }
