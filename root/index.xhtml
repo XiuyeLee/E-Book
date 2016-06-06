@@ -15,6 +15,9 @@
 <h:head>
 	<title>开源书店（Open Source Bookstore）</title>
 	<link href="icon/favicon.png" rel="icon" />
+	<h:outputScript library="js" name="current_theme.js">
+
+	</h:outputScript>
 	<h:outputStylesheet>
 		.customRight{
 			float:right;
@@ -35,7 +38,8 @@
 	<h:form>
 		<h:panelGrid columns="2" styleClass="customRight">
 			<p:column>
-				<h:panelGrid rendered="#{indexView.user==null ? true:false}" columns="2">
+				<h:panelGrid rendered="#{indexView.user==null ? true:false}"
+					columns="2">
 					<p:commandButton action="login" value="登录"></p:commandButton>
 					<p:commandButton action="register" value="注册"></p:commandButton>
 					<!-- <p:link outcome="login" target="_parent" value="登录"
@@ -44,12 +48,14 @@
  -->
 				</h:panelGrid>
 
-				<h:panelGrid columns="#{indexView.user.isAdmin?4:3}" rendered="#{indexView.user==null?false:true}">
+				<h:panelGrid columns="#{indexView.user.isAdmin?4:3}"
+					rendered="#{indexView.user==null?false:true}">
 					<p:outputLabel value="欢迎您，#{indexView.user.username}"></p:outputLabel>
 					<p:commandLink action="#{indexView.exit}" update="@all" value="退出"></p:commandLink>
 					<p:commandButton action="#{indexView.personInfo}" value="个人主页"
 						rendered="#{indexView.user==null?false:true}"></p:commandButton>
-					<p:commandButton action="#{indexView.managerInfo}" value="管理" rendered="#{indexView.user.isAdmin}"></p:commandButton>
+					<p:commandButton action="#{indexView.managerInfo}" value="管理"
+						rendered="#{indexView.user.isAdmin}"></p:commandButton>
 				</h:panelGrid>
 			</p:column>
 
@@ -272,8 +278,10 @@
 				icon="icon/windows-client-download.png"></p:menuitem>
 			<p:menuitem style="color:black;" value="android客户端下载"
 				icon="icon/android.png"></p:menuitem>
-			<p:menuitem style="color:black;" value="反馈" url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
-			<p:menuitem style="color:black;" url="help.jsf" target="_blank" value="帮助" icon="icon/notice.png"></p:menuitem>
+			<p:menuitem style="color:black;" value="反馈"
+				url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" url="help.jsf" target="_blank"
+				value="帮助" icon="icon/notice.png"></p:menuitem>
 
 		</p:dock>
 	</h:form>

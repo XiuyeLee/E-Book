@@ -14,6 +14,9 @@
 <h:head>
 	<title>开源书店（Open Source Bookstore）</title>
 	<link href="icon/favicon.png" rel="icon" />
+	<h:outputScript library="js" name="current_theme.js">
+
+	</h:outputScript>
 	<h:outputStylesheet>
 		.customMarginCenter{
 			margin:auto;
@@ -43,8 +46,7 @@
 						validatorMessage="两次密码不一致或者只能输入6~20位非空字符" maxlength="20"
 						placeholder="密码长度最小6位最大20位" match="pwd2" label="Password 1"
 						required="true" feedback="true" weakLabel="密码强度弱"
-						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强"
-						>
+						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强">
 						<f:validateRegex pattern="\S{6,20}" />
 					</p:password>
 
