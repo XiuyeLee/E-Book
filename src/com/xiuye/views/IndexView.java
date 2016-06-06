@@ -4,7 +4,6 @@ package com.xiuye.views;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -40,14 +39,19 @@ public class IndexView{
 	}
 
 	public User getUser() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
 		/**
 		 * JSF的机制可能会保证user序列化到磁盘
+		 * indexView 也许能持久化
+		 * 如果其user还在，就保存到session中因为重启服务器可能会丢失
+		 * 内容，下面机制保证再次取到，再保存在session中
 		 */
 		if(user != null){
 			log.info("当前会话中的用户还在线:"+user);
+			session.setAttribute("user", user);
 			return user;
 		}
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		if(session == null){
 			return null;
 		}
@@ -58,10 +62,33 @@ public class IndexView{
 			user = userService.getUserByUserid(userid);
 			log.info("重新取出在线用户:"+user);			
 		}
+		/**
+		 * 经过再次确认把数据库在线user保存在session中供页面
+		 * 调用
+		 */
+		if(user != null){
+			session.setAttribute("user", user);
+		}
 		log.info("当前浏览器有没有用户在线:"+(user==null?"否":"用户id:"+ user.getUserid() +" 用户名:"+user.getUsername() + " 在线"));
 		return user;
 	}
 
+	public String exit(){
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		//删除数据库中的在线用户
+		int effectRows = this.onlineUserService.cancelOnlineUserByUserid(user);
+		log.info(effectRows>=1?"在线用户退出"+user:"没有用户退出");		
+		user = null;
+		session.setAttribute("user", user);
+		
+		
+		
+		
+		return "index";
+		
+		
+	}
+	
 	public OnlineUserService getOnlineUserService() {
 		return onlineUserService;
 	}

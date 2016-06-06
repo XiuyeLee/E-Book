@@ -5,7 +5,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -121,7 +120,7 @@ public class LoginView {
 				log.info("保存在线记住密码的账户:"+user.getUsername());
 				
 			}else{
-				
+				session.setMaxInactiveInterval(5*60);
 				this.onlineUserService.addOnlineUser(user, session, 5);
 				log.info("保存在线不记住密码的账户:"+user.getUsername());				
 			}

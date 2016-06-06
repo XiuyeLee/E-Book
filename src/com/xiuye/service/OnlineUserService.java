@@ -96,4 +96,11 @@ public class OnlineUserService implements Serializable {
 		this.onlineUserDao.insertSession(onlineUser);
 	}
 
+	@Transactional
+	public int cancelOnlineUserByUserid(User user){
+		log.info("删除数据库中在线用户:"+user);
+		return this.onlineUserDao.deleteOnlineUserByUserid(user.getUserid());
+		
+	}
+	
 }

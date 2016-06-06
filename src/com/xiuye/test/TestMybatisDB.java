@@ -26,8 +26,8 @@ public class TestMybatisDB {
 //		
 		OnlineUserDao onlineUserDao = ac.getBean(OnlineUserDao.class);
 
-		
-		
+		int i = onlineUserDao.deleteOnlineUserByUserid(null);
+		System.out.println(i);
 //		System.out.println(onlineUserDao);
 		
 //		List<OnlineUser> list = onlineUserDao.findOnlineUsersInSessionTimeout();

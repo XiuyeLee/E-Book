@@ -44,8 +44,9 @@
  -->
 				</h:panelGrid>
 
-				<h:panelGrid columns="#{indexView.user.isAdmin?3:2}" rendered="#{indexView.user==null?false:true}">
+				<h:panelGrid columns="#{indexView.user.isAdmin?4:3}" rendered="#{indexView.user==null?false:true}">
 					<p:outputLabel value="欢迎您，#{indexView.user.username}"></p:outputLabel>
+					<p:commandLink action="#{indexView.exit}" update="@all" value="退出"></p:commandLink>
 					<p:commandButton action="#{indexView.personInfo}" value="个人主页"
 						rendered="#{indexView.user==null?false:true}"></p:commandButton>
 					<p:commandButton action="#{indexView.managerInfo}" value="管理" rendered="#{indexView.user.isAdmin}"></p:commandButton>
@@ -276,8 +277,6 @@
 
 		</p:dock>
 	</h:form>
-
-
 
 </h:body>
 </html>
