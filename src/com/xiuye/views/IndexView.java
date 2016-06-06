@@ -107,14 +107,17 @@ public class IndexView{
 	private  String currentTheme;
 
 	public String getCurrentTheme() {
+		
 		if(currentTheme == null){
-			this.currentTheme = AllThemes.DEFAULT_THEME;
+			this.currentTheme = AllThemes.DEFAULT_THEME;			
 		}
 		return currentTheme;
 	}
 
 	public void setCurrentTheme(String currentTheme) {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		this.currentTheme = currentTheme;
+		session.setAttribute("theme", this.currentTheme);
 		log.info("当前的主题:"+currentTheme);
 				
 	}

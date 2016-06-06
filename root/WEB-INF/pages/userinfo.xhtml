@@ -8,6 +8,9 @@
 
 <h:head>
 	<title>用户个人主页</title>
+	<h:outputScript  library="js" name="current_theme.js">
+		
+	</h:outputScript>
 	<h:outputStylesheet>
 		
 		.textInCenter{
@@ -22,72 +25,75 @@
 
 <h:body>
 
-	<p:layout fullPage="true">
 
 
-		<!-- <p:layoutUnit position="east" resizable="true" size="100">
-			east
-		</p:layoutUnit> -->
-		<p:layoutUnit position="west" resizable="true" size="300">
-			
-			
+	<h:form>
 
-		</p:layoutUnit>
-		<p:layoutUnit position="north" resizable="true">
-			<h:panelGrid columns="1">
-				<p:outputLabel value="欢迎您，尊敬的用户:" title="dfa"></p:outputLabel>
-			</h:panelGrid>
-			<h:panelGrid width="100%" columns="3">
-				<h:panelGrid columns="2">
-					<p:outputLabel value="用户ID: "></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.userid}"></p:outputLabel>
+		<p:layout fullPage="true">
+
+
+			<p:layoutUnit position="west" resizable="true" size="300">
+
+
+
+
+
+			</p:layoutUnit>
+			<p:layoutUnit position="north" resizable="true">
+				<h:panelGrid columns="1">
+					<p:outputLabel value="欢迎您，尊敬的用户:" title="dfa"></p:outputLabel>
 				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="用户名: "></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.username}"></p:outputLabel>
+				<h:panelGrid width="100%" columns="3">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="用户ID: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.userid}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="用户名: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.username}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="性别:"></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.sex}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="生日: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.birthday}">
+							<f:convertDateTime pattern="yyyy年MM月dd日" />
+						</p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Email: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.email}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="QQ: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.qq}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="手机号: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.phone}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2" rendered="${sessionScope.user.isAdmin}">
+						<p:outputLabel value="管理员:"></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.isAdmin?'是':'否'}"></p:outputLabel>
+					</h:panelGrid>
+
 				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="性别:"></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.sex}"></p:outputLabel>
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="生日: "></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.birthday}">
-						<f:convertDateTime pattern="yyyy年MM月dd日"/>
+			</p:layoutUnit>
+			<p:layoutUnit position="south" resizable="true">
+				<h:panelGrid styleClass="textInCenter" columns="1">
+					<p:outputLabel value="Xiuye Company Copyright © 2016 ">
 					</p:outputLabel>
+					<p:outputLabel value="All rights reserved."></p:outputLabel>
 				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Email: "></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.email}"></p:outputLabel>
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="QQ: "></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.qq}"></p:outputLabel>
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="手机号: "></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.phone}"></p:outputLabel>
-				</h:panelGrid>
-				<h:panelGrid columns="2" rendered="${sessionScope.user.isAdmin}">
-					<p:outputLabel value="管理员:"></p:outputLabel>
-					<p:outputLabel value="${sessionScope.user.isAdmin?'是':'否'}"></p:outputLabel>
-				</h:panelGrid>
+			</p:layoutUnit>
 
-			</h:panelGrid>
-		</p:layoutUnit>
-		<p:layoutUnit position="south" resizable="true">
-			<h:panelGrid styleClass="textInCenter" columns="1">
-				<p:outputLabel value="Xiuye Company Copyright © 2016 ">
-				</p:outputLabel>
-				<p:outputLabel value="All rights reserved."></p:outputLabel>
-			</h:panelGrid>
-		</p:layoutUnit>
+			<p:layoutUnit position="center">
 
-		<p:layoutUnit position="center">
-
-		</p:layoutUnit>
-	</p:layout>
-
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
 </h:body>
 
 </html>
