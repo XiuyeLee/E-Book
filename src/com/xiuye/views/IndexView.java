@@ -1,9 +1,9 @@
 package com.xiuye.views;
 
-import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -17,12 +17,10 @@ import com.xiuye.service.UserService;
 
 
 @ManagedBean(name="indexView")
-@SessionScoped
-public class IndexView {
+@RequestScoped
+public class IndexView{
 
-	/**
-	 * 
-	 */
+	
 
 	
 	private User user;
@@ -46,7 +44,7 @@ public class IndexView {
 		 * JSF的机制可能会保证user序列化到磁盘
 		 */
 		if(user != null){
-			log.info("当前会话中的用户还在线");
+			log.info("当前会话中的用户还在线:"+user);
 			return user;
 		}
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -64,16 +62,27 @@ public class IndexView {
 		return user;
 	}
 
+	public OnlineUserService getOnlineUserService() {
+		return onlineUserService;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
 
-	private Logger log = Logger.getLogger(IndexView.class);
+	private static Logger log = Logger.getLogger(IndexView.class);
 	
 	
-	private String currentTheme = AllThemes.DEFAULT_THEME;
+	private  String currentTheme;
 
 	public String getCurrentTheme() {
+		if(currentTheme == null){
+			this.currentTheme = AllThemes.DEFAULT_THEME;
+		}
 		return currentTheme;
 	}
 

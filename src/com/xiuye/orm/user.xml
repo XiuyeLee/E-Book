@@ -25,7 +25,8 @@
 
 	<select id="findUserByPhoneAndPasswd" resultType="com.xiuye.orm.User"
 		parameterType="string">
-		select * from user where phone = #{0} and password = #{1}
+		select * from user where phone = #{0} and password =
+		#{1}
 	</select>
 
 	<select id="findUserByEmailAndPasswd" resultType="com.xiuye.orm.User"
@@ -39,5 +40,23 @@
 		user(userid,username,password,sex,birthday,email,qq,phone,isAdmin)
 		values(#{userid},#{username},#{password},#{sex},#{birthday},#{email},#{qq},#{phone},#{isAdmin})
 	</insert>
+
+	<select id="findUserByUsername" parameterType="string"
+		resultType="com.xiuye.orm.User">
+
+		select * from user where username = #{username}
+
+	</select>
+	<select id="findUserByEmail" parameterType="string" resultType="com.xiuye.orm.User">
+
+		select * from user where email = #{email}
+
+	</select>
+	<select id="findUserByPhone" parameterType="string" resultType="com.xiuye.orm.User">
+
+		select * from user where phone = #{phone}
+
+	</select>
+
 
 </mapper>

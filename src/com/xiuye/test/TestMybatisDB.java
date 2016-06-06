@@ -26,17 +26,19 @@ public class TestMybatisDB {
 //		
 		OnlineUserDao onlineUserDao = ac.getBean(OnlineUserDao.class);
 
-		System.out.println(onlineUserDao);
-		
-		List<OnlineUser> list = onlineUserDao.findOnlineUsersInSessionTimeout();
-		for(OnlineUser online : list){
-			System.out.println(online.getUserid()+":"+online.getSessionid());
-		}
-		
-		OnlineUser onlineUser = new OnlineUser();
 		
 		
-		System.out.println(onlineUserDao.findUseridBySessionid("555BCEC6244FB7ED377BCBEE248643FE"));
+//		System.out.println(onlineUserDao);
+		
+//		List<OnlineUser> list = onlineUserDao.findOnlineUsersInSessionTimeout();
+//		for(OnlineUser online : list){
+//			System.out.println(online.getUserid()+":"+online.getSessionid());
+//		}
+//		
+//		OnlineUser onlineUser = new OnlineUser();
+//		
+//		
+//		System.out.println(onlineUserDao.findUseridBySessionid("555BCEC6244FB7ED377BCBEE248643FE"));
 
 //		Date d = new Date();
 //		onlineUser.setDeletedate(new Date(d.getTime()+24*60*60*1000*5));
@@ -48,21 +50,31 @@ public class TestMybatisDB {
 //		int effectRows = onlineUserDao.insertSession(onlineUser);
 //		
 //		System.out.println(effectRows);
-		
-		TestDao dao = ac.getBean(TestDao.class);
-		List<Test> ts = dao.findAll();
-		System.out.println(ts);
+//		
+//		TestDao dao = ac.getBean(TestDao.class);
+//		List<Test> ts = dao.findAll();
+//		System.out.println(ts);
 		
 		UserDao dao1 = ac.getBean(UserDao.class);
 		System.out.println(dao1);
-		System.out.println(dao1.findUserByUserid("12101010423"));
 		
-		BookDao dao2 = ac.getBean(BookDao.class);
-		System.out.println(dao2.findAll().get(0).getBookname());
+//		System.out.println(dao1.findUserByPhone("18381334381"));
+//		System.out.println(dao1.findUserByUsername("xiuye"));
+//		System.out.println(dao1.findUserByEmail("xiuye_engineer@outlook.com"));
+		System.out.println(dao1.findUserByPhone(null));
+//		System.out.println(dao1.findUserByUsername(null));
+//		System.out.println(dao1.findUserByEmail(null));
+
 		
-		System.out.println(dao1.findUserByNameAndPasswd("xiuye", "123456"));
-		System.out.println(dao1.findUserByEmailAndPasswd("xiuye_engineer@outlook.com", "123456"));
-		System.out.println(dao1.findUserByPhoneAndPasswd("18381334381", "123456"));
+		
+//		System.out.println(dao1.findUserByUserid("12101010423"));
+//		
+//		BookDao dao2 = ac.getBean(BookDao.class);
+//		System.out.println(dao2.findAll().get(0).getBookname());
+//		
+//		System.out.println(dao1.findUserByNameAndPasswd("xiuye", "123456"));
+//		System.out.println(dao1.findUserByEmailAndPasswd("xiuye_engineer@outlook.com", "123456"));
+//		System.out.println(dao1.findUserByPhoneAndPasswd("18381334381", "123456"));
 		
 		//jsf的类无法让spring管理
 //		LoginView login = ac.getBean(LoginView.class);

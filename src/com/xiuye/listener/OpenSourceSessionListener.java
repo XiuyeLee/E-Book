@@ -8,21 +8,20 @@ import com.xiuye.logger.Logger;
 public class OpenSourceSessionListener implements HttpSessionListener {
 
 	private Logger log = Logger.getLogger(OpenSourceSessionListener.class);
-	
+
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		
-		log.info("session created!");
-		
-		
-		
+
+		log.info("SESSIONID:" + se.getSession().getId() + " session created!");
+
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
 
-		log.info("session destroyed!");
-		
+		log.info("SESSIONID:"
+				+ se.getSession().getId() + " session destroyed!");
+
 	}
 
 }

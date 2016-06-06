@@ -3,6 +3,11 @@ package com.xiuye.orm;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.ManagedBean;
+import javax.faces.bean.NoneScoped;
+
+@ManagedBean
+@NoneScoped
 public class User implements Serializable{
 
 	/**
@@ -14,7 +19,7 @@ public class User implements Serializable{
 	private String userid;
 	private String username;
 	private String password;
-	private String sex;
+	private String sex="保密";
 	private Date birthday;
 	private String email;
 	private String qq;

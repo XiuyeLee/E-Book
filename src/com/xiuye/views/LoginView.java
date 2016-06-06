@@ -1,10 +1,10 @@
 package com.xiuye.views;
 
-import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -15,15 +15,20 @@ import com.xiuye.service.OnlineUserService;
 import com.xiuye.service.UserService;
 
 @ManagedBean
-@SessionScoped
-public class LoginView implements Serializable {
+@RequestScoped
+public class LoginView {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4402115331782179736L;
+	
+	
+	private static Logger log = Logger.getLogger(LoginView.class);
 
-	private Logger log = Logger.getLogger(LoginView.class);
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public OnlineUserService getOnlineUserService() {
+		return onlineUserService;
+	}
 
 	public void setOnlineUserService(OnlineUserService onlineUserService) {
 		this.onlineUserService = onlineUserService;

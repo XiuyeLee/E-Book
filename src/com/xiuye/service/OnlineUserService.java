@@ -23,7 +23,7 @@ public class OnlineUserService implements Serializable {
 	 */
 	private static final long serialVersionUID = -4036457742507948054L;
 
-	private Logger log = Logger.getLogger(OnlineUserService.class);
+	private static Logger log = Logger.getLogger(OnlineUserService.class);
 
 	@Resource
 	private OnlineUserDao onlineUserDao;
