@@ -27,6 +27,12 @@ public class UserService implements Serializable{
 
 	}
 
+	public User getUserByUserid(String userid){
+		
+		return userDao.findUserByUserid(userid);
+		
+	}
+	
 	@Transactional
 	public void insertUser(User user) {
 
@@ -34,6 +40,7 @@ public class UserService implements Serializable{
 
 	}
 
+	@Transactional(readOnly=true)
 	public User validate(String name, String password) {
 
 		if (name != null && !name.isEmpty() && password != null

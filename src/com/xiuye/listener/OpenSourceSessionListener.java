@@ -1,6 +1,5 @@
 package com.xiuye.listener;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -15,11 +14,8 @@ public class OpenSourceSessionListener implements HttpSessionListener {
 		
 		log.info("session created!");
 		
-		HttpSession session = se.getSession();
-		if(session.getAttribute("username") == null){
-			session.setAttribute("username", "Welcome to OpenSourceBookstore!");
 		
-		}
+		
 	}
 
 	@Override

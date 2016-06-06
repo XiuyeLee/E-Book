@@ -1,9 +1,16 @@
 package com.xiuye.orm;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5264083166009297228L;
+	
+	
 	private String userid;
 	private String username;
 	private String password;
@@ -13,6 +20,7 @@ public class User {
 	private String qq;
 	private String phone;
 	private boolean isAdmin;
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -68,6 +76,90 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 	
+	public boolean getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((birthday == null) ? 0 : birthday.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + (isAdmin ? 1231 : 1237);
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((qq == null) ? 0 : qq.hashCode());
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		result = prime * result + ((userid == null) ? 0 : userid.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (birthday == null) {
+			if (other.birthday != null)
+				return false;
+		} else if (!birthday.equals(other.birthday))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (isAdmin != other.isAdmin)
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (qq == null) {
+			if (other.qq != null)
+				return false;
+		} else if (!qq.equals(other.qq))
+			return false;
+		if (sex == null) {
+			if (other.sex != null)
+				return false;
+		} else if (!sex.equals(other.sex))
+			return false;
+		if (userid == null) {
+			if (other.userid != null)
+				return false;
+		} else if (!userid.equals(other.userid))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "User [userid=" + userid + ", username=" + username
+				+ ", password=" + password + ", sex=" + sex + ", birthday="
+				+ birthday + ", email=" + email + ", qq=" + qq + ", phone="
+				+ phone + ", isAdmin=" + isAdmin + "]";
+	}
 	
 	
 }

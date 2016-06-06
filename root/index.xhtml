@@ -32,21 +32,10 @@
 <h:body>
 
 	<p:growl id="info" autoUpdate="true"></p:growl>
-	<p:outputLabel value="${username}"></p:outputLabel><br></br>
-	<p:outputLabel value="#{loginView.name}" ></p:outputLabel><br></br>
-	<p:outputLabel value="#{loginView.password}"></p:outputLabel><br></br>
-	<!-- <p:outputLabel value="#{session}"> </p:outputLabel>
-	<p:outputLabel value="#{request}"> </p:outputLabel>
-	<p:outputLabel value="${session}"> </p:outputLabel>
-	<p:outputLabel value="${request}"> </p:outputLabel> -->
-	<!-- <p:outputLabel value="#{view}"> </p:outputLabel>
-	<p:outputLabel value="#{application}"> </p:outputLabel> -->
-	<!-- <p:link value="hhh" href="userinfo.do"></p:link> -->
-	<!-- <ui:include src="/WEB-INF/pages/userinfo.xhtml"></ui:include> -->
 	<h:form>
 		<h:panelGrid columns="2" styleClass="customRight">
 			<p:column>
-				<h:panelGrid rendered="true" columns="2">
+				<h:panelGrid rendered="#{indexView.user==null ? true:false}" columns="2">
 					<p:commandButton action="login" value="登录"></p:commandButton>
 					<p:commandButton action="register" value="注册"></p:commandButton>
 					<!-- <p:link outcome="login" target="_parent" value="登录"
@@ -55,10 +44,11 @@
  -->
 				</h:panelGrid>
 
-				<h:panelGrid columns="1" rendered="false">
+				<h:panelGrid columns="#{indexView.user.isAdmin?3:2}" rendered="#{indexView.user==null?false:true}">
+					<p:outputLabel value="欢迎您，#{indexView.user.username}"></p:outputLabel>
 					<p:commandButton action="#{indexView.personInfo}" value="个人主页"
-						rendered="true"></p:commandButton>
-					<p:commandButton action="#{indexView.managerInfo}" value="管理员"></p:commandButton>
+						rendered="#{indexView.user==null?false:true}"></p:commandButton>
+					<p:commandButton action="#{indexView.managerInfo}" value="管理" rendered="#{indexView.user.isAdmin}"></p:commandButton>
 				</h:panelGrid>
 			</p:column>
 
@@ -281,8 +271,8 @@
 				icon="icon/windows-client-download.png"></p:menuitem>
 			<p:menuitem style="color:black;" value="android客户端下载"
 				icon="icon/android.png"></p:menuitem>
-			<p:menuitem style="color:black;" value="反馈" icon="icon/feedback.png" />
-			<p:menuitem style="color:black;" value="帮助" icon="icon/notice.png"></p:menuitem>
+			<p:menuitem style="color:black;" value="反馈" url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" url="help.jsf" target="_blank" value="帮助" icon="icon/notice.png"></p:menuitem>
 
 		</p:dock>
 	</h:form>

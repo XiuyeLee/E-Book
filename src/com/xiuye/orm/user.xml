@@ -12,7 +12,7 @@
 
 	</select>
 
-	<select id="findByUserid" resultType="com.xiuye.orm.User"
+	<select id="findUserByUserid" resultType="com.xiuye.orm.User"
 		parameterType="string">
 		select * from user where userid = #{userid}
 	</select>
