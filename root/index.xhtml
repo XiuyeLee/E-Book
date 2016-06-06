@@ -30,23 +30,32 @@
 
 </h:head>
 <h:body>
+
 	<p:growl id="info" autoUpdate="true"></p:growl>
-	<!-- <p:link value="hhh" href="userinfo.do"></p:link> -->
-	<!-- <ui:include src="/WEB-INF/pages/userinfo.xhtml"></ui:include> -->
 	<h:form>
 		<h:panelGrid columns="2" styleClass="customRight">
 			<p:column>
-				<p:commandButton action="login"  value="登录"></p:commandButton>
-				<p:commandButton action="register" value="注册"></p:commandButton>
-				<!-- <p:link outcome="login" target="_parent" value="登录"
+				<h:panelGrid rendered="#{indexView.user==null ? true:false}" columns="2">
+					<p:commandButton action="login" value="登录"></p:commandButton>
+					<p:commandButton action="register" value="注册"></p:commandButton>
+					<!-- <p:link outcome="login" target="_parent" value="登录"
 					styleClass="ui-button"></p:link>
 				<p:link outcome="register" target="_parent" value="注册" styleClass="ui-button"></p:link>
  -->
+				</h:panelGrid>
+
+				<h:panelGrid columns="#{indexView.user.isAdmin?3:2}" rendered="#{indexView.user==null?false:true}">
+					<p:outputLabel value="欢迎您，#{indexView.user.username}"></p:outputLabel>
+					<p:commandButton action="#{indexView.personInfo}" value="个人主页"
+						rendered="#{indexView.user==null?false:true}"></p:commandButton>
+					<p:commandButton action="#{indexView.managerInfo}" value="管理" rendered="#{indexView.user.isAdmin}"></p:commandButton>
+				</h:panelGrid>
 			</p:column>
+
 			<p:column>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="界面主题:"></p:outputLabel>
-					<p:themeSwitcher  value="#{indexView.currentTheme}">
+					<p:themeSwitcher value="#{indexView.currentTheme}">
 						<p:ajax immediate="true"></p:ajax>
 						<f:selectItems value="#{allThemes.themes}" />
 					</p:themeSwitcher>
@@ -67,7 +76,7 @@
 		</h:panelGrid>
 		<p:menubar>
 
-			<p:menuitem value="首页" url="/" ></p:menuitem>			
+			<p:menuitem value="首页" url="/"></p:menuitem>
 			<p:submenu label="编程语言">
 				<p:menuitem value="全部" action="#{events.programming}"></p:menuitem>
 				<p:menuitem value="C/C++" action="#{events.c_cpp}"></p:menuitem>
@@ -177,8 +186,10 @@
 					<p:menuitem value="C++Parallel"></p:menuitem>
 					<p:menuitem value="JavaParallel"></p:menuitem>
 					<p:menuitem value="LinuxParallel" action="#{events.linuxParallel}"></p:menuitem>
-				<p:menuitem value="WindowsParallel" action="#{events.windowsParallel}"></p:menuitem>
-				<p:menuitem value="AndroidParallel" action="#{events.androidParallel}"></p:menuitem>
+					<p:menuitem value="WindowsParallel"
+						action="#{events.windowsParallel}"></p:menuitem>
+					<p:menuitem value="AndroidParallel"
+						action="#{events.androidParallel}"></p:menuitem>
 				</p:submenu>
 				<p:menuitem value="编译原理"></p:menuitem>
 				<p:menuitem value="多媒体"></p:menuitem>
@@ -186,16 +197,16 @@
 			<p:submenu label="网络">
 				<p:menuitem value="全部" action="#{events.network}"></p:menuitem>
 				<p:menuitem value="网络基础"></p:menuitem>
-				<p:menuitem value="网络协议" ></p:menuitem>
+				<p:menuitem value="网络协议"></p:menuitem>
 				<p:menuitem value="网络应用" action="#{events.networkApply}"></p:menuitem>
 				<p:menuitem value="网络编程" action="#{events.networkProgramming}"></p:menuitem>
-			</p:submenu>			
+			</p:submenu>
 			<p:submenu label="底层开发">
 				<p:menuitem value="全部" action="#{events.hardwareLowLevel}"></p:menuitem>
-				<p:menuitem value="汇编基础" ></p:menuitem>
+				<p:menuitem value="汇编基础"></p:menuitem>
 				<p:menuitem value="Intel" action="#{events.intel}"></p:menuitem>
 				<p:menuitem value="Arm" action="#{events.arm}"></p:menuitem>
-				<p:menuitem value="驱动" action="#{events.driver}"></p:menuitem>			
+				<p:menuitem value="驱动" action="#{events.driver}"></p:menuitem>
 				<p:menuitem value="电路" action="#{events.circuit}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="应用软件">
@@ -220,7 +231,7 @@
 				<p:menuitem value="资源网站"></p:menuitem>
 				<p:menuitem value="课程资料"></p:menuitem>
 			</p:submenu>
-			
+
 		</p:menubar>
 
 
@@ -231,21 +242,21 @@
 			<p:menuitem value="首页" url="/" icon="ui-icon-extlink" />
 		</p:contextMenu>
 
-		<p:panel id="display"  >
+		<p:panel id="display">
 
 			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-			
+
 			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-			
+
 			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-			
-			
+
+
 			<!-- <object  data="exam.pdf" width="100%" height="100%"></object> -->
 
 		</p:panel>
-		
+
 		<!-- <p:stack icon="icon/stack.png" expanded="true">
 			<p:menuitem value="客户端下载" icon="icon/windows-client-download.png"></p:menuitem>
 			<p:menuitem value="帮助" icon="icon/notice.png"></p:menuitem>
@@ -260,8 +271,8 @@
 				icon="icon/windows-client-download.png"></p:menuitem>
 			<p:menuitem style="color:black;" value="android客户端下载"
 				icon="icon/android.png"></p:menuitem>
-			<p:menuitem style="color:black;" value="反馈" icon="icon/feedback.png" />
-			<p:menuitem style="color:black;" value="帮助" icon="icon/notice.png"></p:menuitem>
+			<p:menuitem style="color:black;" value="反馈" url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" url="help.jsf" target="_blank" value="帮助" icon="icon/notice.png"></p:menuitem>
 
 		</p:dock>
 	</h:form>

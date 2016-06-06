@@ -4,6 +4,39 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 	<display-name>E-Book</display-name>
+
+
+
+	<!-- 指定JSF映射资源时的默认后缀，默认为.jsf -->
+	<!-- <context-param> <param-name>javax.faces.DEFAULT_SUFFIX</param-name> 
+		<param-value>.jsf</param-value> </context-param> -->
+
+	<!-- 指定JSF所管理的生命周期实例的标识符 -->
+	<!-- <context-param> <description> 当在这个应用中处理JSF请求时， 所使用的生命周期实例的标识符. 默认的生命周期模型（没看懂） 
+		</description> <param-name>javax.faces.LIFECYCLE_ID</param-name> <param-value></param-value> 
+		</context-param> -->
+
+	<!-- 指定JSF配置文件的保存位置 -->
+	<!-- <context-param> <param-name>javax.faces.CONFIG_FILES</param-name> <param-value>/WEB-INF/faces-config-beans.xml,/WEB-INF/faces-config-nav.xml</param-value> 
+		</context-param> -->
+
+	<!-- 指定是否需要验证自定义组件 -->
+	<!-- <context-param> <description> Set this flag to true if you want the 
+		JSF Reference Implementation to verify that all of the application objects 
+		you have configured (components, converters, renderers, and validators) can 
+		be successfully created. Default value is false. </description> <param-name>javax.faces.verifyObjects</param-name> 
+		<param-value>true</param-value> </context-param> -->
+
+	<!-- 指定是否需要验证XML文件 -->
+	<!-- <context-param> <description> Set this flag to true if you want the 
+		JavaServer Faces Reference Implementation to validate the XML in your faces-config.xml 
+		resources against the DTD. Default value is false. </description> <param-name>javax.faces.validateXml</param-name> 
+		<param-value>true</param-value> </context-param> -->
+
+	<!-- 当设置在服务器端保存状态时，控制session保存的视图数量，-1表示没有限制 -->
+	<!-- <context-param> <param-name>javax.faces.NUMBER_OF_VIEWS_IN_SESSION</param-name> 
+		<param-value>-1</param-value> </context-param> -->
+
 	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>swanky-purse</param-value> 
 		</context-param> -->
 	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>bluesky</param-value> 
@@ -12,7 +45,7 @@
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
-		
+
 	<!-- 默认主题 -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
@@ -26,9 +59,10 @@
 	<welcome-file-list>
 
 		<welcome-file>index.jsf</welcome-file>
-		<welcome-file>faces/index.xhtml</welcome-file>
-		<welcome-file>index.face</welcome-file>
-		<welcome-file>index.xhtml</welcome-file>
+		<!-- 最好设置一个请求网页文件后缀格式 否则返回WEB-INF/pages/manager.jsf 将报错，你知道了吗？找不到视图 因为jsf默认的视图是xhtml， 
+			所以主页是什么格式，跳转就是什么格式才能成功 或者修改默认jsf页面后缀 也行吧 进过验证 默认后缀，是不是与多个mapping有冲突 -->
+		<!-- <welcome-file>faces/index.xhtml</welcome-file> <welcome-file>index.face</welcome-file> 
+			<welcome-file>index.xhtml</welcome-file> -->
 
 	</welcome-file-list>
 	<!-- 必须写以下监听器，否则报错 -->
@@ -36,7 +70,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-
+	
 
 	<!-- 准备监听器实现单点登录 -->
 
@@ -82,5 +116,29 @@
 		<servlet-name>springDispatcher</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+
+	<listener>
+		<listener-class>com.xiuye.listener.OpenSourceSessionListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
+
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+
+
 
 </web-app>

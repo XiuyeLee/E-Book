@@ -32,23 +32,31 @@
 			<p:row>
 				<h:panelGrid columns="2" id="matchGrid">
 					<p:outputLabel value="用户名:" for="username"></p:outputLabel>
-					<p:inputText id="username" placeholder="汉字或者英语不超过20" maxlength="20"
-						required="true">
-
+					<p:inputText value="#{registerView.user.username}" id="username"
+						placeholder="汉字或者英语不超过20" maxlength="20"
+						validatorMessage="用户名:输入用户名必须包含字母" required="true">
+						<f:validateRegex pattern="\w*[a-zA-Z]+\w*" />
 					</p:inputText>
 
 					<p:outputLabel for="pwd1" value="密码:" />
-					<p:password id="pwd1" validatorMessage="两次密码不一致" maxlength="20"
-						placeholder="最大20位" match="pwd2" label="Password 1"
+					<p:password id="pwd1" value="#{registerView.user.password}"
+						validatorMessage="两次密码不一致或者只能输入6~20位非空字符" maxlength="20"
+						placeholder="密码长度最小6位最大20位" match="pwd2" label="Password 1"
 						required="true" feedback="true" weakLabel="密码强度弱"
-						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强" />
+						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强"
+						>
+						<f:validateRegex pattern="\S{6,20}" />
+					</p:password>
 
 					<p:outputLabel for="pwd2" value="确认密码:" />
-					<p:password id="pwd2" maxlength="20" placeholder="请再次输入密码"
-						label="Password 2" required="true" promptLabel="密码必须和上面一致"
-						feedback="true" />
+					<p:password id="pwd2" value="#{registerView.user.password}"
+						maxlength="20" placeholder="请再次输入密码" label="Password 2"
+						required="true" validatorMessage="确认密码:只能输入6~20位非空字符"
+						promptLabel="密码必须和上面一致" feedback="true">
+						<f:validateRegex pattern="\S{6,20}" />
+					</p:password>
 					<p:outputLabel value="性别:"></p:outputLabel>
-					<p:selectOneRadio value="保密">
+					<p:selectOneRadio value="#{registerView.user.sex}">
 						<f:selectItem itemLabel="男" itemValue="男" />
 						<f:selectItem itemLabel="女" itemValue="女" />
 						<f:selectItem itemLabel="保密" itemValue="保密" />
@@ -57,19 +65,28 @@
 					<p:outputLabel value="生日:" for="birthday"></p:outputLabel>
 					<p:calendar id="birthday" pattern="yyyy-mm-dd" placeholder="请输入日期"
 						required="true" mask="true" yearRange="c-100:c+10"
-						showButtonPanel="true" navigator="true">
-
+						showButtonPanel="true" value="#{registerView.user.birthday}"
+						navigator="true">
 					</p:calendar>
 
 					<p:outputLabel value="邮箱:" for="email"></p:outputLabel>
-					<p:inputText id="email" required="true" maxlength="50"
-						placeholder="请输入邮箱" validatorMessage="邮箱: 输入邮箱格式错误">
-						<f:validateRegex pattern=".+@.+" />
+					<p:inputText id="email" value="#{registerView.user.email}"
+						required="true" maxlength="50" placeholder="请输入邮箱"
+						validatorMessage="邮箱: 输入邮箱格式错误">
+						<f:validateRegex pattern="\w+@\w+\.\w+" />
 					</p:inputText>
 					<p:outputLabel value="QQ:" for="qq"></p:outputLabel>
-					<p:inputText id="qq" maxlength="20" placeholder="请输入qq号码"></p:inputText>
+					<p:inputText id="qq" maxlength="20" validatorMessage="QQ:只能输入数字"
+						value="#{registerView.user.qq}" placeholder="请输入qq号码">
+						<f:validateRegex pattern="\d+" />
+					</p:inputText>
 					<p:outputLabel value="手机号码:" for="phone"></p:outputLabel>
-					<p:inputText id="phone" maxlength="20" placeholder="请输入手机号码"></p:inputText>
+					<p:inputText id="phone" maxlength="20"
+						validatorMessage="phone:手机号码格式错误"
+						value="#{registerView.user.phone}" placeholder="请输入手机号码">
+						<!-- “+”号必须转义否则报错 -->
+						<f:validateRegex pattern="\+?[\d|-]*" />
+					</p:inputText>
 
 				</h:panelGrid>
 			</p:row>
@@ -80,15 +97,17 @@
 						required="true">
 						<p:ajax update="confirm"></p:ajax>
 					</p:selectBooleanCheckbox>
-					<p:link value="我已经阅读并同意注册协议" href="/register_protocol.jsf" target="_blank"></p:link>
+					<p:link value="我已经阅读并同意注册协议" href="/register_protocol.jsf"
+						target="_blank"></p:link>
 				</h:panelGrid>
 			</p:row>
 
 			<p:row>
 				<h:panelGrid columns="2">
 					<p:commandButton id="confirm"
-						disabled="#{registerView.checkAgreeProtocol()}" action="index"
-						value="确认注册" icon="ui-icon-check"></p:commandButton>
+						disabled="#{registerView.checkAgreeProtocol()}"
+						action="#{registerView.register}" value="确认注册"
+						icon="ui-icon-check" update="@form"></p:commandButton>
 					<p:commandButton value="取消" process="@this" action="index"></p:commandButton>
 				</h:panelGrid>
 			</p:row>

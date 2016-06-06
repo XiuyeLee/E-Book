@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiuye.dao.OnlineUserDao">
+
+	<select id="findAll" resultType="com.xiuye.orm.OnlineUser">
+
+		select * from onlineuser
+
+	</select>
+
+	<select id="findUseridBySessionid" parameterType="string"
+		resultType="string">
+		select userid from onlineuser where sessionid = #{sessionid}
+	</select>
+
+	<insert id="insertSession" parameterType="com.xiuye.orm.OnlineUser">
+		insert into
+		onlineuser(userid,sessionid,deletedate,createdate,saveminutes)
+		values(#{userid},#{sessionid},#{deletedate},#{createdate},#{saveminutes})
+	</insert>
+
+	<select id="findOnlineUserBySessionid" parameterType="string"
+		resultType="com.xiuye.orm.OnlineUser">
+		select * from onlineuser where sessionid = #{sessionid}
+	</select>
+	
+	<delete id="deleteOnlineUserBySessionid" parameterType="string">
+		delete from onlineuser where sessionid = #{sessionid}
+	</delete>
+
+	<select id="findOnlineUserByUserid" parameterType="string"
+		resultType="com.xiuye.orm.OnlineUser">
+		select * from onlineuser where userid = #{userid}
+	</select>
+	
+	<select id="findOnlineUsersInSessionTimeout" resultType="com.xiuye.orm.OnlineUser">
+		select * from onlineuser where deletedate &lt;= now()
+	</select>
+	
+	<delete id="deleteOnlineUserByUserid" parameterType="string">
+		delete from onlineuser where userid = #{userid}
+	</delete>
+	
+</mapper>

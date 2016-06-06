@@ -1,4 +1,4 @@
-<beans 
+<beans default-destroy-method="close"
 	default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
@@ -55,7 +55,7 @@
 	
 		<property name="mappings">
 			<props>
-				<prop key="userinfo.do">testController</prop>
+				<prop key="test.do">testController</prop>
 			</props>
 		</property>
 	
