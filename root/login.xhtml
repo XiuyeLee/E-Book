@@ -44,17 +44,17 @@
 				<p:inputText id="name" value="#{loginView.name}" required="true"
 					requiredMessage="必须输入账号" maxlength="50" placeholder="用户名/邮箱/手机号"></p:inputText>
 				<p:outputLabel value="密码:" for="password"></p:outputLabel>
-				<p:inputText id="password" value="#{loginView.password}"
+				<p:password id="password" value="#{loginView.password}"
 					requiredMessage="必须输入密码" maxlength="20" required="true"
-					placeholder="密码"></p:inputText>
+					placeholder="密码"></p:password>
 
 
 			</h:panelGrid>
 			<h:panelGrid columns="2" cellpadding="10">
 				<p:column>
 					<p:selectBooleanCheckbox immediate="true"
-						value="#{loginView.remember}"></p:selectBooleanCheckbox>
-					<p:outputLabel value="记住密码"></p:outputLabel>
+						value="#{loginView.remember}" ></p:selectBooleanCheckbox>
+					<p:outputLabel  value="记住密码"></p:outputLabel>
 				</p:column>
 				<p:column>
 					<p:link value="忘记密码" href="/forgot_passwd.jsf" target="_blank"></p:link>

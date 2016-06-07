@@ -54,6 +54,15 @@
 			<to-view-id>/register.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<!-- 此配置不起作用 对web-inf路径下的文件生效 
+	<navigation-rule>
+		<from-view-id>/WEB-INF/pages/manager.jsf</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/index.jsf</to-view-id>
+		</navigation-case>		
+	</navigation-rule> -->
+	
 
 </faces-config>
 

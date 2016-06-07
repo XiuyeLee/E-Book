@@ -16,7 +16,8 @@
 	<title>开源书店（Open Source Bookstore）</title>
 	<link href="icon/favicon.png" rel="icon" />
 	<h:outputScript library="js" name="current_theme.js">
-
+	</h:outputScript>
+	<h:outputScript library="js" name="userinfo.js">
 	</h:outputScript>
 	<h:outputStylesheet>
 		.customRight{
@@ -63,7 +64,7 @@
 				<p:panelGrid columns="2">
 					<p:outputLabel value="界面主题:"></p:outputLabel>
 					<p:themeSwitcher immediate="true" value="#{indexView.currentTheme}">
-						
+
 						<f:selectItems value="#{allThemes.themes}" />
 					</p:themeSwitcher>
 				</p:panelGrid>

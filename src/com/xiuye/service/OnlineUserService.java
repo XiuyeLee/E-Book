@@ -99,8 +99,10 @@ public class OnlineUserService implements Serializable {
 	@Transactional
 	public int cancelOnlineUserByUserid(User user){
 		log.info("删除数据库中在线用户:"+user);
-		return this.onlineUserDao.deleteOnlineUserByUserid(user.getUserid());
-		
+		if(user != null){
+			return this.onlineUserDao.deleteOnlineUserByUserid(user.getUserid());
+		}
+		return 0;
 	}
 	
 }

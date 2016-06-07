@@ -18,9 +18,6 @@ import com.xiuye.service.UserService;
 @ManagedBean(name="indexView")
 @RequestScoped
 public class IndexView{
-
-	
-
 	
 	private User user;
 	
@@ -40,7 +37,10 @@ public class IndexView{
 
 	public User getUser() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-
+		if(session == null){
+			return null;
+		}
+		user = (User) session.getAttribute("user");
 		/**
 		 * JSF的机制可能会保证user序列化到磁盘
 		 * indexView 也许能持久化
@@ -49,13 +49,11 @@ public class IndexView{
 		 */
 		if(user != null){
 			log.info("当前会话中的用户还在线:"+user);
-			session.setAttribute("user", user);
+			//session.setAttribute("user", user);
 			return user;
 		}
-		if(session == null){
-			return null;
-		}
-		user = (User) session.getAttribute("user");
+		
+		
 		log.info("当前的会话的sessionid:" + session.getId() +" 其长度:" + session.getId().length());
 		if(user == null){			
 			String userid = onlineUserService.getOnlineUseridBySession(session);			
@@ -79,10 +77,7 @@ public class IndexView{
 		int effectRows = this.onlineUserService.cancelOnlineUserByUserid(user);
 		log.info(effectRows>=1?"在线用户退出"+user:"没有用户退出");		
 		user = null;
-		session.setAttribute("user", user);
-		
-		
-		
+		session.setAttribute("user", user);	
 		
 		return "index";
 		

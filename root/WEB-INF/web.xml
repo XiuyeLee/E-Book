@@ -139,6 +139,17 @@
 		<session-timeout>5</session-timeout>
 	</session-config>
 
+	<!-- 禁止访问某些资源 auth-constraint 默认禁止该路径下所有资源的访问-->
+	<!-- <security-constraint>
+		<display-name></display-name>
+		<web-resource-collection>
+			<web-resource-name>pages</web-resource-name>
+			<url-pattern>/resources/pages/*</url-pattern>
+		</web-resource-collection>
+		
+		<auth-constraint></auth-constraint>
+	</security-constraint> -->
 
+	
 
 </web-app>
