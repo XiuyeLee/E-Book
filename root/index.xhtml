@@ -62,8 +62,8 @@
 			<p:column>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="界面主题:"></p:outputLabel>
-					<p:themeSwitcher value="#{indexView.currentTheme}">
-						<p:ajax immediate="true"></p:ajax>
+					<p:themeSwitcher immediate="true" value="#{indexView.currentTheme}">
+						
 						<f:selectItems value="#{allThemes.themes}" />
 					</p:themeSwitcher>
 				</p:panelGrid>

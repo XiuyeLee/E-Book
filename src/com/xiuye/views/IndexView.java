@@ -107,6 +107,9 @@ public class IndexView{
 	private  String currentTheme;
 
 	public String getCurrentTheme() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		//保证主题一致 因为requestscope周期不太清楚
+		currentTheme = (String) session.getAttribute("theme");
 		
 		if(currentTheme == null){
 			this.currentTheme = AllThemes.DEFAULT_THEME;			
