@@ -17,6 +17,7 @@
 		select * from book where bookname = #{bookname}
 
 	</select>
+	
 	<insert id="insertBook" parameterType="com.xiuye.orm.Book">
 
 		insert into
@@ -24,5 +25,10 @@
 		values(#{bookid},#{bookname},#{summary},#{suffix},#{publishdate},#{publishhouse},#{readsum},#{category},#{author},#{cover},#{path})
 
 	</insert>
+	
+	<select id="findBookByBookid" parameterType="string" resultType="com.xiuye.orm.Book">
+		select * from book where bookid = #{bookid}
+	</select>
+	
 
 </mapper>

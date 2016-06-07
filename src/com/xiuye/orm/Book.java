@@ -10,6 +10,7 @@ public class Book {
 	private String suffix;
 	private Date publishdate;
 	private String publishhouse;
+	
 	private int readsum;
 	private String category;
 	private String author;
@@ -80,6 +81,101 @@ public class Book {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((bookid == null) ? 0 : bookid.hashCode());
+		result = prime * result
+				+ ((bookname == null) ? 0 : bookname.hashCode());
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((cover == null) ? 0 : cover.hashCode());
+		result = prime * result + ((path == null) ? 0 : path.hashCode());
+		result = prime * result
+				+ ((publishdate == null) ? 0 : publishdate.hashCode());
+		result = prime * result
+				+ ((publishhouse == null) ? 0 : publishhouse.hashCode());
+		result = prime * result + readsum;
+		result = prime * result + ((suffix == null) ? 0 : suffix.hashCode());
+		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (bookid == null) {
+			if (other.bookid != null)
+				return false;
+		} else if (!bookid.equals(other.bookid))
+			return false;
+		if (bookname == null) {
+			if (other.bookname != null)
+				return false;
+		} else if (!bookname.equals(other.bookname))
+			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (cover == null) {
+			if (other.cover != null)
+				return false;
+		} else if (!cover.equals(other.cover))
+			return false;
+		if (path == null) {
+			if (other.path != null)
+				return false;
+		} else if (!path.equals(other.path))
+			return false;
+		if (publishdate == null) {
+			if (other.publishdate != null)
+				return false;
+		} else if (!publishdate.equals(other.publishdate))
+			return false;
+		if (publishhouse == null) {
+			if (other.publishhouse != null)
+				return false;
+		} else if (!publishhouse.equals(other.publishhouse))
+			return false;
+		if (readsum != other.readsum)
+			return false;
+		if (suffix == null) {
+			if (other.suffix != null)
+				return false;
+		} else if (!suffix.equals(other.suffix))
+			return false;
+		if (summary == null) {
+			if (other.summary != null)
+				return false;
+		} else if (!summary.equals(other.summary))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return bookid + "。" + bookname
+				+ "。" + summary + "。" + suffix
+				+ "。" + publishdate + "。"
+				+ publishhouse + "。 " + readsum + "。"
+				+ category + "。" + author + "。" + cover
+				+ "。" + path;
 	}
 	
 	

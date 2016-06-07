@@ -39,7 +39,7 @@
 					<p:outputLabel value="用户名:" for="username"></p:outputLabel>
 					<p:inputText value="#{registerView.user.username}" id="username"
 						placeholder="汉字或者英语不超过20" maxlength="20"
-						validatorMessage="用户名:输入用户名必须包含字母" required="true">
+						validatorMessage="用户名:输入用户名必须包含字母且不包含空格特殊字符" required="true">
 						<f:validateRegex pattern="\w*[a-zA-Z]+\w*" />
 					</p:inputText>
 

@@ -89,7 +89,7 @@ public class OnlineUserService implements Serializable {
 		OnlineUser onlineUser = new OnlineUser();
 		onlineUser.setUserid(user.getUserid());
 		onlineUser.setSessionid(session.getId());
-		Date createDate = new Date(session.getCreationTime());
+		Date createDate = new Date();//经过验证每次更新cookie，时间也会更新
 		onlineUser.setCreatedate(createDate);
 		onlineUser.setDeletedate(new Date(createDate.getTime() + savedMinutes
 				* 60 * 1000));

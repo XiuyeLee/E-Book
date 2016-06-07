@@ -160,10 +160,10 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", username=" + username
-				+ ", password=" + password + ", sex=" + sex + ", birthday="
-				+ birthday + ", email=" + email + ", qq=" + qq + ", phone="
-				+ phone + ", isAdmin=" + isAdmin + "]";
+		return  userid + "。" + username
+				+ "。" + password + "。" + sex + "。"
+				+ birthday + "。" + email + "。" + qq + "。"
+				+ phone + "。" + isAdmin;
 	}
 	
 	

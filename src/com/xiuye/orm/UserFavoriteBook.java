@@ -2,57 +2,38 @@ package com.xiuye.orm;
 
 import java.util.Date;
 
-public class ReadingHistory {
+public class UserFavoriteBook {
 
 	private String userid;
 	private String bookid;
-	private Date readingdate;
-	private int readtimes;
-
+	private Date addDate;
 	public String getUserid() {
 		return userid;
 	}
-
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-
 	public String getBookid() {
 		return bookid;
 	}
-
 	public void setBookid(String bookid) {
 		this.bookid = bookid;
 	}
-
-	public Date getReadingdate() {
-		return readingdate;
+	public Date getAddDate() {
+		return addDate;
 	}
-
-	public void setReadingdate(Date readingdate) {
-		this.readingdate = readingdate;
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
 	}
-
-	public int getReadtimes() {
-		return readtimes;
-	}
-
-	public void setReadtimes(int readtimes) {
-		this.readtimes = readtimes;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((addDate == null) ? 0 : addDate.hashCode());
 		result = prime * result + ((bookid == null) ? 0 : bookid.hashCode());
-		result = prime * result
-				+ ((readingdate == null) ? 0 : readingdate.hashCode());
-		result = prime * result + readtimes;
 		result = prime * result + ((userid == null) ? 0 : userid.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -61,18 +42,16 @@ public class ReadingHistory {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReadingHistory other = (ReadingHistory) obj;
+		UserFavoriteBook other = (UserFavoriteBook) obj;
+		if (addDate == null) {
+			if (other.addDate != null)
+				return false;
+		} else if (!addDate.equals(other.addDate))
+			return false;
 		if (bookid == null) {
 			if (other.bookid != null)
 				return false;
 		} else if (!bookid.equals(other.bookid))
-			return false;
-		if (readingdate == null) {
-			if (other.readingdate != null)
-				return false;
-		} else if (!readingdate.equals(other.readingdate))
-			return false;
-		if (readtimes != other.readtimes)
 			return false;
 		if (userid == null) {
 			if (other.userid != null)
@@ -81,10 +60,10 @@ public class ReadingHistory {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
-		return userid + "。" + bookid + "。" + readingdate + "。" + readtimes;
+		return  userid + "。" + bookid
+				+ "。" + addDate;
 	}
-
+	
 }

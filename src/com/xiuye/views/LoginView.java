@@ -144,7 +144,7 @@ public class LoginView {
 	private void persistenceClientSession(HttpServletResponse response,HttpSession session,int savedSeconds){
 		
 		Cookie cookie = new Cookie("JSESSIONID",session.getId());
-		cookie.setPath("/");
+		cookie.setPath("/E-Book/");
 		cookie.setMaxAge(savedSeconds);//单位:s
 		response.addCookie(cookie);
 	}

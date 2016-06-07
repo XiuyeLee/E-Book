@@ -33,22 +33,18 @@
 		<p:layout fullPage="true">
 
 
-			<p:layoutUnit position="west" resizable="true" size="300">
 
-
-			</p:layoutUnit>
 			<p:layoutUnit position="north" resizable="true">
 				<h:panelGrid columns="3" width="100%">
 					<p:outputLabel value="欢迎您，尊敬的用户:"></p:outputLabel>
-					<p:link  style="float:right;margin-right:10px;" value="首页"
-						href="/"></p:link>
+					<p:link style="float:right;margin-right:10px;" value="首页" href="/"></p:link>
 					<p:link class="loginOut" style="clear:right;" href="/" value="退出">
 						<p:ajax update="@all"></p:ajax>
-					</p:link>								
-					
+					</p:link>
+
 				</h:panelGrid>
-				
-				
+
+
 				<h:panelGrid width="100%" columns="3">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="用户ID: "></p:outputLabel>
@@ -95,7 +91,35 @@
 				</h:panelGrid>
 			</p:layoutUnit>
 
+			<p:layoutUnit position="west" resizable="true" size="300">
+
+				<p:accordionPanel activeIndex="1" multiple="true">
+					<p:tab title="通知" >
+						<p:dataList  emptyMessage="现在还没有通知">
+							
+						</p:dataList>
+					</p:tab>
+					<p:tab title="读书历史" >
+						<p:dataList value="#{userinfoView.readHistoryBooks}" var="rhBook" emptyMessage="现在还没有读书历史">
+							<p:outputLabel value="#{rhBook.book.bookname}" />
+								
+						</p:dataList>
+					</p:tab>
+				</p:accordionPanel>
+
+			</p:layoutUnit>
+
 			<p:layoutUnit position="center">
+
+				<p:menubar >
+					<p:menuitem value="申请改名" ></p:menuitem>
+					<p:menuitem value="查看历史" ></p:menuitem>
+					<p:menuitem value="最喜欢的图书" ></p:menuitem>
+					<f:facet name="options">
+						<p:autoComplete></p:autoComplete>
+						<p:commandButton value="搜索"></p:commandButton>
+					</f:facet>
+				</p:menubar>
 
 			</p:layoutUnit>
 		</p:layout>

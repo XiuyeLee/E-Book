@@ -12,9 +12,10 @@ public interface BookDao {
 	
 	public List<Book> findAll();
 	
-	Book findByBookname(String bookname);
+	List<Book> findByBookname(String bookname);
 	
 	void insertBook(Book book);
 	
+	Book findBookByBookid(String bookid);
 	
 }

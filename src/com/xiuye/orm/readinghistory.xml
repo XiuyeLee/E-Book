@@ -7,9 +7,22 @@
 <mapper namespace="com.xiuye.dao.ReadingHistoryDao">
 
 	<select id="findAll" resultType="com.xiuye.orm.ReadingHistory">
-	    
-	    select * from readinghistory
-	    
+
+		select * from readinghistory
+
 	</select>
+
+	<select id="findReadingHistoryBookByUserid" parameterType="string"
+		resultType="com.xiuye.orm.ReadingHistory">
+		select * from readinghistory where userid = #{userid} order
+		by readingdate,readtimes desc
+	</select>
+	<delete id="deleteReadingHistoryBookByBookid" parameterType="string">
+		delete from readinghistory where bookid = #{bookid}
+	</delete>
+
+	<insert id="insertReadingHistoryBook" parameterType="com.xiuye.orm.ReadingHistory">
+		insert into readinghistory(userid,bookid,readingdate,readtimes) values(#{userid},#{bookid},#{readingdate},#{readtimes})
+	</insert>
 
 </mapper>
