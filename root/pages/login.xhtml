@@ -35,7 +35,7 @@
 		<p:commandLink process="@this" style="float:right;margin-right:100px;"
 			value="注册" action="register"></p:commandLink>
 		<p:commandLink process="@this" style="float:right;margin-right:10px;"
-			value="首页" action="index"></p:commandLink>
+			value="首页" action="/index"></p:commandLink>
 		<h1 align="center" style="clear: right;">用户登录</h1>
 		<p:panelGrid columns="1" styleClass="customMarginCenter">
 			<h:panelGrid columns="2">
@@ -57,13 +57,13 @@
 					<p:outputLabel  value="记住密码"></p:outputLabel>
 				</p:column>
 				<p:column>
-					<p:link value="忘记密码" href="/forgot_passwd.jsf" target="_blank"></p:link>
+					<p:link value="忘记密码" href="/pages/forgot_passwd.jsf" target="_blank"></p:link>
 				</p:column>
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="立即登录"
 					action="#{loginView.validateUserAccount}"></p:commandButton>
-				<p:commandButton process="@this" value="取消" action="index"></p:commandButton>
+				<p:commandButton process="@this" value="取消" action="/index"></p:commandButton>
 			</h:panelGrid>
 		</p:panelGrid>
 	</h:form>

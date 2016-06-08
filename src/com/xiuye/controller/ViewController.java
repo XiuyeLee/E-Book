@@ -19,7 +19,7 @@ public class ViewController {
 	@Resource
 	private OnlineUserService onlineUserService;
 	
-	@RequestMapping("currentTheme.do")
+	@RequestMapping("/currentTheme.do")
 	@ResponseBody
 	public String theme(HttpSession session) {
 		String theme = (String) session.getAttribute("theme");

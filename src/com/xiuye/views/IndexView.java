@@ -123,12 +123,12 @@ public class IndexView{
 		
 	public String personInfo(){
 		
-		return "/WEB-INF/pages/userinfo.jsf";
+		return "/pages/userinfo.jsf";
 		
 	}
 	
 	public String managerInfo(){
-		return "/WEB-INF/pages/manager.jsf";
+		return "/pages/manager.jsf";
 	}
 
 }

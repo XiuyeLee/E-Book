@@ -3,7 +3,7 @@ $(function() {
 	//PrimeFaces.changeTheme('${sessionScope.theme == null?"swanky-purse":sessionScope.theme}');
 	$.ajax({
 		type:"post",
-		url:"currentTheme.do",
+		url:"/E-Book/currentTheme.do",//我以前也碰到过相对绝对地址，客户端的绝对地址从域名后的斜线‘/’开始
 		dataType:"text",
 		success:function(data){
 			

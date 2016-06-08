@@ -30,7 +30,7 @@
 		<p:commandLink process="@this" style="float:right;margin-right:100px;"
 			value="直接登录" action="login"></p:commandLink>
 		<p:commandLink process="@this" style="float:right;margin-right:10px;"
-			value="首页" action="index"></p:commandLink>
+			value="首页" action="/index"></p:commandLink>
 		<h1 align="center" style="clear: right;">用户注册</h1>
 		<p:panelGrid id="p1" columns="1" styleClass="customMarginCenter">
 
@@ -101,18 +101,21 @@
 						required="true">
 						<p:ajax update="confirm"></p:ajax>
 					</p:selectBooleanCheckbox>
-					<p:link value="我已经阅读并同意注册协议" href="/register_protocol.jsf"
+					<p:link value="我已经阅读并同意注册协议" href="/pages/register_protocol.jsf"
 						target="_blank"></p:link>
 				</h:panelGrid>
 			</p:row>
 
 			<p:row>
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="3">
 					<p:commandButton id="confirm"
 						disabled="#{registerView.checkAgreeProtocol()}"
 						action="#{registerView.register}" value="确认注册"
-						icon="ui-icon-check" update="@form"></p:commandButton>
-					<p:commandButton value="取消" process="@this" action="index"></p:commandButton>
+						icon="ui-icon-check"></p:commandButton>
+					<p:commandButton value="清空" update="p1" process="@this">
+						<p:resetInput target="p1"></p:resetInput>
+					</p:commandButton>
+					<p:commandButton value="取消" process="@this" action="/index"></p:commandButton>
 				</h:panelGrid>
 			</p:row>
 		</p:panelGrid>

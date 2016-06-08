@@ -130,7 +130,7 @@ public class LoginView {
 				this.onlineUserService.addOnlineUser(user, session, 5);
 				log.info("保存在线不记住密码的账户:"+user.getUsername());				
 			}
-			return "index";
+			return "/index";
 			
 		}
 		else{
