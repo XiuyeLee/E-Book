@@ -144,7 +144,13 @@ public class UserinfoView {
 
 	public void deleteFavoriteBook(FavoriteBook fb) {
 
+		if(fb == null){
+			return;
+		}
 		log.info(fb.toString());
+		
+		this.ufBookService.deleteUserFavoriteBook(fb);
+		
 
 	}
 

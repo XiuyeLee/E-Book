@@ -14,7 +14,7 @@
 
 	<select id="findUserFavoriteBooksByUserid" parameterType="string" resultType="com.xiuye.orm.UserFavoriteBook">
 		select * from userfavoritebook where userid = #{userid} 
-		order by addDate,readtimes
+		order by addDate,readtimes desc
 	</select>
 
 	<delete id="deleteUserFavoriteBookByUseridAndBookid" parameterType="string">

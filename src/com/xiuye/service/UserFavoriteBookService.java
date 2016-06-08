@@ -6,10 +6,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xiuye.bean.FavoriteBook;
 import com.xiuye.dao.BookDao;
 import com.xiuye.dao.UserFavoriteBookDao;
+import com.xiuye.logger.Logger;
 import com.xiuye.orm.Book;
 import com.xiuye.orm.User;
 import com.xiuye.orm.UserFavoriteBook;
@@ -17,6 +19,8 @@ import com.xiuye.orm.UserFavoriteBook;
 @Service
 public class UserFavoriteBookService {
 
+	private static Logger log = Logger.getLogger(UserFavoriteBookService.class);
+	
 	@Resource
 	private UserFavoriteBookDao ufBookDao;
 
@@ -76,6 +80,14 @@ public class UserFavoriteBookService {
 
 		return list;
 
+	}
+	
+	@Transactional
+	public void deleteUserFavoriteBook(FavoriteBook fb){
+		
+		int effectRows = this.ufBookDao.deleteUserFavoriteBookByUseridAndBookid(fb.getUfBook().getUserid(), fb.getUfBook().getBookid());
+		
+		log.info("删除收藏图书:"+effectRows+"条");
 	}
 
 }

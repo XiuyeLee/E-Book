@@ -120,7 +120,7 @@
 					<p:menuitem value="收藏的图书"
 						actionListener="#{userinfoView.lookAtFavoriteBooks}" update="@all"></p:menuitem>
 					<f:facet name="options">
-						<p:autoComplete queryDelay="0" immediate="true" maxResults="10"
+						<p:autoComplete placeholder="搜索ID/书名/作者..." queryDelay="0" immediate="true" maxResults="10"
 							value="#{userinfoView.searchContent}"
 							completeMethod="#{userinfoView.completeMethod}"></p:autoComplete>
 						<p:commandButton actionListener="#{userinfoView.search}"
@@ -148,7 +148,7 @@
 							</p:link>							
 						</h:panelGrid>
 						
-						<p:commandButton update="favriteBook" actionListener="#{userinfoView.deleteFavoriteBook(fBook)}" value="删除" icon="ui-icon-trash" ></p:commandButton>
+						<p:commandButton update="@all" actionListener="#{userinfoView.deleteFavoriteBook(fBook)}" value="删除" icon="ui-icon-trash" ></p:commandButton>
 					</p:panel>
 					<p:tooltip for="favriteBook"  trackMouse="true">
 						<h:panelGrid columns="2">
