@@ -111,26 +111,82 @@
 
 			</p:layoutUnit>
 
-			<p:layoutUnit position="center">
+			<p:layoutUnit id="showPersonBooks" position="center">
 
 				<p:menubar>
 					<p:menuitem value="申请改名"></p:menuitem>
-					<p:menuitem onclick="PF('readBooks').hide()" value="查看历史"></p:menuitem>
-					<p:menuitem value="最喜欢的图书"></p:menuitem>
+					<p:menuitem actionListener="#{userinfoView.lookAtHistoryBooks}"
+						update="@all" value="查看历史"></p:menuitem>
+					<p:menuitem value="收藏的图书"
+						actionListener="#{userinfoView.lookAtFavoriteBooks}" update="@all"></p:menuitem>
 					<f:facet name="options">
-						<p:autoComplete completeMethod="#{userinfoView.completeMethod}"></p:autoComplete>
-						<p:commandButton action="index" ajax="false" value="搜索"></p:commandButton>
+						<p:autoComplete queryDelay="0" immediate="true" maxResults="10"
+							value="#{userinfoView.searchContent}"
+							completeMethod="#{userinfoView.completeMethod}"></p:autoComplete>
+						<p:commandButton actionListener="#{userinfoView.search}"
+							update="@all" icon="ui-icon-search" value="搜索"></p:commandButton>
 					</f:facet>
 				</p:menubar>
 
-				<p:dataGrid widgetVar="readBooks" var="rhBook"
-					value="#{userinfoView.readHistoryBooks}" columns="5" rows="20"
-					paginator="true" layout="tabular" paginatorPosition="bottom"
-					emptyMessage="现在还没有读书历史"
+				<p:dataGrid rendered="#{userinfoView.historyOrFavorite}"
+					var="fBook" value="#{userinfoView.}" columns="5"
+					rows="20" paginator="true" layout="tabular"
+					paginatorPosition="bottom" emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,20,30">
 					<f:facet name="header">
-						历史图书
+						收藏书籍
+					</f:facet>
+					
+					<p:panel id="favriteBook" header="#{rhBook.book.bookid}"
+						style="text-align:center;">
+						<h:panelGrid columns="1">
+							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+							<p:link target="_blank" href="https://www.baidu.com"
+								value="#{rhBook.book.bookname}">
+							</p:link>
+							<p:commandButton value="删除" icon="ui-icon-cancel" ></p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					<p:tooltip for="favriteBook">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="书籍ID:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.bookid}"></p:outputLabel>
+							<p:outputLabel value="书籍名:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.bookname}"></p:outputLabel>
+							<p:outputLabel value="书籍分类为:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.category}"></p:outputLabel>
+							<p:outputLabel value="出版社:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.publishhouse}"></p:outputLabel>
+							<p:outputLabel value="出版时间:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.publishdate}"></p:outputLabel>
+							<p:outputLabel value="书籍作者:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.author}"></p:outputLabel>
+							<p:outputLabel value="阅读次数:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.readingHistory.readtimes}"></p:outputLabel>
+							<p:outputLabel value="上次阅读日期:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.readingHistory.readingdate}">
+								<f:convertDateTime pattern="yyyy年MM月dd日" />
+							</p:outputLabel>
+
+						</h:panelGrid>
+					</p:tooltip>
+					
+					
+				</p:dataGrid>
+				
+				
+				
+				
+				
+				<p:dataGrid rendered="#{userinfoView.historyOrFavorite}"
+					var="rhBook" value="#{userinfoView.readHistoryBooks}" columns="5"
+					rows="20" paginator="true" layout="tabular"
+					paginatorPosition="bottom" emptyMessage="现在还没有读书历史"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30">
+					<f:facet name="header">
+						阅读历史
 					</f:facet>
 					<p:panel id="historyBook" header="#{rhBook.book.bookid}"
 						style="text-align:center;">

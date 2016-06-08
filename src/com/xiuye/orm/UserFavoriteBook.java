@@ -1,5 +1,6 @@
 package com.xiuye.orm;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserFavoriteBook {
@@ -7,24 +8,31 @@ public class UserFavoriteBook {
 	private String userid;
 	private String bookid;
 	private Date addDate;
+
 	public String getUserid() {
 		return userid;
 	}
+
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
+
 	public String getBookid() {
 		return bookid;
 	}
+
 	public void setBookid(String bookid) {
 		this.bookid = bookid;
 	}
+
 	public Date getAddDate() {
 		return addDate;
 	}
+
 	public void setAddDate(Date addDate) {
 		this.addDate = addDate;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -34,6 +42,7 @@ public class UserFavoriteBook {
 		result = prime * result + ((userid == null) ? 0 : userid.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -60,10 +69,12 @@ public class UserFavoriteBook {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return  userid + "。" + bookid
-				+ "。" + addDate;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		String date = format.format(addDate);
+		return date;
 	}
-	
+
 }

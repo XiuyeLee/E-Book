@@ -1,5 +1,6 @@
 package com.xiuye.orm;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ReadingHistory {
@@ -84,7 +85,13 @@ public class ReadingHistory {
 
 	@Override
 	public String toString() {
-		return userid + "。" + bookid + "。" + readingdate + "。" + readtimes;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+
+		String date = "";
+		if(readingdate != null)
+			date = format.format(readingdate);
+		
+		return date + "。" + readtimes;
 	}
 
 }

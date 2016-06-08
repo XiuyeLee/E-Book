@@ -2,7 +2,7 @@ package com.xiuye.test;
 
 import java.util.List;
 
-import com.xiuye.beans.ReadingHistoryBook;
+import com.xiuye.bean.ReadingHistoryBook;
 import com.xiuye.orm.User;
 import com.xiuye.service.ReadingHistoryService;
 import com.xiuye.util.SpringUtil;

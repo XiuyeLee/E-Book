@@ -1,4 +1,4 @@
-package com.xiuye.beans;
+package com.xiuye.bean;
 
 import com.xiuye.orm.Book;
 import com.xiuye.orm.ReadingHistory;
@@ -19,5 +19,11 @@ public class ReadingHistoryBook {
 	public void setReadingHistory(ReadingHistory readingHistory) {
 		this.readingHistory = readingHistory;
 	}
+	@Override
+	public String toString() {
+		return  book + "。"
+				+ readingHistory ;
+	}
+	
 
 }

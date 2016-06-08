@@ -3,7 +3,7 @@ package com.xiuye.listener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import com.xiuye.beans.AllThemes;
+import com.xiuye.bean.AllThemes;
 import com.xiuye.logger.Logger;
 
 public class OpenSourceSessionListener implements HttpSessionListener {

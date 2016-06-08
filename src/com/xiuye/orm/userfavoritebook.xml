@@ -12,4 +12,12 @@
 	    
 	</select>
 
+	<select id="findUserFavoriteBooksByUserid" parameterType="string" resultType="com.xiuye.orm.UserFavoriteBook">
+		select * from userfavoritebook where userid = #{userid}
+	</select>
+
+	<delete id="deleteUserFavoriteBookByUseridAndBookid" parameterType="string">
+		delete from userfavoritebook where userid=#{0} and bookid=#{1}
+	</delete>
+
 </mapper>

@@ -38,9 +38,8 @@ public class Logger {
 	public void info(String message) {
 		if (!CLOSEINFO) {
 
-			System.out.println("INFO: 时间:"
-					+ new Date(System.currentTimeMillis()) + " 类对象:" + clazz
-					+ " 内容: " + message);
+			System.out.println("INFO:" + message + " 类对象:" + clazz
+					+  " 时间:"	+ new Date());
 		}
 	}
 }

@@ -7,7 +7,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.xiuye.beans.AllThemes;
+import com.xiuye.bean.AllThemes;
 import com.xiuye.logger.Logger;
 import com.xiuye.orm.User;
 import com.xiuye.service.OnlineUserService;

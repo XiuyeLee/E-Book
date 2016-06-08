@@ -10,7 +10,8 @@ public interface ReadingHistoryDao {
 	
 	List<ReadingHistory> findReadingHistoryBookByUserid(String userid);
 	
-	int deleteReadingHistoryBookByBookid(String bookid);
+	int deleteReadingHistoryBookByUseridAndBookid(String userid,String bookid);
 	
 	int insertReadingHistoryBook(ReadingHistory readingBook);
+	int deleteReadingHistoryBooksByUserid(String userid);
 }

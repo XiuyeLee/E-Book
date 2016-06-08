@@ -1,5 +1,6 @@
 package com.xiuye.orm;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Book {
@@ -10,79 +11,101 @@ public class Book {
 	private String suffix;
 	private Date publishdate;
 	private String publishhouse;
-	
+
 	private int readsum;
 	private String category;
 	private String author;
 	private String cover;
 	private String path;
+
 	public String getBookid() {
 		return bookid;
 	}
+
 	public void setBookid(String bookid) {
 		this.bookid = bookid;
 	}
+
 	public String getBookname() {
 		return bookname;
 	}
+
 	public void setBookname(String bookname) {
 		this.bookname = bookname;
 	}
+
 	public String getSummary() {
 		return summary;
 	}
+
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
+
 	public String getSuffix() {
 		return suffix;
 	}
+
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
+
 	public Date getPublishdate() {
 		return publishdate;
 	}
+
 	public void setPublishdate(Date publishdate) {
 		this.publishdate = publishdate;
 	}
+
 	public String getPublishhouse() {
 		return publishhouse;
 	}
+
 	public void setPublishhouse(String publishhouse) {
 		this.publishhouse = publishhouse;
 	}
+
 	public int getReadsum() {
 		return readsum;
 	}
+
 	public void setReadsum(int readsum) {
 		this.readsum = readsum;
 	}
+
 	public String getCategory() {
 		return category;
 	}
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 	public String getAuthor() {
 		return author;
 	}
+
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
 	public String getCover() {
 		return cover;
 	}
+
 	public void setCover(String cover) {
 		this.cover = cover;
 	}
+
 	public String getPath() {
 		return path;
 	}
+
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -104,6 +127,7 @@ public class Book {
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -167,16 +191,15 @@ public class Book {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return bookid + "。" + bookname
-				+ "。" + summary + "。" + suffix
-				+ "。" + publishdate + "。"
-				+ publishhouse + "。 " + readsum + "。"
-				+ category + "。" + author + "。" + cover
-				+ "。" + path;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+		String date = "";
+		if(publishdate != null)
+			date = format.format(publishdate);
+		return bookid + "。" + bookname + "。" + date + "。"
+				+ publishhouse + "。 " + readsum + "。" + category + "。" + author;
 	}
-	
-	
+
 }
