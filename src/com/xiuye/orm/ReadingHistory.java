@@ -91,7 +91,7 @@ public class ReadingHistory {
 		if(readingdate != null)
 			date = format.format(readingdate);
 		
-		return date + "。" + readtimes;
+		return date;
 	}
 
 }

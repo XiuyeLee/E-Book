@@ -13,7 +13,8 @@
 	</select>
 
 	<select id="findUserFavoriteBooksByUserid" parameterType="string" resultType="com.xiuye.orm.UserFavoriteBook">
-		select * from userfavoritebook where userid = #{userid}
+		select * from userfavoritebook where userid = #{userid} 
+		order by addDate,readtimes
 	</select>
 
 	<delete id="deleteUserFavoriteBookByUseridAndBookid" parameterType="string">

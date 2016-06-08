@@ -111,7 +111,7 @@
 
 			</p:layoutUnit>
 
-			<p:layoutUnit id="showPersonBooks" position="center">
+			<p:layoutUnit position="center">
 
 				<p:menubar>
 					<p:menuitem value="申请改名"></p:menuitem>
@@ -128,9 +128,9 @@
 					</f:facet>
 				</p:menubar>
 
-				<p:dataGrid rendered="#{userinfoView.historyOrFavorite}"
-					var="fBook" value="#{userinfoView.}" columns="5"
-					rows="20" paginator="true" layout="tabular"
+				<p:dataGrid  rowIndexVar="row" rendered="#{!userinfoView.historyOrFavorite}"
+					var="fBook" value="#{userinfoView.favoriteBooks}" columns="5"
+					rows="20" paginator="true" layout="grid"
 					paginatorPosition="bottom" emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,20,30">
@@ -138,36 +138,39 @@
 						收藏书籍
 					</f:facet>
 					
-					<p:panel id="favriteBook" header="#{rhBook.book.bookid}"
+					<p:panel  closable="true" header="#{fBook.book.bookid}"
 						style="text-align:center;">
-						<h:panelGrid columns="1">
+						<h:panelGrid id="favriteBook" columns="1">
+							<p:outputLabel  value="#{row}"/>
 							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 							<p:link target="_blank" href="https://www.baidu.com"
-								value="#{rhBook.book.bookname}">
-							</p:link>
-							<p:commandButton value="删除" icon="ui-icon-cancel" ></p:commandButton>
+								value="#{fBook.book.bookname}">
+							</p:link>							
 						</h:panelGrid>
+						
+						<p:commandButton update="favriteBook" actionListener="#{userinfoView.deleteFavoriteBook(fBook)}" value="删除" icon="ui-icon-trash" ></p:commandButton>
 					</p:panel>
-					<p:tooltip for="favriteBook">
+					<p:tooltip for="favriteBook"  trackMouse="true">
 						<h:panelGrid columns="2">
 							<p:outputLabel value="书籍ID:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.book.bookid}"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.bookid}"></p:outputLabel>
 							<p:outputLabel value="书籍名:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.book.bookname}"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.bookname}"></p:outputLabel>
 							<p:outputLabel value="书籍分类为:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.book.category}"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.category}"></p:outputLabel>
 							<p:outputLabel value="出版社:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.book.publishhouse}"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.publishhouse}"></p:outputLabel>
 							<p:outputLabel value="出版时间:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.book.publishdate}"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.publishdate}"></p:outputLabel>
 							<p:outputLabel value="书籍作者:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.book.author}"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.author}"></p:outputLabel>
 							<p:outputLabel value="阅读次数:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.readingHistory.readtimes}"></p:outputLabel>
-							<p:outputLabel value="上次阅读日期:"></p:outputLabel>
-							<p:outputLabel value="#{rhBook.readingHistory.readingdate}">
-								<f:convertDateTime pattern="yyyy年MM月dd日" />
+							<p:outputLabel value="#{fBook.ufBook.readtimes}"></p:outputLabel>							
+							<p:outputLabel value="收藏加图书时间:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.ufBook.addDate}">
+								<f:convertDateTime pattern="yyyy年MM月dd日 HH:mm:ss" />
 							</p:outputLabel>
+							
 
 						</h:panelGrid>
 					</p:tooltip>
@@ -179,25 +182,26 @@
 				
 				
 				
-				<p:dataGrid rendered="#{userinfoView.historyOrFavorite}"
+				<p:dataGrid rowIndexVar="row" rendered="#{userinfoView.historyOrFavorite}"
 					var="rhBook" value="#{userinfoView.readHistoryBooks}" columns="5"
-					rows="20" paginator="true" layout="tabular"
+					rows="20" paginator="true" layout="grid"
 					paginatorPosition="bottom" emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,20,30">
 					<f:facet name="header">
 						阅读历史
 					</f:facet>
-					<p:panel id="historyBook" header="#{rhBook.book.bookid}"
+					<p:panel  closable="true" id="historyBook" header="#{rhBook.book.bookid}"
 						style="text-align:center;">
 						<h:panelGrid columns="1">
+							<p:outputLabel value="#{row}"></p:outputLabel>
 							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 							<p:link target="_blank" href="https://www.baidu.com"
 								value="#{rhBook.book.bookname}">
 							</p:link>
 						</h:panelGrid>
 					</p:panel>
-					<p:tooltip for="historyBook">
+					<p:tooltip trackMouse="true" for="historyBook">
 						<h:panelGrid columns="2">
 							<p:outputLabel value="书籍ID:"></p:outputLabel>
 							<p:outputLabel value="#{rhBook.book.bookid}"></p:outputLabel>

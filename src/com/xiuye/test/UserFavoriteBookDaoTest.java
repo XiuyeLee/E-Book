@@ -10,7 +10,7 @@ public class UserFavoriteBookDaoTest {
 		UserFavoriteBookDao dao = SpringUtil.getBean(UserFavoriteBookDao.class);
 //		int i = dao.deleteUserFavoriteBookByUseridAndBookid("12101010423", "1001");
 //		System.out.println(i);
-		System.out.println(dao.findUserFavoriteBooksByUserid("12101010423"));
+		System.out.println(dao.findUserFavoriteBooksByUserid("12101010423").get(0).getReadtimes());
 		
 	}
 

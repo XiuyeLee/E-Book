@@ -9,8 +9,18 @@ public class UserFavoriteBook {
 	private String bookid;
 	private Date addDate;
 
+	private int readtimes;
+
 	public String getUserid() {
 		return userid;
+	}
+
+	public int getReadtimes() {
+		return readtimes;
+	}
+
+	public void setReadtimes(int readtimes) {
+		this.readtimes = readtimes;
 	}
 
 	public void setUserid(String userid) {
@@ -73,7 +83,9 @@ public class UserFavoriteBook {
 	@Override
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-		String date = format.format(addDate);
+		String date = "";
+		if (addDate != null)
+			date = format.format(addDate);
 		return date;
 	}
 
