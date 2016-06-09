@@ -1,5 +1,6 @@
 package com.xiuye.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,12 @@ import com.xiuye.orm.User;
 import com.xiuye.orm.UserFavoriteBook;
 
 @Service
-public class UserFavoriteBookService {
+public class UserFavoriteBookService implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4045732154913170400L;
 
 	private static Logger log = Logger.getLogger(UserFavoriteBookService.class);
 	

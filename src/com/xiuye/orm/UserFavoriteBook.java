@@ -1,10 +1,15 @@
 package com.xiuye.orm;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserFavoriteBook {
+public class UserFavoriteBook implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2093832005837492645L;
 	private String userid;
 	private String bookid;
 	private Date addDate;

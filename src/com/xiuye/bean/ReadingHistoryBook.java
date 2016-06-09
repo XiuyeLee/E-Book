@@ -1,10 +1,16 @@
 package com.xiuye.bean;
 
+import java.io.Serializable;
+
 import com.xiuye.orm.Book;
 import com.xiuye.orm.ReadingHistory;
 
-public class ReadingHistoryBook {
+public class ReadingHistoryBook implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8637423367306140157L;
 	private Book book;
 	private ReadingHistory readingHistory;
 	public Book getBook() {

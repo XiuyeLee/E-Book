@@ -1,9 +1,14 @@
 package com.xiuye.orm;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class OnlineUser {
+public class OnlineUser implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5877496431046420774L;
 	private String userid;
 	private String sessionid;
 	private Date deletedate;

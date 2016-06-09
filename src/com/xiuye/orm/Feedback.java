@@ -1,7 +1,13 @@
 package com.xiuye.orm;
 
-public class Feedback {
+import java.io.Serializable;
 
+public class Feedback implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7603404609100156576L;
 	private String userid;
 	private String content;
 	private String fbdate;

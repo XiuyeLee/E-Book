@@ -1,155 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
-	<display-name>E-Book</display-name>
-
-
-
-	<!-- 指定JSF映射资源时的默认后缀，默认为.jsf -->
-	<!-- <context-param> <param-name>javax.faces.DEFAULT_SUFFIX</param-name> 
-		<param-value>.jsf</param-value> </context-param> -->
-
-	<!-- 指定JSF所管理的生命周期实例的标识符 -->
-	<!-- <context-param> <description> 当在这个应用中处理JSF请求时， 所使用的生命周期实例的标识符. 默认的生命周期模型（没看懂） 
-		</description> <param-name>javax.faces.LIFECYCLE_ID</param-name> <param-value></param-value> 
-		</context-param> -->
-
-	<!-- 指定JSF配置文件的保存位置 -->
-	<!-- <context-param> <param-name>javax.faces.CONFIG_FILES</param-name> <param-value>/WEB-INF/faces-config-beans.xml,/WEB-INF/faces-config-nav.xml</param-value> 
-		</context-param> -->
-
-	<!-- 指定是否需要验证自定义组件 -->
-	<!-- <context-param> <description> Set this flag to true if you want the 
-		JSF Reference Implementation to verify that all of the application objects 
-		you have configured (components, converters, renderers, and validators) can 
-		be successfully created. Default value is false. </description> <param-name>javax.faces.verifyObjects</param-name> 
-		<param-value>true</param-value> </context-param> -->
-
-	<!-- 指定是否需要验证XML文件 -->
-	<!-- <context-param> <description> Set this flag to true if you want the 
-		JavaServer Faces Reference Implementation to validate the XML in your faces-config.xml 
-		resources against the DTD. Default value is false. </description> <param-name>javax.faces.validateXml</param-name> 
-		<param-value>true</param-value> </context-param> -->
-
-	<!-- 当设置在服务器端保存状态时，控制session保存的视图数量，-1表示没有限制 -->
-	<!-- <context-param> <param-name>javax.faces.NUMBER_OF_VIEWS_IN_SESSION</param-name> 
-		<param-value>-1</param-value> </context-param> -->
-
-	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>swanky-purse</param-value> 
-		</context-param> -->
-	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>bluesky</param-value> 
-		</context-param> -->
-	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param>
-
-	<!-- 默认主题 -->
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>swanky-purse</param-value>
-	</context-param>
-	<!-- 保存状态在客户区 -->
-	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
-	</context-param>
-	<welcome-file-list>
-
-		<welcome-file>index.jsf</welcome-file>
-		<!-- 最好设置一个请求网页文件后缀格式 否则返回WEB-INF/pages/manager.jsf 将报错，你知道了吗？找不到视图 因为jsf默认的视图是xhtml， 
-			所以主页是什么格式，跳转就是什么格式才能成功 或者修改默认jsf页面后缀 也行吧 进过验证 默认后缀，是不是与多个mapping有冲突 -->
-		<!-- <welcome-file>faces/index.xhtml</welcome-file> <welcome-file>index.face</welcome-file> 
-			<welcome-file>index.xhtml</welcome-file> -->
-
-	</welcome-file-list>
-	<!-- 必须写以下监听器，否则报错 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	
-
-	<!-- 准备监听器实现单点登录 -->
-
-	<!-- 配置jsf入口 -->
-	<servlet>
-		<servlet-name>facesServelet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<!-- jsf地址映射（处理相关以相关后缀结尾的请求） -->
-	<servlet-mapping>
-		<servlet-name>facesServelet</servlet-name>
-		<url-pattern>*.jsf</url-pattern>
-	</servlet-mapping>
-	<!-- jsf地址映射 -->
-	<servlet-mapping>
-		<servlet-name>facesServelet</servlet-name>
-		<url-pattern>*.face</url-pattern>
-	</servlet-mapping>
-	<!-- jsf地址映射 -->
-	<servlet-mapping>
-		<servlet-name>facesServelet</servlet-name>
-		<url-pattern>/faces/*</url-pattern>
-	</servlet-mapping>
-	<!-- jsf地址映射 -->
-	<servlet-mapping>
-		<servlet-name>facesServelet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
-
-
-	<!-- 以下代码可以注释掉，因为spring入口不会干扰jsf入口 -->
-	<servlet>
-		<servlet-name>springDispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/applicationContext.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>springDispatcher</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-
-	<listener>
-		<listener-class>com.xiuye.listener.OpenSourceSessionListener</listener-class>
-	</listener>
-	
-	<filter>
-		<filter-name>characterEncodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>characterEncodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
-	
-
-	<session-config>
-		<session-timeout>5</session-timeout>
-	</session-config>
-
-	<!-- 禁止访问某些资源 auth-constraint 默认禁止该路径下所有资源的访问-->
-	<!-- <security-constraint>
-		<display-name></display-name>
-		<web-resource-collection>
-			<web-resource-name>pages</web-resource-name>
-			<url-pattern>/resources/pages/*</url-pattern>
-		</web-resource-collection>
-		
-		<auth-constraint></auth-constraint>
-	</security-constraint> -->
-
-	
-
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>E-Book</display-name>
+  <context-param>
+    <param-name>primefaces.FONT_AWESOME</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <mime-mapping>
+    <extension>woff2</extension>
+    <mime-type>application/x-front-woff</mime-type>
+  </mime-mapping>
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>swanky-purse</param-value>
+  </context-param>
+ 
+  <welcome-file-list>
+    <welcome-file>index.jsf</welcome-file>
+  </welcome-file-list>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>facesServelet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>facesServelet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>facesServelet</servlet-name>
+    <url-pattern>*.face</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>facesServelet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>facesServelet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>springDispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springDispatcher</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <listener>
+    <listener-class>com.xiuye.listener.OpenSourceSessionListener</listener-class>
+  </listener>
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <session-config>
+    <session-timeout>5</session-timeout>
+  </session-config>
+  <context-param>
+    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+    <param-value>resources.application</param-value>
+  </context-param>
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
 </web-app>

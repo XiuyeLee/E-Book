@@ -1,10 +1,15 @@
 package com.xiuye.orm;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ReadingHistory {
+public class ReadingHistory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7464977027087742447L;
 	private String userid;
 	private String bookid;
 	private Date readingdate;

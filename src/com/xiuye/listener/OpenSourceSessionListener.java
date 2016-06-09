@@ -13,6 +13,7 @@ public class OpenSourceSessionListener implements HttpSessionListener {
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
 
+		//Logger.CLOSEINFO = true;
 		se.getSession().setAttribute("theme", AllThemes.DEFAULT_THEME);
 		
 		log.info("SESSIONID:" + se.getSession().getId() + " session created!");

@@ -112,7 +112,7 @@
 						disabled="#{registerView.checkAgreeProtocol()}"
 						action="#{registerView.register}" value="确认注册"
 						icon="ui-icon-check"></p:commandButton>
-					<p:commandButton value="清空" update="p1" process="@this">
+					<p:commandButton value="清空" actionListener="#{registerView.clear}" update="p1" process="@this">
 						<p:resetInput target="p1"></p:resetInput>
 					</p:commandButton>
 					<p:commandButton value="取消" process="@this" action="/index"></p:commandButton>

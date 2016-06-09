@@ -1,12 +1,12 @@
 package com.xiuye.views;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -20,7 +20,12 @@ import com.xiuye.service.UserFavoriteBookService;
 
 @ManagedBean
 @SessionScoped
-public class UserinfoView {
+public class UserinfoView implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5659432281968130360L;
 
 	private static Logger log = Logger.getLogger(UserinfoView.class);
 

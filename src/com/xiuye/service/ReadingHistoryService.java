@@ -1,5 +1,6 @@
 package com.xiuye.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,12 @@ import com.xiuye.orm.ReadingHistory;
 import com.xiuye.orm.User;
 
 @Service
-public class ReadingHistoryService {
+public class ReadingHistoryService implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5349990569168253452L;
 
 	private static Logger log = Logger.getLogger(ReadingHistoryService.class);
 	

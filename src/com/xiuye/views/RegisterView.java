@@ -1,27 +1,34 @@
 package com.xiuye.views;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 import com.xiuye.logger.Logger;
 import com.xiuye.orm.User;
 import com.xiuye.service.UserService;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class RegisterView {
 
 	@ManagedProperty("#{userService}")
 	private UserService userService;
 
-	@ManagedProperty("#{user}")
+	
 	private User user;
 
+	@PostConstruct
+	public void init(){
+		user = new User();
+	}
 	private static Logger log = Logger.getLogger(RegisterView.class);
 
+	
+	
 	public User getUser() {
 		return user;
 	}
@@ -70,13 +77,17 @@ public class RegisterView {
 		int effectRows = userService.insertUser(user);
 		if (effectRows >= 1) {
 			log.info("成功注册用户:" + user);
-			//user = new User();// 相当于清空user
+			user = new User();// 相当于清空user
 			return "login";
 		} else {
-			//user = new User();// 相当于清空user
+			user = new User();// 相当于清空user
 			return null;
 		}
 
+	}
+	
+	public void clear(){
+		user = new User();
 	}
 
 }

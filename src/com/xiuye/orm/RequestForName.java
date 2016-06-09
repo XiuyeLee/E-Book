@@ -1,9 +1,14 @@
 package com.xiuye.orm;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RequestForName {
+public class RequestForName implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1748916513629958694L;
 	private String userid;
 	private String content;
 	private boolean isdeal;
