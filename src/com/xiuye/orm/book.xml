@@ -6,6 +6,11 @@
 
 <mapper namespace="com.xiuye.dao.BookDao">
 
+	<select id="findBookPathByBookid" parameterType="string" resultType="string">
+		select path from book where bookid=#{bookid}
+	</select>
+	
+
 	<select id="findAll" resultType="com.xiuye.orm.Book">
 
 		select * from book
@@ -41,7 +46,9 @@
 		suffix=#{suffix},publishdate=#{publishdate},publishhouse=#{publishhouse},
 		readsum=#{readsum},category=#{category},author=#{author},cover=#{cover},
 		path=#{path}
-		where bookid = #{bookid};
+		where bookid = #{bookid}
 	</update>
+
+
 
 </mapper>

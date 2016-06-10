@@ -246,9 +246,9 @@
 
 
 		<p:contextMenu for="display" widgetVar="menu">
-			<p:menuitem value="阅读" icon="ui-icon-search"></p:menuitem>
-			<p:menuitem value="下载" icon="ui-icon-arrowthick-1-s" />
-			<p:menuitem value="首页" url="/" icon="ui-icon-extlink" />
+			<p:menuitem value="阅读" icon="fa fa-fw fa-book"></p:menuitem>
+			<p:menuitem value="下载" icon="fa fa-fw fa-download" />
+			<p:menuitem value="首页" url="/" icon="fa fa-fw fa-home" />
 		</p:contextMenu>
 
 		<p:panel id="display">
@@ -269,16 +269,16 @@
 					<h:panelGrid width="100%" id="bookShow" columns="1">
 						<p:outputLabel value="#{row}" />
 						<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-						<p:link target="_blank" href="https://www.baidu.com"
+						<p:link target="_blank" href="readBook.do?bookid=#{book.bookid}"
 							value="#{book.bookname}">
 						</p:link>
 					</h:panelGrid>
 
 					<h:panelGrid width="100%" columns="3">
-						<p:commandButton icon="fa fa-fw fa-book" value="阅读"></p:commandButton>
-						<p:commandButton icon="fa fa-fw fa-download" value="下载">
+						<p:commandButton icon="fa fa-fw fa-book" onclick="window.open('readBook.do?bookid=#{book.bookid}')" value="阅读"></p:commandButton>
+						<p:commandButton disabled="${sessionScope.user==null?true:false}" actionListener="#{fileView.downloadBook(book.bookid)}" icon="fa fa-fw fa-download" value="下载">
 						</p:commandButton>
-						<p:commandButton icon="fa fa-fw fa-star" value="收藏"></p:commandButton>
+						<p:commandButton disabled="${sessionScope.user==null?true:false}" actionListener="#{fileView.addFavoriteBook(book.bookid)}" icon="fa fa-fw fa-star" value="收藏"></p:commandButton>
 					</h:panelGrid>
 
 					<p:tooltip for="bookShow" trackMouse="true">

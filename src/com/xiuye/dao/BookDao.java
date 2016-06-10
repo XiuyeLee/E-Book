@@ -17,4 +17,6 @@ public interface BookDao {
 	int deleteBookByBookid(String bookid);
 
 	int updateBookByBookid(Book book);
+	
+	String findBookPathByBookid(String bookid);
 }

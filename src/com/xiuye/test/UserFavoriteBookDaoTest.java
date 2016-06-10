@@ -11,7 +11,7 @@ public class UserFavoriteBookDaoTest {
 //		int i = dao.deleteUserFavoriteBookByUseridAndBookid("12101010423", "1001");
 //		System.out.println(i);
 		System.out.println(dao.findUserFavoriteBooksByUserid("12101010423").get(0).getReadtimes());
-		
+		System.out.println(dao.findUserFavoriteBookByUseridAndBookid("12101010423", "1001"));
 	}
 
 }

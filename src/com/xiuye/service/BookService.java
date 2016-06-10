@@ -62,4 +62,21 @@ public class BookService implements Serializable {
 		
 	}
 	
+	public String getBookPath(String bookid){
+		
+		if(bookid == null || bookid.isEmpty()){
+			return "";
+		}
+		
+		return this.bookDao.findBookPathByBookid(bookid);
+		
+	}
+	
+	public Book getBookByBookid(String bookid){
+		
+		
+		
+		return this.bookDao.findBookByBookid(bookid);
+		
+	}
 }

@@ -1,5 +1,6 @@
 package com.xiuye.views;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class IndexView {
 
 	@ManagedProperty("#{bookService}")
 	private BookService bookService;
-	
+
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
 	}
@@ -42,28 +43,21 @@ public class IndexView {
 	private List<Book> books;
 
 	private List<Book> searchedBooks;
-	
+
 	@PostConstruct
 	public void init() {
 
-		
 		books = this.bookService.getAllBooks();
 
 	}
 
-	
-	
 	public List<Book> getSearchedBooks() {
 		return searchedBooks;
 	}
 
-
-
 	public void setSearchedBooks(List<Book> searchedBooks) {
 		this.searchedBooks = searchedBooks;
 	}
-
-
 
 	public List<Book> getBooks() {
 		return books;
@@ -190,5 +184,7 @@ public class IndexView {
 	public void getValue(String value) {
 		log.info("得到值:" + value);
 	}
+
+	
 
 }

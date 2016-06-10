@@ -147,7 +147,7 @@
 						<h:panelGrid width="100%" id="favriteBook" columns="1">
 							<p:outputLabel value="#{row}" />
 							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-							<p:link target="_blank" href="https://www.baidu.com"
+							<p:link target="_blank" href="readBook.do?bookid=#{fBook.book.bookid}"
 								value="#{fBook.book.bookname}">
 							</p:link>
 						</h:panelGrid>
@@ -155,7 +155,7 @@
 							<p:commandButton update="@all"
 								actionListener="#{userinfoView.deleteFavoriteBook(fBook)}"
 								value="删除" icon="ui-icon-trash"></p:commandButton>
-							<p:commandButton value="下载" ajax="false"
+							<p:commandButton actionListener="#{fileView.downloadBook(fBook.book.bookid)}" value="下载" ajax="false"
 								icon="fa fa-fw fa-download">
 								<!-- <p:fileDownload value=""></p:fileDownload> -->
 							</p:commandButton>
