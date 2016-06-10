@@ -36,7 +36,7 @@
 
 
 			<p:layoutUnit position="north" resizable="true">
-				<h:panelGrid columns="4" width="100%">
+				<h:panelGrid columns="2" width="100%">
 					<p:outputLabel value="欢迎您，尊敬的用户:"></p:outputLabel>
 					<h:panelGrid columns="3" cellspacing="10" style="float:right">
 						<p:link value="首页" href="/"></p:link>
@@ -133,7 +133,7 @@
 
 				<p:dataGrid rowIndexVar="row"
 					rendered="#{!userinfoView.historyOrFavorite}" var="fBook"
-					value="#{userinfoView.favoriteBooks}" columns="5" rows="20"
+					value="#{userinfoView.favoriteBooks}"  rows="20"
 					paginator="true" layout="grid" paginatorPosition="bottom"
 					emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -144,14 +144,14 @@
 
 					<p:panel closable="true" header="#{fBook.book.bookid}"
 						style="text-align:center;">
-						<h:panelGrid id="favriteBook" columns="1">
+						<h:panelGrid width="100%" id="favriteBook" columns="1">
 							<p:outputLabel value="#{row}" />
 							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 							<p:link target="_blank" href="https://www.baidu.com"
 								value="#{fBook.book.bookname}">
 							</p:link>
 						</h:panelGrid>
-						<h:panelGrid columns="2">
+						<h:panelGrid width="100%" columns="2">
 							<p:commandButton update="@all"
 								actionListener="#{userinfoView.deleteFavoriteBook(fBook)}"
 								value="删除" icon="ui-icon-trash"></p:commandButton>
@@ -197,7 +197,7 @@
 
 				<p:dataGrid rowIndexVar="row"
 					rendered="#{userinfoView.historyOrFavorite}" var="rhBook"
-					value="#{userinfoView.readHistoryBooks}" columns="5" rows="20"
+					value="#{userinfoView.readHistoryBooks}"  rows="20"
 					paginator="true" layout="grid" paginatorPosition="bottom"
 					emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -207,7 +207,7 @@
 					</f:facet>
 					<p:panel closable="true" id="historyBook"
 						header="#{rhBook.book.bookid}" style="text-align:center;">
-						<h:panelGrid columns="1">
+						<h:panelGrid width="100%" columns="1">
 							<p:outputLabel value="#{row}"></p:outputLabel>
 							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 							<p:link target="_blank" href="https://www.baidu.com"

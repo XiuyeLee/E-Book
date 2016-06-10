@@ -1,6 +1,9 @@
 package com.xiuye.views;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -9,28 +12,67 @@ import javax.servlet.http.HttpSession;
 
 import com.xiuye.bean.AllThemes;
 import com.xiuye.logger.Logger;
+import com.xiuye.orm.Book;
 import com.xiuye.orm.User;
+import com.xiuye.service.BookService;
 import com.xiuye.service.OnlineUserService;
 import com.xiuye.service.UserService;
 
-
-
-@ManagedBean(name="indexView")
+@ManagedBean(name = "indexView")
 @RequestScoped
-public class IndexView{
-	
+public class IndexView {
+
 	private User user;
-	
-	private String category="所有书籍";
-	
+
+	private String category = "所有书籍";
+
 	@ManagedProperty("#{onlineUserService}")
 	private OnlineUserService onlineUserService;
-	
+
 	@ManagedProperty("#{userService}")
 	private UserService userService;
 
+	@ManagedProperty("#{bookService}")
+	private BookService bookService;
+	
+	public void setBookService(BookService bookService) {
+		this.bookService = bookService;
+	}
+
+	private List<Book> books;
+
+	private List<Book> searchedBooks;
+	
+	@PostConstruct
+	public void init() {
+
+		
+		books = this.bookService.getAllBooks();
+
+	}
+
 	
 	
+	public List<Book> getSearchedBooks() {
+		return searchedBooks;
+	}
+
+
+
+	public void setSearchedBooks(List<Book> searchedBooks) {
+		this.searchedBooks = searchedBooks;
+	}
+
+
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+
 	public String getCategory() {
 		return category;
 	}
@@ -48,55 +90,55 @@ public class IndexView{
 	}
 
 	public User getUser() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		if(session == null){
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		if (session == null) {
 			return null;
 		}
 		user = (User) session.getAttribute("user");
 		/**
-		 * JSF的机制可能会保证user序列化到磁盘
-		 * indexView 也许能持久化
-		 * 如果其user还在，就保存到session中因为重启服务器可能会丢失
-		 * 内容，下面机制保证再次取到，再保存在session中
+		 * JSF的机制可能会保证user序列化到磁盘 indexView 也许能持久化
+		 * 如果其user还在，就保存到session中因为重启服务器可能会丢失 内容，下面机制保证再次取到，再保存在session中
 		 */
-		if(user != null){
-			log.info("当前会话中的用户还在线:"+user);
-			//session.setAttribute("user", user);
+		if (user != null) {
+			log.info("当前会话中的用户还在线:" + user);
+			// session.setAttribute("user", user);
 			return user;
 		}
-		
-		
-		log.info("当前的会话的sessionid:" + session.getId() +" 其长度:" + session.getId().length());
-		if(user == null){			
-			String userid = onlineUserService.getOnlineUseridBySession(session);			
+
+		log.info("当前的会话的sessionid:" + session.getId() + " 其长度:"
+				+ session.getId().length());
+		if (user == null) {
+			String userid = onlineUserService.getOnlineUseridBySession(session);
 			user = userService.getUserByUserid(userid);
-			log.info("重新取出在线用户:"+user);			
+			log.info("重新取出在线用户:" + user);
 		}
 		/**
-		 * 经过再次确认把数据库在线user保存在session中供页面
-		 * 调用
+		 * 经过再次确认把数据库在线user保存在session中供页面 调用
 		 */
-		if(user != null){
+		if (user != null) {
 			session.setAttribute("user", user);
 		}
-		log.info("当前浏览器有没有用户在线:"+(user==null?"否":"用户id:"+ user.getUserid() +" 用户名:"+user.getUsername() + " 在线"));
+		log.info("当前浏览器有没有用户在线:"
+				+ (user == null ? "否" : "用户id:" + user.getUserid() + " 用户名:"
+						+ user.getUsername() + " 在线"));
 		return user;
 	}
 
-	public String exit(){
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+	public String exit() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
 		User user = (User) session.getAttribute("user");
-		//删除数据库中的在线用户
+		// 删除数据库中的在线用户
 		int effectRows = this.onlineUserService.cancelOnlineUserByUserid(user);
-		log.info(effectRows>=1?"在线用户退出"+user:"没有用户退出");		
+		log.info(effectRows >= 1 ? "在线用户退出" + user : "没有用户退出");
 		user = null;
-		session.setAttribute("user", user);	
-		
+		session.setAttribute("user", user);
+
 		return "/index";
-		
-		
+
 	}
-	
+
 	public OnlineUserService getOnlineUserService() {
 		return onlineUserService;
 	}
@@ -110,43 +152,43 @@ public class IndexView{
 	}
 
 	private static Logger log = Logger.getLogger(IndexView.class);
-	
-	
-	private  String currentTheme;
+
+	private String currentTheme;
 
 	public String getCurrentTheme() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		//保证主题一致 因为requestscope周期不太清楚
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		// 保证主题一致 因为requestscope周期不太清楚
 		currentTheme = (String) session.getAttribute("theme");
-		
-		if(currentTheme == null){
-			this.currentTheme = AllThemes.DEFAULT_THEME;			
+
+		if (currentTheme == null) {
+			this.currentTheme = AllThemes.DEFAULT_THEME;
 		}
 		return currentTheme;
 	}
 
 	public void setCurrentTheme(String currentTheme) {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
 		this.currentTheme = currentTheme;
 		session.setAttribute("theme", this.currentTheme);
-		log.info("当前的主题:"+currentTheme);
-				
+		log.info("当前的主题:" + currentTheme);
+
 	}
 
-		
-	public String personInfo(){
-		
+	public String personInfo() {
+
 		return "/pages/userinfo";
-		
+
 	}
-	
-	public String managerInfo(){
+
+	public String managerInfo() {
 		ManagerView.tabTitle = "图书管理";
 		return "/pages/manager";
 	}
 
-	public void getValue(String value){
-		log.info("得到值:"+value);
+	public void getValue(String value) {
+		log.info("得到值:" + value);
 	}
-	
+
 }

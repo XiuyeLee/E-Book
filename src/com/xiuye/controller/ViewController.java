@@ -1,6 +1,7 @@
 package com.xiuye.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,29 @@ public class ViewController {
 		log.info(effectRows >= 1 ? "在线用户退出" + user : "没有用户退出");
 		user = null;
 		session.setAttribute("user", user);
+	}
+	
+	
+	@RequestMapping("/readBook.do")
+	@ResponseBody
+	public byte[] readBook(String bookid,HttpServletResponse res){
+		
+		log.info(bookid);
+		return "xiuye你好啊".getBytes();
+	}
+	
+	@RequestMapping("/downloadBook.do")
+	@ResponseBody
+	public void downloadBook(String userid){
+		
+		
+		
+	}
+	
+	@RequestMapping("/storeBook.do")
+	@ResponseBody
+	public void storeBook(String bookid){
+		
 	}
 
 }

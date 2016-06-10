@@ -254,49 +254,51 @@
 		<p:panel id="display">
 
 
-			<p:dataGrid rowIndexVar="row" columns="9" paginator="true"
-				layout="grid" paginatorPosition="bottom" emptyMessage="本站暂时还没有图书"
+			<p:dataGrid var="book" value="#{indexView.books}" rowIndexVar="row"
+				 paginator="true" paginatorPosition="top" layout="grid"
+				emptyMessage="本站暂时还没有图书"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="10,20,30" rows="10">
+				rowsPerPageTemplate="10,20,30,40,50,60,70,80,90,100" rows="20">
 
 				<f:facet name="header">
 					#{indexView.category}
 				</f:facet>
-				<p:panel header="书籍名" style="text-align:center">
-					<h:panelGrid id="bookShow" columns="1">
+
+				<p:panel header="#{book.bookname}" style="text-align:center">
+
+					<h:panelGrid width="100%" id="bookShow" columns="1">
 						<p:outputLabel value="#{row}" />
 						<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-						<p:link target="_blank" href="https://www.baidu.com" value="书籍名">
+						<p:link target="_blank" href="https://www.baidu.com"
+							value="#{book.bookname}">
 						</p:link>
-
 					</h:panelGrid>
 
-					<h:panelGrid columns="3">
-						<p:commandButton value="阅读"></p:commandButton>
-						<p:commandButton value="下载"></p:commandButton>
-						<p:commandButton value="收藏"></p:commandButton>
+					<h:panelGrid width="100%" columns="3">
+						<p:commandButton icon="fa fa-fw fa-book" value="阅读"></p:commandButton>
+						<p:commandButton icon="fa fa-fw fa-download" value="下载">
+						</p:commandButton>
+						<p:commandButton icon="fa fa-fw fa-star" value="收藏"></p:commandButton>
 					</h:panelGrid>
 
 					<p:tooltip for="bookShow" trackMouse="true">
 						<h:panelGrid columns="2">
 							<p:outputLabel value="书籍ID:"></p:outputLabel>
-							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="#{book.bookid}"></p:outputLabel>
 							<p:outputLabel value="书籍名:"></p:outputLabel>
-							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="#{book.bookname}"></p:outputLabel>
 							<p:outputLabel value="书籍分类为:"></p:outputLabel>
-							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="#{book.category}"></p:outputLabel>
 							<p:outputLabel value="出版社:"></p:outputLabel>
-							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="#{book.publishhouse}"></p:outputLabel>
 							<p:outputLabel value="出版时间:"></p:outputLabel>
-							<p:outputLabel value="2016年10月10日">
+							<p:outputLabel value="#{book.publishdate}">
 								<f:convertDateTime pattern="yyyy年MM月dd日" />
 							</p:outputLabel>
 							<p:outputLabel value="书籍作者:"></p:outputLabel>
-							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="#{book.author}"></p:outputLabel>
 							<p:outputLabel value="阅读次数:"></p:outputLabel>
-							<p:outputLabel value="xxx"></p:outputLabel>
-							
-
+							<p:outputLabel value="#{book.readsum}"></p:outputLabel>
 						</h:panelGrid>
 					</p:tooltip>
 
