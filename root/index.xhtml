@@ -244,18 +244,37 @@
 		</p:menubar>
 
 
-
-		<p:contextMenu for="display" widgetVar="menu">
-			<p:menuitem value="阅读" icon="fa fa-fw fa-book"></p:menuitem>
-			<p:menuitem value="下载" icon="fa fa-fw fa-download" />
+		<p:contextMenu widgetVar="menu">
 			<p:menuitem value="首页" url="/" icon="fa fa-fw fa-home" />
+			<p:menuitem value="个人主页" action="/pages/userinfo"
+				rendered="${sessionScope.user!=null?true:false}"
+				icon="fa fa-fw fa-user"></p:menuitem>
+			<p:menuitem value="管理系统" action="/pages/manager"
+				rendered="${sessionScope.user!=null and sessionScope.user.isAdmin?true:false}"
+				icon="fa fa-fw fa-gears" />
+			<p:menuitem value="退出" update="@all" action="#{indexView.exit}"
+				rendered="${sessionScope.user!=null?true:false}"
+				icon="fa fa-power-off"></p:menuitem>
+			<p:menuitem rendered="${sessionScope.user!=null?false:true}"
+				value="登录" icon="fa fa-arrow-circle-right"
+				action="/pages/login"
+				>
+
+			</p:menuitem>
+
+			<p:menuitem
+				action="/pages/register"
+				 rendered="${sessionScope.user!=null?false:true}"
+				icon="fa fa-arrow-circle-o-right" value="注册"></p:menuitem>
+
 		</p:contextMenu>
+
 
 		<p:panel id="display">
 
 
 			<p:dataGrid var="book" value="#{indexView.books}" rowIndexVar="row"
-				 paginator="true" paginatorPosition="top" layout="grid"
+				paginator="true" paginatorPosition="top" layout="grid"
 				emptyMessage="本站暂时还没有图书"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,30,40,50,60,70,80,90,100" rows="20">
@@ -275,10 +294,16 @@
 					</h:panelGrid>
 
 					<h:panelGrid width="100%" columns="3">
-						<p:commandButton icon="fa fa-fw fa-book" onclick="window.open('readBook.do?bookid=#{book.bookid}')" value="阅读"></p:commandButton>
-						<p:commandButton disabled="${sessionScope.user==null?true:false}" actionListener="#{fileView.downloadBook(book.bookid)}" icon="fa fa-fw fa-download" value="下载">
+						<p:commandButton icon="fa fa-fw fa-book"
+							onclick="window.open('readBook.do?bookid=#{book.bookid}')"
+							value="阅读"></p:commandButton>
+						<p:commandButton disabled="${sessionScope.user==null?true:false}"
+							actionListener="#{fileView.downloadBook(book.bookid)}"
+							icon="fa fa-fw fa-download" value="下载">
 						</p:commandButton>
-						<p:commandButton disabled="${sessionScope.user==null?true:false}" actionListener="#{fileView.addFavoriteBook(book.bookid)}" icon="fa fa-fw fa-star" value="收藏"></p:commandButton>
+						<p:commandButton disabled="${sessionScope.user==null?true:false}"
+							actionListener="#{fileView.addFavoriteBook(book.bookid)}"
+							icon="fa fa-fw fa-star" value="收藏"></p:commandButton>
 					</h:panelGrid>
 
 					<p:tooltip for="bookShow" trackMouse="true">
@@ -300,6 +325,7 @@
 							<p:outputLabel value="阅读次数:"></p:outputLabel>
 							<p:outputLabel value="#{book.readsum}"></p:outputLabel>
 						</h:panelGrid>
+
 					</p:tooltip>
 
 				</p:panel>
@@ -325,8 +351,8 @@
 			<p:menuitem style="color:black;" value="android客户端下载"
 				icon="icon/android.png"></p:menuitem>
 			<p:menuitem style="color:black;" value="反馈"
-				url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
-			<p:menuitem style="color:black;" url="help.jsf" target="_blank"
+				outcome="/pages/feedback" target="_blank" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" outcome="/help" target="_blank"
 				value="帮助" icon="icon/notice.png"></p:menuitem>
 
 		</p:dock>
