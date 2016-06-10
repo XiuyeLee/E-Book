@@ -17,7 +17,7 @@
 		select * from book where bookname = #{bookname}
 
 	</select>
-	
+
 	<insert id="insertBook" parameterType="com.xiuye.orm.Book">
 
 		insert into
@@ -25,10 +25,23 @@
 		values(#{bookid},#{bookname},#{summary},#{suffix},#{publishdate},#{publishhouse},#{readsum},#{category},#{author},#{cover},#{path})
 
 	</insert>
-	
+
 	<select id="findBookByBookid" parameterType="string" resultType="com.xiuye.orm.Book">
 		select * from book where bookid = #{bookid}
 	</select>
-	
+
+	<delete id="deleteBookByBookid" parameterType="string">
+		delete from book
+		where bookid = #{bookid}
+	</delete>
+
+	<update id="updateBookByBookid" parameterType="com.xiuye.orm.Book">
+		update book set
+		bookname=#{bookname},summary=#{summary},
+		suffix=#{suffix},publishdate=#{publishdate},publishhouse=#{publishhouse},
+		readsum=#{readsum},category=#{category},author=#{author},cover=#{cover},
+		path=#{path}
+		where bookid = #{bookid};
+	</update>
 
 </mapper>

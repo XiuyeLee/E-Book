@@ -9,10 +9,19 @@
 	<title>管理</title>
 	<h:outputScript library="js" name="current_theme.js">
 	</h:outputScript>
+	<h:outputStylesheet>
+		
+		.textInCenter{
+			vertical-align:top;
+			text-align:center;
+			margin:auto;
+		}
+		
+	</h:outputStylesheet>
 </h:head>
 <h:body>
 	<p:growl autoUpdate="true"></p:growl>
-	<h:form>
+	<h:form prependId="false">
 		<p:layout fullPage="true">
 			<p:layoutUnit position="north">
 				<h:panelGrid columns="3" width="100%">
@@ -25,9 +34,11 @@
 						<p:outputLabel value="${sessionScope.user.email}"></p:outputLabel>
 					</h:panelGrid>
 					<h:panelGrid columns="3">
-						<p:commandButton action="/index" value="首页"></p:commandButton>
-						<p:commandButton action="/pages/userinfo" value="个人主页"></p:commandButton>
-						<p:commandButton value="退出"></p:commandButton>
+						<p:commandButton action="/index" process="@this" value="首页"></p:commandButton>
+						<p:commandButton process="@this" action="/pages/userinfo"
+							value="个人主页"></p:commandButton>
+						<p:commandButton process="@this" action="#{indexView.exit}"
+							value="退出"></p:commandButton>
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel value="电话号码:"></p:outputLabel>
@@ -37,35 +48,336 @@
 						<p:outputLabel value="QQ:"></p:outputLabel>
 						<p:outputLabel value="${sessionScope.user.qq}"></p:outputLabel>
 					</h:panelGrid>
-					<h:panelGrid columns="2" cellspacing="10" >
-						
-						<p:autoComplete placeholder="搜索" ></p:autoComplete>
-						<p:commandButton value="搜索" icon="ui-icon-search"></p:commandButton>
+					<h:panelGrid columns="2" cellspacing="10">
+
+						<p:autoComplete placeholder="搜索"></p:autoComplete>
+						<p:commandButton process="@this" value="搜索" icon="ui-icon-search"></p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:layoutUnit>
 			<p:layoutUnit position="center">
 
-				<p:tabView scrollable="true">
+				<p:tabView prependId="false" activeIndex="1" scrollable="true">
 					<p:tab title="用户信息">
-						
+
+						<p:dataTable resizeMode="expand" draggableColumns="true"
+							draggableRows="true" resizableColumns="true" rowIndexVar="index"
+							liveResize="true" paginatorPosition="bottom" rows="10"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" paginator="true" id="users"
+							editable="true" editMode="cell" var="user"
+							value="#{managerView.users}" emptyMessage="现在还没有用户">
+							<f:facet name="header">
+								所有用户
+								<p:commandButton id="toggler" type="button"
+									icon="ui-icon-calculator"></p:commandButton>
+								<p:columnToggler trigger="toggler" datasource="users"></p:columnToggler>
+							</f:facet>
+							<p:column width="15" headerText="序号">
+								<h:outputText value="#{index}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户ID">
+								<h:outputText value="#{user.userid}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户名">
+								<h:outputText value="#{user.username}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户密码">
+								<h:outputText value="#{user.password}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户性别">
+								<h:outputText value="#{user.sex}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户生日">
+								<h:outputText value="#{user.birthday}">
+									<f:convertDateTime pattern="yyyy年MM月dd日" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="用户邮箱">
+								<h:outputText value="#{user.email}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户QQ">
+								<h:outputText value="#{user.qq}"></h:outputText>
+							</p:column>
+							<p:column headerText="用户手机">
+								<h:outputText value="#{user.phone}"></h:outputText>
+							</p:column>
+							<p:column headerText="是否是管理员">
+								<h:outputText value="#{user.isAdmin?'是':'否'}"></h:outputText>
+							</p:column>
+							<p:column headerText="编辑">
+								<p:commandButton
+									actionListener="#{managerView.openModifyUser(user)}"
+									oncomplete="PF('modifyUserDlg').show()" value="编辑"
+									update="modifyUserPanel" process="users"></p:commandButton>
+							</p:column>
+							<p:column headerText="删除">
+								<p:commandButton update="users" actionListener="#{managerView.deleteUser(user)}"
+									 value="删除"
+									process="users"></p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
 					</p:tab>
 					<p:tab title="图书管理">
-						
+						<p:menubar>
+							<f:facet name="options">
+								<p:commandButton process="@this" value="添加新书"
+									oncomplete="PF('addBookDlg').show()" update="bookAddPanel"></p:commandButton>
+							</f:facet>
+						</p:menubar>
+						<p:dataTable resizableColumns="true" resizeMode="expand"
+							draggableRows="true" paginatorPosition="bottom" rows="10"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" paginator="true" id="books"
+							editable="true" var="book" value="#{managerView.books}"
+							selection="true" emptyMessage="现在还没有书籍">
+							<f:facet name="header">
+								所有书籍
+							</f:facet>
+
+							<p:column headerText="书籍ID">
+								<h:outputText value="#{book.bookid}"></h:outputText>
+							</p:column>
+							<p:column headerText="书籍名">
+								<h:outputText value="#{book.bookname}"></h:outputText>
+
+							</p:column>
+							<p:column headerText="文件后缀">
+								<h:outputText value="#{book.suffix}"></h:outputText>
+							</p:column>
+							<p:column headerText="作者">
+								<h:outputText value="#{book.author}"></h:outputText>
+
+							</p:column>
+							<p:column headerText="出版社">
+								<h:outputText value="#{book.publishhouse}"></h:outputText>
+
+							</p:column>
+							<p:column headerText="出版时间">
+								<h:outputText value="#{book.publishdate}">
+									<f:convertDateTime pattern="yyyy年MM月dd日" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="书籍分类">
+								<h:outputText value="#{book.category}"></h:outputText>
+							</p:column>
+							<p:column headerText="书籍阅读次数">
+								<h:outputText value="#{book.readsum}"></h:outputText>
+
+
+							</p:column>
+							<p:column headerText="封面路径">
+
+								<h:outputText value="#{book.cover}"></h:outputText>
+							</p:column>
+
+							<p:column headerText="书籍路径和简介">
+								<p:rowToggler collapseLabel="关闭" expandLabel="打开" />
+							</p:column>
+
+							<p:column headerText="编辑">
+								<p:commandButton process="books" update="bookEditPanel"
+									action="manager" oncomplete="PF('bookDlg').show()" value="编辑">
+									<f:setPropertyActionListener
+										target="#{managerView.selectedBook}" value="#{book}" />
+								</p:commandButton>
+
+							</p:column>
+							<p:column headerText="删除">
+								<p:commandButton value="删除" process="books"
+									actionListener="#{managerView.deleteBoook(book)}"
+									update="books">
+
+								</p:commandButton>
+							</p:column>
+
+							<p:rowExpansion>
+								<p:outputPanel>
+									<h:panelGrid columns="1">
+										<p:outputLabel value="书籍路径:#{book.path}"></p:outputLabel>
+										<h:outputText value="简介:#{book.summary}"></h:outputText>
+									</h:panelGrid>
+								</p:outputPanel>
+							</p:rowExpansion>
+
+						</p:dataTable>
+
 					</p:tab>
 					<p:tab title="用户反馈">
-						
+
 					</p:tab>
 					<p:tab title="用户申请">
-						
+
 					</p:tab>
 				</p:tabView>
-				
+
 			</p:layoutUnit>
 		</p:layout>
+		<p:layoutUnit position="south" resizable="true">
+			<h:panelGrid styleClass="textInCenter" columns="1">
+				<p:outputLabel value="Xiuye Company Copyright © 2016 ">
+				</p:outputLabel>
+				<p:outputLabel value="All rights reserved."></p:outputLabel>
+			</h:panelGrid>
 
+		</p:layoutUnit>
+
+
+		<p:dialog height="400" closeOnEscape="true" widgetVar="bookDlg"
+			showEffect="shake" hideEffect="explode" position="center"
+			resizable="true" header="修改书籍">
+
+			<p:outputPanel id="bookEditPanel" style="text-align:center">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="书籍ID:"></p:outputLabel>
+					<p:inputText size="100" disabled="true"
+						value="#{managerView.selectedBook.bookid}"></p:inputText>
+					<p:outputLabel value="书籍名:" for="bname"></p:outputLabel>
+					<p:inputText size="100" id="bname" requiredMessage="必须输入书籍名"
+						value="#{managerView.selectedBook.bookname}" required="true"></p:inputText>
+					<p:outputLabel for="suffix" value="文件后缀:"></p:outputLabel>
+					<p:inputText id="suffix" required="true" size="100"
+						requiredMessage="必须输入文件后缀"
+						value="#{managerView.selectedBook.suffix}"></p:inputText>
+					<p:outputLabel value="作者:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.selectedBook.author}"></p:inputText>
+					<p:outputLabel value="出版社:"></p:outputLabel>
+					<p:inputText size="100"
+						value="#{managerView.selectedBook.publishhouse}"></p:inputText>
+					<p:outputLabel value="出版时间:">
+					</p:outputLabel>
+					<p:inputMask size="100" mask="9999年99月99日"
+						value="#{managerView.selectedBook.publishdate}">
+						<f:convertDateTime pattern="yyyy年MM月dd日" />
+					</p:inputMask>
+
+					<p:outputLabel for="category" value="书籍分类:"></p:outputLabel>
+					<p:inputText id="category" size="100" required="true"
+						requiredMessage="必须输入书籍分类"
+						value="#{managerView.selectedBook.category}"></p:inputText>
+					<p:outputLabel value="书籍阅读次数:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.selectedBook.readsum}"></p:inputText>
+					<p:outputLabel value="封面路径:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.selectedBook.cover}"></p:inputText>
+					<p:outputLabel for="path" value="书籍路径:"></p:outputLabel>
+					<p:inputText id="path" size="100" required="true"
+						requiredMessage="必须输入书籍路径"
+						value="#{managerView.selectedBook.path}"></p:inputText>
+					<p:outputLabel value="简介:"></p:outputLabel>
+					<p:editor value="#{managerView.selectedBook.summary}"></p:editor>
+					<p:outputLabel value="操作:"></p:outputLabel>
+					<h:panelGrid columns="2" width="100%" cellpadding="30">
+						<p:commandButton process="bookEditPanel"
+							action="#{managerView.modify}" update="books"
+							oncomplete="PF('bookDlg').hide()" value="确定"></p:commandButton>
+						<p:commandButton process="@this"
+							action="#{managerView.cancelModify}" update="books"
+							oncomplete="PF('bookDlg').hide()" value="关闭"></p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:outputPanel>
+
+		</p:dialog>
+
+		<p:dialog height="400" closeOnEscape="true" widgetVar="addBookDlg"
+			showEffect="bounce" hideEffect="drop" position="center"
+			resizable="true" header="添加书籍">
+
+			<p:outputPanel id="bookAddPanel" style="text-align:center">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="书籍ID:"></p:outputLabel>
+					<p:inputText size="100" disabled="true"
+						value="#{managerView.addBook.bookid}"></p:inputText>
+					<p:outputLabel value="书籍名:" for="bname1"></p:outputLabel>
+					<p:inputText size="100" id="bname1" requiredMessage="必须输入书籍名"
+						value="#{managerView.addBook.bookname}" required="true"></p:inputText>
+					<p:outputLabel for="suffix1" value="文件后缀:"></p:outputLabel>
+					<p:inputText id="suffix1" required="true" size="100"
+						requiredMessage="必须输入文件后缀" value="#{managerView.addBook.suffix}"></p:inputText>
+					<p:outputLabel value="作者:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.addBook.author}"></p:inputText>
+					<p:outputLabel value="出版社:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.addBook.publishhouse}"></p:inputText>
+					<p:outputLabel value="出版时间:">
+					</p:outputLabel>
+					<p:inputMask size="100" mask="9999年99月99日"
+						value="#{managerView.addBook.publishdate}">
+						<f:convertDateTime pattern="yyyy年MM月dd日" />
+					</p:inputMask>
+
+					<p:outputLabel for="category1" value="书籍分类:"></p:outputLabel>
+					<p:inputText id="category1" size="100" required="true"
+						requiredMessage="必须输入书籍分类" value="#{managerView.addBook.category}"></p:inputText>
+					<p:outputLabel value="书籍阅读次数:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.addBook.readsum}"></p:inputText>
+					<p:outputLabel value="封面路径:"></p:outputLabel>
+					<p:inputText size="100" value="#{managerView.addBook.cover}"></p:inputText>
+					<p:outputLabel for="path2" value="书籍路径:"></p:outputLabel>
+					<p:inputText id="path2" size="100" required="true"
+						requiredMessage="必须输入书籍路径" value="#{managerView.addBook.path}"></p:inputText>
+					<p:outputLabel value="简介:"></p:outputLabel>
+					<p:editor value="#{managerView.addBook.summary}"></p:editor>
+					<p:outputLabel value="操作:"></p:outputLabel>
+					<h:panelGrid columns="2" width="100%" cellpadding="30">
+						<p:commandButton actionListener="#{managerView.addBook}"
+							update="books" process="bookAddPanel"
+							oncomplete="PF('addBookDlg').hide()" value="确定"></p:commandButton>
+						<p:commandButton process="@this" update="books"
+							oncomplete="PF('addBookDlg').hide()" value="取消"></p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:outputPanel>
+
+		</p:dialog>
+
+		<p:dialog height="400" closeOnEscape="true" widgetVar="modifyUserDlg"
+			showEffect="blind" hideEffect="clip" position="center"
+			resizable="true">
+			<p:outputPanel id="modifyUserPanel">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="用户ID:"></p:outputLabel>
+					<p:inputText value="#{managerView.selectedUser.userid}"
+						disabled="true"></p:inputText>
+					<p:outputLabel for="username" value="用户名:"></p:outputLabel>
+					<p:inputText id="username" required="true"
+						placeholder="汉字或者英语不超过20" maxlength="20"
+						validatorMessage="用户名:输入用户名必须包含字母且不包含空格特殊字符"
+						value="#{managerView.selectedUser.username}">
+						<f:validateRegex pattern="\w*[a-zA-Z]+\w*" />
+						</p:inputText>
+					<p:outputLabel value="用户密码:"></p:outputLabel>
+					<p:inputText disabled="true" value="#{managerView.selectedUser.password}"></p:inputText>
+					<p:outputLabel value="用户性别:"></p:outputLabel>
+					<p:inputText disabled="true" value="#{managerView.selectedUser.sex}"></p:inputText>
+					<p:outputLabel   value="用户生日:"></p:outputLabel>
+					<p:inputText disabled="true"  value="#{managerView.selectedUser.birthday}">
+						<f:convertDateTime pattern="yyyy年MM月dd日" />
+					</p:inputText>
+					<p:outputLabel value="用户邮箱:"></p:outputLabel>
+					<p:inputText disabled="true"  value="#{managerView.selectedUser.email}"></p:inputText>
+					<p:outputLabel value="用户qq:"></p:outputLabel>
+					<p:inputText disabled="true"  value="#{managerView.selectedUser.qq}"></p:inputText>
+					<p:outputLabel value="用户电话:"></p:outputLabel>
+					<p:inputText disabled="true" value="#{managerView.selectedUser.phone}"></p:inputText>
+					<p:outputLabel value="是否是管理员:"></p:outputLabel>
+					<p:selectBooleanButton disabled="#{managerView.on}" onLabel="是" offLabel="不是"
+						value="#{managerView.selectedUser.isAdmin}"></p:selectBooleanButton>
+					<p:outputLabel value="操作:"></p:outputLabel>
+					<h:panelGrid columns="2" width="100%" cellpadding="30">
+						<p:commandButton actionListener="#{managerView.modifyUser}"
+							update="users" process="modifyUserPanel"
+							oncomplete="PF('modifyUserDlg').hide()" value="确定"></p:commandButton>
+						<p:commandButton process="@this" update="users" 
+							oncomplete="PF('modifyUserDlg').hide()" value="取消"></p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
 
 	</h:form>
+
 
 
 </h:body>

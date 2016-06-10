@@ -6,8 +6,7 @@ import java.util.Date;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.NoneScoped;
 
-@ManagedBean
-@NoneScoped
+
 public class User implements Serializable{
 
 	/**

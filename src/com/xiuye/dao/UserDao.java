@@ -23,5 +23,9 @@ public interface UserDao {
 	User findUserByPhone(String phone);
 
 	User findUserByUsername(String username);
+	
+	int deleteUserByUserId(String userid);
+	
+	int updateUserByUserid(String userid);
 
 }

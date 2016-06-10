@@ -73,13 +73,14 @@ public class IndexView{
 
 	public String exit(){
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		User user = (User) session.getAttribute("user");
 		//删除数据库中的在线用户
 		int effectRows = this.onlineUserService.cancelOnlineUserByUserid(user);
 		log.info(effectRows>=1?"在线用户退出"+user:"没有用户退出");		
 		user = null;
 		session.setAttribute("user", user);	
 		
-		return "index";
+		return "/index";
 		
 		
 	}

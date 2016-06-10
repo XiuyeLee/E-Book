@@ -58,5 +58,13 @@
 
 	</select>
 
+	<delete id="deleteUserByUserId" parameterType="string">
+		delete from user where userid=#{userid}
+	</delete>
+	<update id="updateUserByUserid" parameterType="com.xiuye.orm.User">
+		update user set userid = #{userid},username=#{username},password=#{password},sex=#{sex},
+		birthday=#{birthday},email=#{email},qq=#{qq},phone=#{phone},isAdmin=#{isAdmin}
+		where  userid=#{userid}
+	</update >
 
 </mapper>

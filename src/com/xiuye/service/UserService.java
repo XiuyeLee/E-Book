@@ -102,4 +102,17 @@ public class UserService implements Serializable {
 
 	}
 
+	public int updateUser(User user) {
+		if (user == null) {
+			return 0;
+		}
+		return this.updateUser(user);
+	}
+	public int  deteleUser(User user){
+		if (user == null) {
+			return 0;
+		}
+		return this.userDao.deleteUserByUserId(user.getUserid());
+	}
+
 }
