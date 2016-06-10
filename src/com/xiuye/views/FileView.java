@@ -107,8 +107,6 @@ public class FileView {
 		}
 	}
 
-	public void readBook(){
-		log.info("读书了");
-	}
+	
 	
 }

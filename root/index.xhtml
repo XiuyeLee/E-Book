@@ -299,11 +299,11 @@
 							value="阅读"></p:commandButton>
 						<p:commandButton disabled="${sessionScope.user==null?true:false}"
 							actionListener="#{fileView.downloadBook(book.bookid)}"
-							icon="fa fa-fw fa-download" value="下载">
+							icon="fa fa-fw fa-download" title="${sessionScope.user==null?'您还未登录不能操作':''}" value="下载">
 						</p:commandButton>
 						<p:commandButton disabled="${sessionScope.user==null?true:false}"
 							actionListener="#{fileView.addFavoriteBook(book.bookid)}"
-							icon="fa fa-fw fa-star" value="收藏"></p:commandButton>
+							icon="fa fa-fw fa-star" title="${sessionScope.user==null?'您还未登录不能操作':''}" value="收藏"></p:commandButton>
 					</h:panelGrid>
 
 					<p:tooltip for="bookShow" trackMouse="true">
