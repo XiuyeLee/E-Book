@@ -21,11 +21,23 @@ public class IndexView{
 	
 	private User user;
 	
+	private String category="所有书籍";
+	
 	@ManagedProperty("#{onlineUserService}")
 	private OnlineUserService onlineUserService;
 	
 	@ManagedProperty("#{userService}")
 	private UserService userService;
+
+	
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public void setOnlineUserService(OnlineUserService onlineUserService) {
 		this.onlineUserService = onlineUserService;
@@ -129,7 +141,12 @@ public class IndexView{
 	}
 	
 	public String managerInfo(){
+		ManagerView.tabTitle = "图书管理";
 		return "/pages/manager";
 	}
 
+	public void getValue(String value){
+		log.info("得到值:"+value);
+	}
+	
 }

@@ -40,7 +40,7 @@
 					<p:outputLabel value="欢迎您，尊敬的用户:"></p:outputLabel>
 					<h:panelGrid columns="3" cellspacing="10" style="float:right">
 						<p:link value="首页" href="/"></p:link>
-						<p:commandLink action="/pages/manager" value="管理系统"
+						<p:commandLink action="#{userinfoView.managerInfo}" value="管理系统"
 							rendered="${sessionScope.user.isAdmin}"></p:commandLink>
 						<p:link class="loginOut" href="/" value="退出">
 						</p:link>

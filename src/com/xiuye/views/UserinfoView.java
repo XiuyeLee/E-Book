@@ -53,6 +53,15 @@ public class UserinfoView implements Serializable{
 		this.ufBookService = ufBookService;
 	}
 
+	
+	public String managerInfo(){
+		
+		ManagerView.tabTitle = "图书管理";
+		return "/pages/manager";
+				
+		
+	}
+	
 	public List<FavoriteBook> getFavoriteBooks() {
 
 		if (search) {

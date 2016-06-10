@@ -1,27 +1,28 @@
 package com.xiuye.orm;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Book implements Serializable{
+public class Book implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8140654691676267296L;
-	private String bookid;
-	private String bookname;
-	private String summary;
-	private String suffix;
+	private String bookid = "";
+	private String bookname = "";
+	private String summary = "";
+	private String suffix = "";
 	private Date publishdate;
-	private String publishhouse;
+	private String publishhouse = "";
 
 	private int readsum;
-	private String category;
-	private String author;
-	private String cover;
-	private String path;
+	private String category = "";
+	private String author = "";
+	private String cover = "";
+	private String path = "";
 
 	public String getBookid() {
 		return bookid;
@@ -56,6 +57,15 @@ public class Book implements Serializable{
 	}
 
 	public Date getPublishdate() {
+		if (this.publishdate == null) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				this.publishdate = format.parse("0000-00-00");
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
+		}
 		return publishdate;
 	}
 
@@ -201,10 +211,10 @@ public class Book implements Serializable{
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
 		String date = "";
-		if(publishdate != null)
+		if (publishdate != null)
 			date = format.format(publishdate);
-		return bookid + "。" + bookname + "。" + date + "。"
-				+ publishhouse + "。 " + readsum + "。" + category + "。" + author;
+		return bookid + "。" + bookname + "。" + date + "。" + publishhouse + "。 "
+				+ readsum + "。" + category + "。" + author;
 	}
 
 }

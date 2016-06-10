@@ -50,15 +50,23 @@
 					</h:panelGrid>
 					<h:panelGrid columns="2" cellspacing="10">
 
-						<p:autoComplete placeholder="搜索"></p:autoComplete>
-						<p:commandButton process="@this" value="搜索" icon="ui-icon-search"></p:commandButton>
+						<p:autoComplete maxResults="10" id="searchBox"
+							value="#{managerView.searchContent}" immediate="true"
+							queryDelay="0" completeMethod="#{managerView.search}"
+							placeholder="搜索">
+
+						</p:autoComplete>
+						<p:commandButton partialSubmit="true" process="@this,searchBox" update=":books,:users"
+							actionListener="#{managerView.executeQuery}" value="搜索"
+							icon="ui-icon-search"></p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:layoutUnit>
 			<p:layoutUnit position="center">
 
 				<p:tabView prependId="false" activeIndex="1" scrollable="true">
-					<p:tab title="用户信息">
+					<p:ajax event="tabChange" listener="#{managerView.onTabChange}"></p:ajax>
+					<p:tab id="userinfo" title="用户信息">
 
 						<p:dataTable resizeMode="expand" draggableColumns="true"
 							draggableRows="true" resizableColumns="true" rowIndexVar="index"
@@ -112,15 +120,15 @@
 									update="modifyUserPanel" process="users"></p:commandButton>
 							</p:column>
 							<p:column headerText="删除">
-								<p:commandButton update="users" actionListener="#{managerView.deleteUser(user)}"
-									 value="删除"
+								<p:commandButton update="users"
+									actionListener="#{managerView.deleteUser(user)}" value="删除"
 									process="users"></p:commandButton>
 							</p:column>
 
 						</p:dataTable>
 
 					</p:tab>
-					<p:tab title="图书管理">
+					<p:tab id="bookinfo" title="图书管理">
 						<p:menubar>
 							<f:facet name="options">
 								<p:commandButton process="@this" value="添加新书"
@@ -346,30 +354,35 @@
 						validatorMessage="用户名:输入用户名必须包含字母且不包含空格特殊字符"
 						value="#{managerView.selectedUser.username}">
 						<f:validateRegex pattern="\w*[a-zA-Z]+\w*" />
-						</p:inputText>
+					</p:inputText>
 					<p:outputLabel value="用户密码:"></p:outputLabel>
-					<p:inputText disabled="true" value="#{managerView.selectedUser.password}"></p:inputText>
+					<p:inputText disabled="true"
+						value="#{managerView.selectedUser.password}"></p:inputText>
 					<p:outputLabel value="用户性别:"></p:outputLabel>
-					<p:inputText disabled="true" value="#{managerView.selectedUser.sex}"></p:inputText>
-					<p:outputLabel   value="用户生日:"></p:outputLabel>
-					<p:inputText disabled="true"  value="#{managerView.selectedUser.birthday}">
+					<p:inputText disabled="true"
+						value="#{managerView.selectedUser.sex}"></p:inputText>
+					<p:outputLabel value="用户生日:"></p:outputLabel>
+					<p:inputText disabled="true"
+						value="#{managerView.selectedUser.birthday}">
 						<f:convertDateTime pattern="yyyy年MM月dd日" />
 					</p:inputText>
 					<p:outputLabel value="用户邮箱:"></p:outputLabel>
-					<p:inputText disabled="true"  value="#{managerView.selectedUser.email}"></p:inputText>
+					<p:inputText disabled="true"
+						value="#{managerView.selectedUser.email}"></p:inputText>
 					<p:outputLabel value="用户qq:"></p:outputLabel>
-					<p:inputText disabled="true"  value="#{managerView.selectedUser.qq}"></p:inputText>
+					<p:inputText disabled="true" value="#{managerView.selectedUser.qq}"></p:inputText>
 					<p:outputLabel value="用户电话:"></p:outputLabel>
-					<p:inputText disabled="true" value="#{managerView.selectedUser.phone}"></p:inputText>
+					<p:inputText disabled="true"
+						value="#{managerView.selectedUser.phone}"></p:inputText>
 					<p:outputLabel value="是否是管理员:"></p:outputLabel>
-					<p:selectBooleanButton disabled="#{managerView.on}" onLabel="是" offLabel="不是"
-						value="#{managerView.selectedUser.isAdmin}"></p:selectBooleanButton>
+					<p:selectBooleanButton disabled="#{managerView.on}" onLabel="是"
+						offLabel="不是" value="#{managerView.selectedUser.isAdmin}"></p:selectBooleanButton>
 					<p:outputLabel value="操作:"></p:outputLabel>
 					<h:panelGrid columns="2" width="100%" cellpadding="30">
 						<p:commandButton actionListener="#{managerView.modifyUser}"
 							update="users" process="modifyUserPanel"
 							oncomplete="PF('modifyUserDlg').hide()" value="确定"></p:commandButton>
-						<p:commandButton process="@this" update="users" 
+						<p:commandButton process="@this" update="users"
 							oncomplete="PF('modifyUserDlg').hide()" value="取消"></p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
