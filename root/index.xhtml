@@ -15,6 +15,10 @@
 <h:head>
 	<title>开源书店（Open Source Bookstore）</title>
 	<link href="icon/favicon.png" rel="icon" />
+	<h:outputScript library="js" name="current_theme.js">
+	</h:outputScript>
+	<h:outputScript library="js" name="userinfo.js">
+	</h:outputScript>
 	<h:outputStylesheet>
 		.customRight{
 			float:right;
@@ -35,28 +39,32 @@
 	<h:form>
 		<h:panelGrid columns="2" styleClass="customRight">
 			<p:column>
-				<h:panelGrid rendered="#{indexView.user==null ? true:false}" columns="2">
-					<p:commandButton action="login" value="登录"></p:commandButton>
-					<p:commandButton action="register" value="注册"></p:commandButton>
+				<h:panelGrid rendered="#{indexView.user==null ? true:false}"
+					columns="2">
+					<p:commandButton action="/pages/login" value="登录"></p:commandButton>
+					<p:commandButton action="/pages/register" value="注册"></p:commandButton>
 					<!-- <p:link outcome="login" target="_parent" value="登录"
 					styleClass="ui-button"></p:link>
 				<p:link outcome="register" target="_parent" value="注册" styleClass="ui-button"></p:link>
  -->
 				</h:panelGrid>
 
-				<h:panelGrid columns="#{indexView.user.isAdmin?3:2}" rendered="#{indexView.user==null?false:true}">
+				<h:panelGrid columns="#{indexView.user.isAdmin?4:3}"
+					rendered="#{indexView.user==null?false:true}">
 					<p:outputLabel value="欢迎您，#{indexView.user.username}"></p:outputLabel>
+					<p:commandLink action="#{indexView.exit}" update="@all" value="退出"></p:commandLink>
 					<p:commandButton action="#{indexView.personInfo}" value="个人主页"
 						rendered="#{indexView.user==null?false:true}"></p:commandButton>
-					<p:commandButton action="#{indexView.managerInfo}" value="管理" rendered="#{indexView.user.isAdmin}"></p:commandButton>
+					<p:commandButton action="#{indexView.managerInfo}" value="管理系统"
+						rendered="#{indexView.user.isAdmin}"></p:commandButton>
 				</h:panelGrid>
 			</p:column>
 
 			<p:column>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="界面主题:"></p:outputLabel>
-					<p:themeSwitcher value="#{indexView.currentTheme}">
-						<p:ajax immediate="true"></p:ajax>
+					<p:themeSwitcher immediate="true" value="#{indexView.currentTheme}">
+
 						<f:selectItems value="#{allThemes.themes}" />
 					</p:themeSwitcher>
 				</p:panelGrid>
@@ -70,7 +78,8 @@
 			</p:column>
 			<p:column>
 				<!-- <p:inputText size="50" placeholder="搜索" value=""></p:inputText> -->
-				<p:autoComplete size="50" placeholder="搜索"></p:autoComplete>
+				<p:autoComplete size="50" placeholder="搜索"
+					style="margin-right:10px;"></p:autoComplete>
 				<p:commandButton value="搜索" icon="ui-icon-search"></p:commandButton>
 			</p:column>
 		</h:panelGrid>
@@ -244,14 +253,56 @@
 
 		<p:panel id="display">
 
-			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
 
-			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+			<p:dataGrid rowIndexVar="row" columns="9" paginator="true"
+				layout="grid" paginatorPosition="bottom" emptyMessage="本站暂时还没有图书"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,30" rows="10">
 
-			<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+				<f:facet name="header">
+					#{indexView.category}
+				</f:facet>
+				<p:panel header="书籍名" style="text-align:center">
+					<h:panelGrid id="bookShow" columns="1">
+						<p:outputLabel value="#{row}" />
+						<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+						<p:link target="_blank" href="https://www.baidu.com" value="书籍名">
+						</p:link>
 
+					</h:panelGrid>
+
+					<h:panelGrid columns="3">
+						<p:commandButton value="阅读"></p:commandButton>
+						<p:commandButton value="下载"></p:commandButton>
+						<p:commandButton value="收藏"></p:commandButton>
+					</h:panelGrid>
+
+					<p:tooltip for="bookShow" trackMouse="true">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="书籍ID:"></p:outputLabel>
+							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="书籍名:"></p:outputLabel>
+							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="书籍分类为:"></p:outputLabel>
+							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="出版社:"></p:outputLabel>
+							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="出版时间:"></p:outputLabel>
+							<p:outputLabel value="2016年10月10日">
+								<f:convertDateTime pattern="yyyy年MM月dd日" />
+							</p:outputLabel>
+							<p:outputLabel value="书籍作者:"></p:outputLabel>
+							<p:outputLabel value="xxx"></p:outputLabel>
+							<p:outputLabel value="阅读次数:"></p:outputLabel>
+							<p:outputLabel value="xxx"></p:outputLabel>
+							
+
+						</h:panelGrid>
+					</p:tooltip>
+
+				</p:panel>
+
+			</p:dataGrid>
 
 			<!-- <object  data="exam.pdf" width="100%" height="100%"></object> -->
 
@@ -271,13 +322,13 @@
 				icon="icon/windows-client-download.png"></p:menuitem>
 			<p:menuitem style="color:black;" value="android客户端下载"
 				icon="icon/android.png"></p:menuitem>
-			<p:menuitem style="color:black;" value="反馈" url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
-			<p:menuitem style="color:black;" url="help.jsf" target="_blank" value="帮助" icon="icon/notice.png"></p:menuitem>
+			<p:menuitem style="color:black;" value="反馈"
+				url="https://www.baidu.com" target="_blank" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" url="help.jsf" target="_blank"
+				value="帮助" icon="icon/notice.png"></p:menuitem>
 
 		</p:dock>
 	</h:form>
-
-
 
 </h:body>
 </html>

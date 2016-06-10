@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>用户个人主页</title>
+	<h:outputScript library="js" name="current_theme.js">
+	</h:outputScript>
+	<h:outputScript library="js" name="userinfo.js">
+	</h:outputScript>
+	<h:outputStylesheet>
+		
+		.textInCenter{
+			vertical-align:top;
+			text-align:center;
+			margin:auto;
+		}
+		
+	</h:outputStylesheet>
+
+</h:head>
+
+<h:body>
+
+
+	<p:growl autoUpdate="true"></p:growl>
+
+	<h:form>
+
+		<p:layout fullPage="true">
+
+
+
+			<p:layoutUnit position="north" resizable="true">
+				<h:panelGrid columns="4" width="100%">
+					<p:outputLabel value="欢迎您，尊敬的用户:"></p:outputLabel>
+					<h:panelGrid columns="3" cellspacing="10" style="float:right">
+						<p:link value="首页" href="/"></p:link>
+						<p:commandLink action="#{userinfoView.managerInfo}" value="管理系统"
+							rendered="${sessionScope.user.isAdmin}"></p:commandLink>
+						<p:link class="loginOut" href="/" value="退出">
+						</p:link>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<h:panelGrid style="clear:right;" width="100%" columns="3">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="用户ID: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.userid}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="用户名: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.username}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="性别:"></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.sex}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="生日: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.birthday}">
+							<f:convertDateTime pattern="yyyy年MM月dd日" />
+						</p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Email: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.email}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="QQ: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.qq}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="手机号: "></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.phone}"></p:outputLabel>
+					</h:panelGrid>
+					<h:panelGrid columns="2" rendered="${sessionScope.user.isAdmin}">
+						<p:outputLabel value="管理员:"></p:outputLabel>
+						<p:outputLabel value="${sessionScope.user.isAdmin?'是':'否'}"></p:outputLabel>
+					</h:panelGrid>
+
+				</h:panelGrid>
+			</p:layoutUnit>
+			<p:layoutUnit position="south" resizable="true">
+				<h:panelGrid styleClass="textInCenter" columns="1">
+					<p:outputLabel value="Xiuye Company Copyright © 2016 ">
+					</p:outputLabel>
+					<p:outputLabel value="All rights reserved."></p:outputLabel>
+				</h:panelGrid>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="west" resizable="true" size="300">
+
+				<p:accordionPanel activeIndex="1" multiple="true">
+					<p:tab title="通知">
+						<p:dataList emptyMessage="现在还没有通知">
+
+						</p:dataList>
+					</p:tab>
+					<p:tab title="读书历史">
+						<p:dataList value="#{userinfoView.readHistoryBooks}" var="rhBook"
+							emptyMessage="现在还没有读书历史">
+							<p:outputLabel value="#{rhBook.book.bookname}" />
+
+						</p:dataList>
+					</p:tab>
+				</p:accordionPanel>
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+
+				<p:menubar>
+					<p:menuitem value="申请改名"></p:menuitem>
+					<p:menuitem actionListener="#{userinfoView.lookAtHistoryBooks}"
+						update="@all" value="查看历史"></p:menuitem>
+					<p:menuitem value="收藏的图书"
+						actionListener="#{userinfoView.lookAtFavoriteBooks}" update="@all"></p:menuitem>
+					<f:facet name="options">
+						<p:autoComplete placeholder="ID/书名/作者..." queryDelay="0"
+							immediate="true" maxResults="10"
+							value="#{userinfoView.searchContent}"
+							completeMethod="#{userinfoView.completeMethod}"
+							style="margin-right:10px;"></p:autoComplete>
+						<p:commandButton actionListener="#{userinfoView.search}"
+							update="@all" icon="ui-icon-search" value="搜索"></p:commandButton>
+					</f:facet>
+				</p:menubar>
+
+				<p:dataGrid rowIndexVar="row"
+					rendered="#{!userinfoView.historyOrFavorite}" var="fBook"
+					value="#{userinfoView.favoriteBooks}" columns="5" rows="20"
+					paginator="true" layout="grid" paginatorPosition="bottom"
+					emptyMessage="现在还没有读书历史"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30">
+					<f:facet name="header">
+						收藏书籍
+					</f:facet>
+
+					<p:panel closable="true" header="#{fBook.book.bookid}"
+						style="text-align:center;">
+						<h:panelGrid id="favriteBook" columns="1">
+							<p:outputLabel value="#{row}" />
+							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+							<p:link target="_blank" href="https://www.baidu.com"
+								value="#{fBook.book.bookname}">
+							</p:link>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton update="@all"
+								actionListener="#{userinfoView.deleteFavoriteBook(fBook)}"
+								value="删除" icon="ui-icon-trash"></p:commandButton>
+							<p:commandButton value="下载" ajax="false"
+								icon="fa fa-fw fa-download">
+								<!-- <p:fileDownload value=""></p:fileDownload> -->
+							</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					<p:tooltip for="favriteBook" trackMouse="true">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="书籍ID:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.bookid}"></p:outputLabel>
+							<p:outputLabel value="书籍名:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.bookname}"></p:outputLabel>
+							<p:outputLabel value="书籍分类为:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.category}"></p:outputLabel>
+							<p:outputLabel value="出版社:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.publishhouse}"></p:outputLabel>
+							<p:outputLabel value="出版时间:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.publishdate}">
+								<f:convertDateTime pattern="yyyy年MM月dd日" />
+							</p:outputLabel>
+							<p:outputLabel value="书籍作者:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.book.author}"></p:outputLabel>
+							<p:outputLabel value="阅读次数:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.ufBook.readtimes}"></p:outputLabel>
+							<p:outputLabel value="收藏加图书时间:"></p:outputLabel>
+							<p:outputLabel value="#{fBook.ufBook.addDate}">
+								<f:convertDateTime pattern="yyyy年MM月dd日 HH:mm:ss" />
+							</p:outputLabel>
+
+
+						</h:panelGrid>
+					</p:tooltip>
+
+
+				</p:dataGrid>
+
+
+
+
+
+				<p:dataGrid rowIndexVar="row"
+					rendered="#{userinfoView.historyOrFavorite}" var="rhBook"
+					value="#{userinfoView.readHistoryBooks}" columns="5" rows="20"
+					paginator="true" layout="grid" paginatorPosition="bottom"
+					emptyMessage="现在还没有读书历史"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30">
+					<f:facet name="header">
+						阅读历史
+					</f:facet>
+					<p:panel closable="true" id="historyBook"
+						header="#{rhBook.book.bookid}" style="text-align:center;">
+						<h:panelGrid columns="1">
+							<p:outputLabel value="#{row}"></p:outputLabel>
+							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+							<p:link target="_blank" href="https://www.baidu.com"
+								value="#{rhBook.book.bookname}">
+							</p:link>
+						</h:panelGrid>
+					</p:panel>
+					<p:tooltip trackMouse="true" for="historyBook">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="书籍ID:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.bookid}"></p:outputLabel>
+							<p:outputLabel value="书籍名:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.bookname}"></p:outputLabel>
+							<p:outputLabel value="书籍分类为:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.category}"></p:outputLabel>
+							<p:outputLabel value="出版社:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.publishhouse}"></p:outputLabel>
+							<p:outputLabel value="出版时间:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.publishdate}">
+								<f:convertDateTime pattern="yyyy年MM月dd日" />
+							</p:outputLabel>
+							<p:outputLabel value="书籍作者:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.book.author}"></p:outputLabel>
+							<p:outputLabel value="阅读次数:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.readingHistory.readtimes}"></p:outputLabel>
+							<p:outputLabel value="上次阅读日期:"></p:outputLabel>
+							<p:outputLabel value="#{rhBook.readingHistory.readingdate}">
+								<f:convertDateTime pattern="yyyy年MM月dd日" />
+							</p:outputLabel>
+
+						</h:panelGrid>
+					</p:tooltip>
+				</p:dataGrid>
+
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+</h:body>
+
+</html>

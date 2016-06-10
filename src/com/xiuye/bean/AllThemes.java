@@ -1,4 +1,4 @@
-package com.xiuye.beans;
+package com.xiuye.bean;
 
 import org.springframework.stereotype.Component;
 

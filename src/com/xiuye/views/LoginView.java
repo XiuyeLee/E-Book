@@ -5,8 +5,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.xiuye.logger.Logger;
@@ -99,6 +100,8 @@ public class LoginView {
 	public String validateUserAccount() {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+		
 		this.onlineUserService.clearNotExistsOnlineUser();		
 		user = userService.validate(name, password);
 		
@@ -117,15 +120,17 @@ public class LoginView {
 			if (this.remember) {
 				
 				session.setMaxInactiveInterval(24*60*60*5);//单位:s
+				this.persistenceClientSession(response, session, 24*60*60*5);
 				this.onlineUserService.addOnlineUser(user, session, 24*60*5L);
 				log.info("保存在线记住密码的账户:"+user.getUsername());
 				
 			}else{
-				
+				session.setMaxInactiveInterval(5*60);
+				this.persistenceClientSession(response, session, 5*60);
 				this.onlineUserService.addOnlineUser(user, session, 5);
 				log.info("保存在线不记住密码的账户:"+user.getUsername());				
 			}
-			return "index";
+			return "/index";
 			
 		}
 		else{
@@ -134,5 +139,13 @@ public class LoginView {
 			
 		}
 
+	}
+	
+	private void persistenceClientSession(HttpServletResponse response,HttpSession session,int savedSeconds){
+		
+		Cookie cookie = new Cookie("JSESSIONID",session.getId());
+		cookie.setPath("/E-Book/");
+		cookie.setMaxAge(savedSeconds);//单位:s
+		response.addCookie(cookie);
 	}
 }

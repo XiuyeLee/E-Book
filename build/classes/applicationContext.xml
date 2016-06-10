@@ -1,0 +1,72 @@
+<beans 
+	default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+
+	xsi:schemaLocation="
+   
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+    http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+    
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+	
+	
+	
+	<context:component-scan base-package="com.xiuye"></context:component-scan>
+	
+	
+	
+	<util:properties id="jdbcConfig" location="classpath:jdbc.properties"></util:properties>
+	
+	<bean id="dbcp2" class="org.apache.commons.dbcp2.BasicDataSource">
+	    <property name="driverClassName" value="#{jdbcConfig.driverClassName}"></property>
+	    <property name="username" value="#{jdbcConfig.username}"></property>
+	    <property name="password" value="#{jdbcConfig.password}"></property>
+	    <property name="url" value="#{jdbcConfig.url}"></property>
+	    
+	</bean>
+	
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <property name="dataSource" ref="dbcp2"></property>
+	    <property name="mapperLocations" value="classpath:com/xiuye/orm/*.xml"></property>
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	    
+	    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
+	    
+	</bean>
+	<!-- 以下这句必须的 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    
+	    <property name="basePackage" value="com.xiuye.dao"></property>
+	    
+	</bean>
+	
+	<bean id="testController" class="com.xiuye.controller.TestController"></bean>
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	
+		<property name="mappings">
+			<props>
+				<prop key="test.do">testController</prop>
+			</props>
+		</property>
+	
+	</bean>
+	
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- <mvc:default-servlet-handler/> -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+       <property name="prefix" value="/WEB-INF/pages/"></property>
+       <property name="suffix" value=".xhtml"></property>
+   </bean>
+	
+</beans>

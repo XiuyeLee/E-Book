@@ -14,6 +14,9 @@
 <h:head>
 	<title>开源书店（Open Source Bookstore）</title>
 	<link href="icon/favicon.png" rel="icon" />
+	<h:outputScript library="js" name="current_theme.js">
+
+	</h:outputScript>
 	<h:outputStylesheet>
 		.customMarginCenter{
 			margin:auto;
@@ -26,6 +29,8 @@
 	<h:form>
 		<p:commandLink process="@this" style="float:right;margin-right:100px;"
 			value="直接登录" action="login"></p:commandLink>
+		<p:commandLink process="@this" style="float:right;margin-right:10px;"
+			value="首页" action="/index"></p:commandLink>
 		<h1 align="center" style="clear: right;">用户注册</h1>
 		<p:panelGrid id="p1" columns="1" styleClass="customMarginCenter">
 
@@ -34,7 +39,7 @@
 					<p:outputLabel value="用户名:" for="username"></p:outputLabel>
 					<p:inputText value="#{registerView.user.username}" id="username"
 						placeholder="汉字或者英语不超过20" maxlength="20"
-						validatorMessage="用户名:输入用户名必须包含字母" required="true">
+						validatorMessage="用户名:输入用户名必须包含字母且不包含空格特殊字符" required="true">
 						<f:validateRegex pattern="\w*[a-zA-Z]+\w*" />
 					</p:inputText>
 
@@ -43,8 +48,7 @@
 						validatorMessage="两次密码不一致或者只能输入6~20位非空字符" maxlength="20"
 						placeholder="密码长度最小6位最大20位" match="pwd2" label="Password 1"
 						required="true" feedback="true" weakLabel="密码强度弱"
-						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强"
-						>
+						goodLabel="密码强度良" promptLabel="请输入密码" strongLabel="密码强度强">
 						<f:validateRegex pattern="\S{6,20}" />
 					</p:password>
 
@@ -97,18 +101,21 @@
 						required="true">
 						<p:ajax update="confirm"></p:ajax>
 					</p:selectBooleanCheckbox>
-					<p:link value="我已经阅读并同意注册协议" href="/register_protocol.jsf"
+					<p:link value="我已经阅读并同意注册协议" href="/pages/register_protocol.jsf"
 						target="_blank"></p:link>
 				</h:panelGrid>
 			</p:row>
 
 			<p:row>
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="3">
 					<p:commandButton id="confirm"
 						disabled="#{registerView.checkAgreeProtocol()}"
 						action="#{registerView.register}" value="确认注册"
-						icon="ui-icon-check" update="@form"></p:commandButton>
-					<p:commandButton value="取消" process="@this" action="index"></p:commandButton>
+						icon="ui-icon-check"></p:commandButton>
+					<p:commandButton value="清空" actionListener="#{registerView.clear}" update="p1" process="@this">
+						<p:resetInput target="p1"></p:resetInput>
+					</p:commandButton>
+					<p:commandButton value="取消" process="@this" action="/index"></p:commandButton>
 				</h:panelGrid>
 			</p:row>
 		</p:panelGrid>

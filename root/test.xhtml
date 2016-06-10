@@ -4,11 +4,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"  
-    xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions" 
-	>
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 <h:head>
 	<title>主页</title>
+	<h:outputScript library="js" name="current_theme.js">
+
+	</h:outputScript>
 </h:head>
 <h:body>
 	<!-- <p:outputLabel value="#{indexView.user}"></p:outputLabel> -->
@@ -23,7 +25,7 @@
 	<p:outputLabel value="#{application}"> </p:outputLabel> -->
 	<!-- <p:link value="hhh" href="userinfo.do"></p:link> -->
 	<!-- <ui:include src="/WEB-INF/pages/userinfo.xhtml"></ui:include> -->
-	
+
 	<h:form action="">
 		<p:outputLabel id="display" value="#{testView.value}"></p:outputLabel>
 		<br />
@@ -38,7 +40,8 @@
 		</p:themeSwitcher>
 		<br />
 		<!-- 改变主题 -->
-		<p:commandButton value="swanky-purse" onclick="PrimeFaces.changeTheme('swanky-purse')" />
+		<p:commandButton value="swanky-purse"
+			onclick="PrimeFaces.changeTheme('swanky-purse')" />
 	</h:form>
 	<p:button value="#{testView.testBean.username}"></p:button>
 	<p:button value="#{testView.testBean.password}"></p:button>

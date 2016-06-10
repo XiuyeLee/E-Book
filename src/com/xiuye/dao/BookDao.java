@@ -2,19 +2,19 @@ package com.xiuye.dao;
 
 import java.util.List;
 
-
-
-
 import com.xiuye.orm.Book;
 
-
 public interface BookDao {
-	
+
 	public List<Book> findAll();
-	
-	Book findByBookname(String bookname);
-	
-	void insertBook(Book book);
-	
-	
+
+	List<Book> findByBookname(String bookname);
+
+	int insertBook(Book book);
+
+	Book findBookByBookid(String bookid);
+
+	int deleteBookByBookid(String bookid);
+
+	int updateBookByBookid(Book book);
 }

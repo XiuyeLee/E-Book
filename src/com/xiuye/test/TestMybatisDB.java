@@ -2,15 +2,19 @@ package com.xiuye.test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.xiuye.dao.BookDao;
 import com.xiuye.dao.OnlineUserDao;
+import com.xiuye.dao.ReadingHistoryDao;
 import com.xiuye.dao.TestDao;
 import com.xiuye.dao.UserDao;
 import com.xiuye.orm.OnlineUser;
+import com.xiuye.orm.ReadingHistory;
 import com.xiuye.orm.Test;
 import com.xiuye.service.OnlineUserService;
 import com.xiuye.views.LoginView;
@@ -21,13 +25,29 @@ public class TestMybatisDB {
 		@SuppressWarnings("resource")
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
+		ReadingHistoryDao readingHistoryDao = ac.getBean(ReadingHistoryDao.class);
+//		for(int i=0;i<30;i++){
+			ReadingHistory readBook = new ReadingHistory();
+			readBook.setBookid("1001");
+			readBook.setUserid("12101010423");
+			readBook.setReadtimes(new Random().nextInt(100)+1);
+			readBook.setReadingdate(new Date());
+			readingHistoryDao.insertReadingHistoryBook(readBook);
+//		}
+		List<ReadingHistory> readingBooks = readingHistoryDao.findReadingHistoryBookByUserid("12101010423");
+		for(ReadingHistory r : readingBooks){
+			
+			System.out.println(r.getUserid() +":"+r.getBookid()+":"+r.getReadingdate() +":" +r.getReadtimes());
+			
+		}
+		
 //		OnlineUserService onlineService = ac.getBean(OnlineUserService.class);
 //		onlineService.validateOnlyOneUserOneBrowser();
 //		
 		OnlineUserDao onlineUserDao = ac.getBean(OnlineUserDao.class);
 
-		
-		
+		int i = onlineUserDao.deleteOnlineUserByUserid(null);
+		System.out.println(i);
 //		System.out.println(onlineUserDao);
 		
 //		List<OnlineUser> list = onlineUserDao.findOnlineUsersInSessionTimeout();

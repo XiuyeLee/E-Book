@@ -1,13 +1,14 @@
 package com.xiuye.orm;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.ManagedBean;
 import javax.faces.bean.NoneScoped;
 
-@ManagedBean
-@NoneScoped
+
 public class User implements Serializable{
 
 	/**
@@ -16,14 +17,14 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 5264083166009297228L;
 	
 	
-	private String userid;
-	private String username;
-	private String password;
+	private String userid = "";
+	private String username = "";
+	private String password = "";
 	private String sex="保密";
 	private Date birthday;
-	private String email;
-	private String qq;
-	private String phone;
+	private String email = "";
+	private String qq = "";
+	private String phone = "";
 	private boolean isAdmin;
 	
 	public String getUserid() {
@@ -54,6 +55,15 @@ public class User implements Serializable{
 		return birthday;
 	}
 	public void setBirthday(Date birthday) {
+		if (this.birthday == null) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				this.birthday = format.parse("0000-00-00");
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
+		}
 		this.birthday = birthday;
 	}
 	public String getEmail() {
@@ -160,10 +170,10 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", username=" + username
-				+ ", password=" + password + ", sex=" + sex + ", birthday="
-				+ birthday + ", email=" + email + ", qq=" + qq + ", phone="
-				+ phone + ", isAdmin=" + isAdmin + "]";
+		return  userid + "。" + username
+				+ "。" + password + "。" + sex + "。"
+				+ birthday + "。" + email + "。" + qq + "。"
+				+ phone + "。" + isAdmin;
 	}
 	
 	

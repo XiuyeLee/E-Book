@@ -3,12 +3,11 @@ package com.xiuye.views;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import com.xiuye.beans.TestBean;
+import com.xiuye.bean.TestBean;
 import com.xiuye.orm.Test;
 import com.xiuye.service.TestService;
 
