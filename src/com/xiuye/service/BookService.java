@@ -79,4 +79,12 @@ public class BookService implements Serializable {
 		return this.bookDao.findBookByBookid(bookid);
 		
 	}
+	
+	public int addReadtime(Book book){
+		
+		if(book == null){
+			return 0;
+		}
+		return this.bookDao.updateAddReadtime(book);
+	}
 }

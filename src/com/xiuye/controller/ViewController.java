@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xiuye.logger.Logger;
 import com.xiuye.orm.Book;
 import com.xiuye.orm.User;
+import com.xiuye.orm.UserFavoriteBook;
 import com.xiuye.service.BookService;
 import com.xiuye.service.OnlineUserService;
+import com.xiuye.service.ReadingHistoryService;
+import com.xiuye.service.UserFavoriteBookService;
 
 @Controller
 public class ViewController {
@@ -33,6 +36,12 @@ public class ViewController {
 	private OnlineUserService onlineUserService;
 	@Resource
 	private BookService bookService;
+
+	@Resource
+	private ReadingHistoryService readingHistoryService;
+
+	@Resource
+	private UserFavoriteBookService ufbService;
 
 	@RequestMapping("/currentTheme.do")
 	@ResponseBody
@@ -59,15 +68,11 @@ public class ViewController {
 		session.setAttribute("user", user);
 	}
 
-	
-	
 	@RequestMapping("/readBook.do")
 	@ResponseBody
-	public void readBook(String bookid, HttpServletResponse response,
-			HttpServletRequest request) {
+	public void readBook(String bookid, HttpSession session,
+			HttpServletResponse response, HttpServletRequest request) {
 
-		
-		
 		Book book = this.bookService.getBookByBookid(bookid);
 		if (book == null) {
 			return;
@@ -95,8 +100,8 @@ public class ViewController {
 			e1.printStackTrace();
 		}
 		log.info("文件名:" + filename);
-//		response.setHeader("Content-Disposition", "attachment;filename="
-//				+ filename);
+		// response.setHeader("Content-Disposition", "attachment;filename="
+		// + filename);
 
 		BufferedInputStream bis = null;
 		FileInputStream fis = null;
@@ -130,6 +135,18 @@ public class ViewController {
 			}
 		}
 
+		int effectRows = 0;
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			UserFavoriteBook ufBook = new UserFavoriteBook();
+			ufBook.setBookid(bookid);
+			ufBook.setUserid(user.getUserid());
+			effectRows = this.ufbService.addUserBookReadtimes(ufBook);
+			log.info("用户增加阅读次数:" + effectRows + "次");
+		}
+
+		effectRows = this.bookService.addReadtime(book);
+		log.info("总阅读次数加" + effectRows + "次");
 	}
 
 	@RequestMapping("/downloadBook.do")
@@ -198,12 +215,6 @@ public class ViewController {
 			} catch (IOException e) {
 			}
 		}
-
-	}
-
-	@RequestMapping("/storeBook.do")
-	@ResponseBody
-	public void storeBook(String bookid) {
 
 	}
 

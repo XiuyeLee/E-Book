@@ -118,4 +118,13 @@ public class UserFavoriteBookService implements Serializable {
 		return this.ufBookDao.insertFavoriteBook(ufBook);
 	}
 
+	public int addUserBookReadtimes(UserFavoriteBook ufBook){
+		if (ufBook == null) {
+			return 0;
+		}
+		
+		return this.ufBookDao.updateAddFavoriteBookReadtime(ufBook);
+		
+	}
+	
 }

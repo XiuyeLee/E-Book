@@ -38,11 +38,11 @@
 			<p:layoutUnit position="north" resizable="true">
 				<h:panelGrid columns="2" width="100%">
 					<p:outputLabel value="欢迎您，尊敬的用户:"></p:outputLabel>
-					<h:panelGrid columns="3" cellspacing="10" style="float:right">
-						<p:link value="首页" href="/"></p:link>
-						<p:commandLink action="#{userinfoView.managerInfo}" value="管理系统"
+					<h:panelGrid columns="3"  cellspacing="10" style="float:right">
+						<p:link value="首页" styleClass="fa fa-home" href="/"></p:link>
+						<p:commandLink styleClass="fa fa-gears" action="#{userinfoView.managerInfo}" value="管理系统"
 							rendered="${sessionScope.user.isAdmin}"></p:commandLink>
-						<p:link class="loginOut" href="/" value="退出">
+						<p:link class="loginOut" href="/" styleClass="fa fa-power-off" value="退出">
 						</p:link>
 					</h:panelGrid>
 				</h:panelGrid>

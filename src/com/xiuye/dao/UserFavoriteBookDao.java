@@ -11,4 +11,5 @@ public interface UserFavoriteBookDao {
 	int deleteUserFavoriteBookByUseridAndBookid(String userid,String bookid);
 	UserFavoriteBook findUserFavoriteBookByUseridAndBookid(String userid,String bookid);
 	int insertFavoriteBook(UserFavoriteBook ufBook);
+	int updateAddFavoriteBookReadtime(UserFavoriteBook ufBook);
 }

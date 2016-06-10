@@ -49,6 +49,9 @@
 		where bookid = #{bookid}
 	</update>
 
+	<update id="updateAddReadtime" parameterType="com.xiuye.orm.Book">
+		update book set readsum = readsum+1 where bookid=#{bookid}  
+	</update>
 
 
 </mapper>

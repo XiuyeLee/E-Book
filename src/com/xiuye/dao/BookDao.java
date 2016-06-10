@@ -19,4 +19,5 @@ public interface BookDao {
 	int updateBookByBookid(Book book);
 	
 	String findBookPathByBookid(String bookid);
+	int updateAddReadtime(Book book);
 }

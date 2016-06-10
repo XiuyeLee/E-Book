@@ -35,5 +35,10 @@
 		userfavoritebook(userid,bookid,addDate,readtimes)
 		values(#{userid},#{bookid},#{addDate},#{readtimes})
 	</insert>
-
+	
+	<update id="updateAddFavoriteBookReadtime" parameterType="com.xiuye.orm.UserFavoriteBook">
+		update userfavoritebook set readtimes = readtimes+1
+		where userid = #{userid} and bookid = #{bookid}
+	</update>
+	
 </mapper>
