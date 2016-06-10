@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
-import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -83,7 +83,9 @@ public class FileView {
 					new FacesMessage("你还未登录，不能收藏"));
 			return;
 		}
-
+		log.info("86:"+user);
+		log.info("87:"+bookid);
+		log.info("88:"+this.userFavoriteBookService);
 		boolean repeat = this.userFavoriteBookService.checkRepeatFavoriteBook(
 				bookid, user);
 		if (!repeat) {

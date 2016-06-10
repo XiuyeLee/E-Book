@@ -31,7 +31,7 @@
 	</select>
 
 	<insert id="insertFavoriteBook" parameterType="com.xiuye.orm.UserFavoriteBook">
-		inset into
+		insert into
 		userfavoritebook(userid,bookid,addDate,readtimes)
 		values(#{userid},#{bookid},#{addDate},#{readtimes})
 	</insert>
