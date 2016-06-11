@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Date;
 
@@ -135,9 +136,11 @@ public class ViewController {
 				}
 
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				log.info("文件没找到:readBook原因:"+e.getMessage());
+				//e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.info("IO异常操作:readBook原因:"+e.getMessage());
+				//e.printStackTrace();
 			} finally {
 				try {
 					fis.close();
@@ -233,9 +236,11 @@ public class ViewController {
 			}
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.info("文件没找到:downloadBook原因:"+e.getMessage());
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.info("IO异常操作:downloadBook原因:"+e.getMessage());
+			//e.printStackTrace();
 		} finally {
 			try {
 				fis.close();
@@ -246,6 +251,77 @@ public class ViewController {
 			}
 		}
 
+	}
+
+	@RequestMapping("/bookCover.do")
+	@ResponseBody
+	public void bookCover(String cover, HttpServletResponse response) {
+
+		cover = URLDecoder.decode(cover);
+		BufferedInputStream bis = null;
+		try {
+			bis = new BufferedInputStream(new FileInputStream(cover));
+			int length = bis.available();
+			response.setContentLength(length);
+			BufferedOutputStream bos = new BufferedOutputStream(
+					response.getOutputStream());
+
+			byte[] data = new byte[1024];
+
+			while (bis.read(data) > -1) {
+
+				bos.write(data);
+				bos.flush();
+
+			}
+
+		} catch (FileNotFoundException e) {
+			log.info("文件没找到:bookCover原因:"+e.getMessage());
+			//e.printStackTrace();
+		} catch (IOException e) {
+			log.info("IO异常操作:bookCover原因:"+e.getMessage());
+			//e.printStackTrace();
+		}
+
+		finally {
+			if (bis != null)
+				try {
+					bis.close();
+				} catch (IOException e) {
+				}
+
+		}
+		
+		/**
+		 * 上面错误的时候就加在下面的作为默认封面
+		 * 
+		 */
+		try {
+			bis = new BufferedInputStream(new FileInputStream("F:/ComputerScience_and_TechnologyDocument/Cover/book.png"));
+			int length = bis.available();
+			response.setContentLength(length);
+			BufferedOutputStream bos = new BufferedOutputStream(
+					response.getOutputStream());
+
+			byte[] data = new byte[1024];
+
+			while (bis.read(data) > -1) {
+
+				bos.write(data);
+				bos.flush();
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null)
+				try {
+					bis.close();
+				} catch (IOException e) {
+				}
+
+		}
 	}
 
 }

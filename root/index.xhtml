@@ -504,7 +504,7 @@
 
 					<h:panelGrid width="100%" id="bookShow" columns="1">
 						<p:outputLabel value="#{row}" />
-						<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+						<p:graphicImage  url="#{GIMView.bookCover(book.cover)}"></p:graphicImage>
 						<p:link target="_blank" href="readBook.do?bookid=#{book.bookid}"
 							value="#{book.bookname}">
 						</p:link>

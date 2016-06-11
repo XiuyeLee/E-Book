@@ -13,7 +13,7 @@
 
 	<select id="findAll" resultType="com.xiuye.orm.Book">
 
-		select * from book
+		select * from book order by readsum desc
 
 	</select>
 
