@@ -7,7 +7,7 @@
 <mapper namespace="com.xiuye.dao.BookDao">
 
 	<select id="findBookPathByBookid" parameterType="string" resultType="string">
-		select path from book where bookid=#{bookid}
+		select path from book where bookid=#{bookid} order by readsum desc
 	</select>
 	
 
@@ -53,5 +53,8 @@
 		update book set readsum = readsum+1 where bookid=#{bookid}  
 	</update>
 
+	<select id="findBookByCategory" parameterType="string" resultType="com.xiuye.orm.Book">
+		select * from book where category=#{category} order by readsum desc
+	</select>
 
 </mapper>

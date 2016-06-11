@@ -25,6 +25,8 @@ public class IndexView {
 
 	private User user;
 
+	private boolean[] search = null;
+
 	private String category = "所有书籍";
 
 	@ManagedProperty("#{onlineUserService}")
@@ -48,7 +50,8 @@ public class IndexView {
 	public void init() {
 
 		books = this.bookService.getAllBooks();
-
+		// 因为getBooks会被jsf页面掉2次所以设置search为2个boolean数组
+		search = new boolean[2];
 	}
 
 	public List<Book> getSearchedBooks() {
@@ -60,6 +63,18 @@ public class IndexView {
 	}
 
 	public List<Book> getBooks() {
+
+		if (search[0] || search[1]) {
+			log.info("执行getBooks:search:" + search);
+			if (search[0]) {
+				search[0] = false;
+			} else {
+				search[1] = false;
+			}
+			return books;
+		}
+		log.info("执行getBooks非分类搜索:search:" + search);
+		books = this.bookService.getAllBooks();
 		return books;
 	}
 
@@ -185,6 +200,60 @@ public class IndexView {
 		log.info("得到值:" + value);
 	}
 
+	private static String[] PL;// 编程语言
+	private static String[] PA;// 编程进阶
+	private static String[] DL;// 开发库
+	private static String[][] web;// web开发
+	private static String[] JavaEE;
+	private static String[] BF;// 前端
+	private static String[] GD;// 游戏开发
+	private static String[] DB;// 数据库
+	private static String[][] OS;// 操作系统
+	private static String[] Parallel;// 并发
+	private static String[] Network;
+	private static String[] Hardware;// 底层开发
+	private static String[] PS;// 应用软件
+
+	static {
+		PL = new String[16];
+		
+		
+	}
+
+	public void allBooksByAllCategoty(String value) {
+
+		String searchData = value.toLowerCase().trim();
+		switch (searchData) {
+		case "":
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	public List<String> searching(String query){
+		
+		List<String> list = new ArrayList<String>();
+		
+		
+		
+		
+		
+		return list;
+		
+		
+	}
 	
+	public void booksByCategory(String value) {
+
+		books = this.bookService.getBooksByCategory(value);
+		for (Book book : books) {
+			log.info("找到分类书籍:" + book);
+		}
+		search[0] = true;
+		search[1] = true;
+		log.info("分类搜索:" + true);
+	}
 
 }

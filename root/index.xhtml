@@ -36,7 +36,7 @@
 <h:body>
 
 	<p:growl id="info" autoUpdate="true"></p:growl>
-	<h:form>
+	<h:form prependId="false">
 		<h:panelGrid columns="2" styleClass="customRight">
 			<p:column>
 				<h:panelGrid rendered="#{indexView.user==null ? true:false}"
@@ -52,10 +52,13 @@
 				<h:panelGrid cellspacing="5" columns="#{indexView.user.isAdmin?4:3}"
 					rendered="#{indexView.user==null?false:true}">
 					<p:outputLabel value="欢迎您，#{indexView.user.username}"></p:outputLabel>
-					<p:commandLink styleClass="fa fa-power-off" action="#{indexView.exit}" update="@all" value="退出"></p:commandLink>
-					<p:commandButton styleClass="fa fa-user" action="#{indexView.personInfo}" value="个人主页"
+					<p:commandLink styleClass="fa fa-power-off"
+						action="#{indexView.exit}" update="@all" value="退出"></p:commandLink>
+					<p:commandButton styleClass="fa fa-user"
+						action="#{indexView.personInfo}" value="个人主页"
 						rendered="#{indexView.user==null?false:true}"></p:commandButton>
-					<p:commandButton styleClass="fa fa-gears" action="#{indexView.managerInfo}" value="管理系统"
+					<p:commandButton styleClass="fa fa-gears"
+						action="#{indexView.managerInfo}" value="管理系统"
 						rendered="#{indexView.user.isAdmin}"></p:commandButton>
 				</h:panelGrid>
 			</p:column>
@@ -78,159 +81,420 @@
 			</p:column>
 			<p:column>
 				<!-- <p:inputText size="50" placeholder="搜索" value=""></p:inputText> -->
-				<p:autoComplete size="50" placeholder="搜索"
+				<p:autoComplete size="50" placeholder="搜索" completeMethod="#{indexView}"
 					style="margin-right:10px;"></p:autoComplete>
-				<p:commandButton value="搜索" icon="ui-icon-search"></p:commandButton>
+				<p:commandButton value="搜索" update="books" icon="ui-icon-search"></p:commandButton>
 			</p:column>
 		</h:panelGrid>
 		<p:menubar>
 
-			<p:menuitem value="首页" url="/"></p:menuitem>
+			<p:menuitem value="首页" action="#{events.say('首页')}" url="/"></p:menuitem>
 			<p:submenu label="编程语言">
-				<p:menuitem value="全部" action="#{events.programming}"></p:menuitem>
-				<p:menuitem value="C/C++" action="#{events.c_cpp}"></p:menuitem>
-				<p:menuitem value="Java" action="#{events.java}"></p:menuitem>
-				<p:menuitem value="C#" action="#{events.csharp}"></p:menuitem>
-				<p:menuitem value="Python" action="#{events.python}"></p:menuitem>
-				<p:menuitem value="JavaScript" action="#{events.js}"></p:menuitem>
-				<p:menuitem value="Objective-c" action="#{events.oc}"></p:menuitem>
-				<p:menuitem value="Swift" action="#{events.swift}"></p:menuitem>
-				<p:menuitem value="Nodejs" action="#{events.nodejs}"></p:menuitem>
-				<p:menuitem value="Shell"></p:menuitem>
-				<p:menuitem value="PHP" action="#{events.php}"></p:menuitem>
-				<p:menuitem value="ASP.NET" action="#{events.asp}"></p:menuitem>
-				<p:menuitem value="Fortran"></p:menuitem>
-				<p:menuitem value="Erlang" action="#{events.erlang}"></p:menuitem>
-				<p:menuitem value="VB" action="#{events.vb}"></p:menuitem>
-				<p:menuitem value="Delphi" action="#{events.delphi}"></p:menuitem>
-				<p:menuitem value="Matlab" action="#{events.matlab}"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+					actionListener="#{indexView.allBooksByAllCategoty('PLAll')}"
+					action="#{events.say('编程语言')}"></p:menuitem>
+				<p:menuitem value="C/C++" update="books"
+					actionListener="#{indexView.booksByCategory('C/C++')}"
+					action="#{events.c_cpp}"></p:menuitem>
+				<p:menuitem value="Java" update="books"
+					actionListener="#{indexView.booksByCategory('Java')}"
+					action="#{events.java}"></p:menuitem>
+				<p:menuitem value="C#" update="books"
+					actionListener="#{indexView.booksByCategory('C#')}"
+					action="#{events.csharp}"></p:menuitem>
+				<p:menuitem value="Python" update="books"
+					actionListener="#{indexView.booksByCategory('Python')}"
+					action="#{events.python}"></p:menuitem>
+				<p:menuitem value="JavaScript" update="books"
+					actionListener="#{indexView.booksByCategory('JavaScript')}"
+					action="#{events.js}"></p:menuitem>
+				<p:menuitem value="Objective-C" update="books"
+					actionListener="#{indexView.booksByCategory('Objective-C')}"
+					action="#{events.oc}"></p:menuitem>
+				<p:menuitem value="Swift" update="books"
+					actionListener="#{indexView.booksByCategory('Swift')}"
+					action="#{events.swift}"></p:menuitem>
+				<p:menuitem value="Nodejs" update="books"
+					actionListener="#{indexView.booksByCategory('Nodejs')}"
+					action="#{events.nodejs}"></p:menuitem>
+				<p:menuitem value="Shell" update="books"
+				action="#{events.say('Shell')}"
+					actionListener="#{indexView.booksByCategory('Shell')}"></p:menuitem>
+				<p:menuitem value="PHP" update="books"
+					actionListener="#{indexView.booksByCategory('PHP')}"
+					action="#{events.php}"></p:menuitem>
+				<p:menuitem value="ASP.NET" update="books"
+					actionListener="#{indexView.booksByCategory('ASP.NET')}"
+					action="#{events.asp}"></p:menuitem>
+				<p:menuitem value="Fortran" update="books"
+					actionListener="#{indexView.booksByCategory('Fortran')}"></p:menuitem>
+				<p:menuitem value="Erlang" update="books"
+					actionListener="#{indexView.booksByCategory('Erlang')}"
+					action="#{events.erlang}"></p:menuitem>
+				<p:menuitem value="VB" update="books"
+					actionListener="#{indexView.booksByCategory('VB')}"
+					action="#{events.vb}"></p:menuitem>
+				<p:menuitem value="Delphi" update="books"
+					actionListener="#{indexView.booksByCategory('Delphi')}"
+					action="#{events.delphi}"></p:menuitem>
+				<p:menuitem value="Matlab" update="books"
+					actionListener="#{indexView.booksByCategory('Matlab')}"
+					action="#{events.matlab}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="编程进阶">
-				<p:menuitem value="全部"></p:menuitem>
-				<p:menuitem value="编程进阶杂书"></p:menuitem>
-				<p:menuitem value="C++编程进阶"></p:menuitem>
-				<p:menuitem value="Java编程进阶"></p:menuitem>
-				<p:menuitem value="数据结构和算法"
-					action="#{events.dataStructureAndAlgorithm}"></p:menuitem>
-				<p:menuitem value="开发实战"></p:menuitem>
-				<p:menuitem value="人工智能"></p:menuitem>
-				<p:menuitem value="图表绘制"></p:menuitem>
-				<p:menuitem value="版本控制"></p:menuitem>
-				<p:menuitem value="数学" action="#{events.math}" />
-				<p:menuitem value="物理" action="#{events.phisics}"></p:menuitem>
-				<p:menuitem value="英语" action="#{events.english}"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('PAAll')}"
+					action="#{events.say('编程进阶')}"
+				></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('PAMB')}"
+					action="#{events.say('编程进阶杂书')}"
+					value="编程进阶杂书"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('CA')}" 
+					action="#{events.say('C++进阶编程')}"
+					value="C++编程进阶"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('JA')}"
+					action="#{events.say('Java编程进阶')}"
+					value="Java编程进阶"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('DSAA')}"
+					value="数据结构和算法" action="#{events.dataStructureAndAlgorithm}"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('开发实战')}"
+					actionListener="#{indexView.booksByCategory('DIA')}" value="开发实战"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('人工智能')}"
+					actionListener="#{indexView.booksByCategory('AI')}" value="人工智能"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('图表绘制')}"
+					actionListener="#{indexView.booksByCategory('CD')}" value="图表绘制"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('版本控制')}"
+					actionListener="#{indexView.booksByCategory('VC')}" value="版本控制"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Math')}" value="数学"
+					action="#{events.math}" />
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Physics')}" value="物理"
+					action="#{events.phisics}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('English')}" value="英语"
+					action="#{events.english}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="开发库">
-				<p:menuitem value="全部"></p:menuitem>
-				<p:menuitem value="Boost" action="#{events.boost}"></p:menuitem>
-				<p:menuitem value="MFC" action="#{events.mfc}"></p:menuitem>
-				<p:menuitem value="QT" action="#{events.qt}"></p:menuitem>
-				<p:menuitem value="SWT"></p:menuitem>
-				<p:menuitem value="OpenCV"></p:menuitem>
-				<p:menuitem value="ICE" action="#{events.ice}"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('DLAll')}"
+					action="#{events.say('开发库')}"
+				></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Boost')}"
+					value="Boost" action="#{events.boost}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('MFC')}" value="MFC"
+					action="#{events.mfc}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('QT')}" value="QT"
+					action="#{events.qt}"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('SWT')}"
+					actionListener="#{indexView.booksByCategory('SWT')}" value="SWT"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('OpenCV')}"
+					actionListener="#{indexView.booksByCategory('OpenCV')}"
+					value="OpenCV"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('ICE')}" value="ICE"
+					action="#{events.ice}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="Web开发">
-				<p:menuitem value="全部"></p:menuitem>
+				<p:menuitem value="全部"  update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('WebAll')}"
+					action="#{events.say('Web开发')}"
+				></p:menuitem>
 				<p:submenu label="JavaEE">
-					<p:menuitem value="全部"></p:menuitem>
-					<p:menuitem value="JavaEE基础"></p:menuitem>
-					<p:menuitem value="Servlet"></p:menuitem>
-					<p:menuitem value="XML"></p:menuitem>
-					<p:menuitem value="Spring" action="#{events.spring}"></p:menuitem>
-					<p:menuitem value="Mybatis" action="#{events.mybatis}"></p:menuitem>
-					<p:menuitem value="Hibernate" action="#{events.hibernate}"></p:menuitem>
-					<p:menuitem value="Struts" action="#{events.struts}"></p:menuitem>
-					<p:menuitem value="JSF"></p:menuitem>
-					<p:menuitem value="JFinal" action="#{events.jfinal}"></p:menuitem>
-					<p:menuitem value="EJB"></p:menuitem>
-					<p:menuitem value="JNDI"></p:menuitem>
-					<p:menuitem value="JMS"></p:menuitem>
-					<p:menuitem value="RMI"></p:menuitem>
-					<p:menuitem value="JDBC"></p:menuitem>
-					<p:menuitem value="JavaMail"></p:menuitem>
-					<p:menuitem value="IDL/CORBA"></p:menuitem>
+					<p:menuitem value="全部" update="books"
+					actionListener="#{indexView.allBooksByAllCategoty('JavaEEAll')}"
+					action="#{events.say('JavaEE')}"
+					></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('JavaEEBasic')}"
+						action="#{events.say('JavaEE基础')}"
+						value="JavaEE基础"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('')}"
+						actionListener="#{indexView.booksByCategory('Servlet')}"
+						value="Servlet"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('XML')}"
+						actionListener="#{indexView.booksByCategory('XML')}" value="XML"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Spring')}"
+						value="Spring" action="#{events.spring}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('MyBatis')}"
+						value="MyBatis" action="#{events.mybatis}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Hibernate')}"
+						value="Hibernate" action="#{events.hibernate}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Struts')}"
+						value="Struts" action="#{events.struts}"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('JSF')}"
+						actionListener="#{indexView.booksByCategory('JSF')}" value="JSF"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('JFinal')}"
+						value="JFinal" action="#{events.jfinal}"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('EJB')}"
+						actionListener="#{indexView.booksByCategory('EJB')}" value="EJB"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('JNDI')}"
+						actionListener="#{indexView.booksByCategory('JNDI')}" value="JNDI"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('JMS')}"
+						actionListener="#{indexView.booksByCategory('JMS')}" value="JMS"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('RMI')}"
+						actionListener="#{indexView.booksByCategory('RMI')}" value="RMI"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('JDBC')}"
+						actionListener="#{indexView.booksByCategory('JDBC')}" value="JDBC"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('JavaMail')}"
+						actionListener="#{indexView.booksByCategory('JavaMail')}"
+						value="JavaMail"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('IDL/CORBA')}"
+						actionListener="#{indexView.booksByCategory('IDL/CORBA')}"
+						value="IDL/CORBA"></p:menuitem>
 				</p:submenu>
 				<p:submenu label="浏览器前端">
-					<p:menuitem value="全部"></p:menuitem>
-					<p:menuitem value="Html" action="#{events.html}"></p:menuitem>
-					<p:menuitem value="CSS" action="#{events.css}"></p:menuitem>
-					<p:menuitem value="Ajax"></p:menuitem>
-					<p:menuitem value="JQuery" action="#{events.jquery}"></p:menuitem>
-					<p:menuitem value="Boostrap" action="#{events.bootstrap}"></p:menuitem>
-					<p:menuitem value="Angularjs" action="#{events.angularjs}"></p:menuitem>
-					<p:menuitem value="Reactjs" action="#{events.reactjs}"></p:menuitem>
-					<p:menuitem value="Extjs" action="#{events.extjs}"></p:menuitem>
+					<p:menuitem value="全部" update="books"
+					actionListener="#{indexView.allBooksByAllCategoty('BFAll')}"
+					action="#{events.say('浏览器前端')}"
+					></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Html')}" value="Html"
+						action="#{events.html}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('CSS')}" value="CSS"
+						action="#{events.css}"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('Ajax')}"
+						actionListener="#{indexView.booksByCategory('Ajax')}" value="Ajax"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('JQuery')}"
+						value="JQuery" action="#{events.jquery}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Boostrap')}"
+						value="Boostrap" action="#{events.bootstrap}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Angularjs')}"
+						value="Angularjs" action="#{events.angularjs}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Reactjs')}"
+						value="Reactjs" action="#{events.reactjs}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('Extjs')}"
+						value="Extjs" action="#{events.extjs}"></p:menuitem>
 				</p:submenu>
 			</p:submenu>
 			<p:submenu label="游戏开发">
-				<p:menuitem value="全部" action="#{events.gameDevelopment}"></p:menuitem>
-				<p:menuitem value="游戏开发基础"></p:menuitem>
-				<p:menuitem value="OpenGL" action="#{events.opengl}"></p:menuitem>
-				<p:menuitem value="DirectX" action="#{events.directX}"></p:menuitem>
-				<p:menuitem value="Cocos2D" action="#{events.cocos2d}"></p:menuitem>
-				<p:menuitem value="Unity3D" action="#{events.unity3d}"></p:menuitem>
-				<p:menuitem value="CryEngine"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+					actionListener="#{indexView.allBooksByAllCategoty('GameDevelopAll')}"
+					action="#{events.say('游戏开发')}" ></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('游戏开发基础')}"
+					actionListener="#{indexView.booksByCategory('GameBasic')}"
+					value="游戏开发基础"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('OpenGL')}"
+					value="OpenGL" action="#{events.opengl}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('DirectX')}"
+					value="DirectX" action="#{events.directX}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Cocos2D')}"
+					value="Cocos2D" action="#{events.cocos2d}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Unity3D')}"
+					value="Unity3D" action="#{events.unity3d}"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('CryEngine')}"
+					actionListener="#{indexView.booksByCategory('CryEngine')}"
+					value="CryEngine"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="数据库">
-				<p:menuitem value="全部" action="#{events.DB}"></p:menuitem>
-				<p:menuitem value="Oracle" action="#{events.oracle}"></p:menuitem>
-				<p:menuitem value="Mysql" action="#{events.mysql}"></p:menuitem>
-				<p:menuitem value="Sql Server" action="#{events.sqlServer}"></p:menuitem>
-				<p:menuitem value="Sybase" action="#{events.sybase}"></p:menuitem>
-				<p:menuitem value="SQL" action="#{events.sql}"></p:menuitem>
-				<p:menuitem value="BigData"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('DBAll')}"
+					action="#{events.say('数据库')}"
+				 ></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Oracle')}"
+					value="Oracle" action="#{events.oracle}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Mysql')}"
+					value="Mysql" action="#{events.mysql}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('SqlServer')}"
+					value="Sql Server" action="#{events.sqlServer}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Sybase')}"
+					value="Sybase" action="#{events.sybase}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('SQL')}" value="SQL"
+					action="#{events.sql}"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('BigData')}"
+					actionListener="#{indexView.booksByCategory('BigData')}"
+					value="BigData"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="操作系统">
-				<p:menuitem value="全部" action="#{events.OS}"></p:menuitem>
-				<p:menuitem value="Android" action="#{events.android}"></p:menuitem>
-				<p:menuitem value="Windows" action="#{events.windows}"></p:menuitem>
-				<p:menuitem value="Linux" action="#{events.linux}"></p:menuitem>
-				<p:menuitem value="Unix" action="#{events.unix}"></p:menuitem>
-				<p:menuitem value="MacOS" action="#{events.mac}"></p:menuitem>
-				<p:menuitem value="IPhone"></p:menuitem>
-				<p:menuitem value="JVM"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('OSAll')}"
+					action="#{events.say('操作系统')}"
+				 ></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Android')}"
+					value="Android" action="#{events.android}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Windows')}"
+					value="Windows" action="#{events.windows}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Linux')}"
+					value="Linux" action="#{events.linux}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Unix')}" value="Unix"
+					action="#{events.unix}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('MacOS')}"
+					value="MacOS" action="#{events.mac}"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('IPhone')}"
+					actionListener="#{indexView.booksByCategory('IPhone')}"
+					value="IPhone"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('JVM')}"
+					actionListener="#{indexView.booksByCategory('JVM')}" value="JVM"></p:menuitem>
 				<p:submenu label="Parallel">
-					<p:menuitem value="全部"></p:menuitem>
-					<p:menuitem value="CPUParallel"></p:menuitem>
-					<p:menuitem value="C++Parallel"></p:menuitem>
-					<p:menuitem value="JavaParallel"></p:menuitem>
-					<p:menuitem value="LinuxParallel" action="#{events.linuxParallel}"></p:menuitem>
-					<p:menuitem value="WindowsParallel"
-						action="#{events.windowsParallel}"></p:menuitem>
-					<p:menuitem value="AndroidParallel"
+					<p:menuitem value="全部" update="books"
+					actionListener="#{indexView.allBooksByAllCategoty('ParallelAll')}"
+					action="#{events.say('并发|并行')}"
+					></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('CPUParallel')}"
+						actionListener="#{indexView.booksByCategory('CPUParallel')}"
+						value="CPUParallel"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('C++Parallel')}"
+						actionListener="#{indexView.booksByCategory('C++Parallel')}"
+						value="C++Parallel"></p:menuitem>
+					<p:menuitem update="books"
+					action="#{events.say('JavaParallel')}"
+						actionListener="#{indexView.booksByCategory('JavaParallel')}"
+						value="JavaParallel"></p:menuitem>
+					<p:menuitem update="books"
+					
+						actionListener="#{indexView.booksByCategory('LinuxParallel')}"
+						value="LinuxParallel" action="#{events.linuxParallel}"></p:menuitem>
+					<p:menuitem update="books"
+						actionListener="#{indexView.booksByCategory('WindowsParallel')}"
+						value="WindowsParallel" action="#{events.windowsParallel}"></p:menuitem>
+					<p:menuitem value="AndroidParallel" update="books"
+						actionListener="#{indexView.booksByCategory('AndroidParallel')}"
 						action="#{events.androidParallel}"></p:menuitem>
 				</p:submenu>
-				<p:menuitem value="编译原理"></p:menuitem>
-				<p:menuitem value="多媒体"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('编译原理')}"
+					actionListener="#{indexView.booksByCategory('CompilersPrinciples')}"
+					value="编译原理"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('多媒体')}"
+					actionListener="#{indexView.booksByCategory('Media')}" value="多媒体"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="网络">
-				<p:menuitem value="全部" action="#{events.network}"></p:menuitem>
-				<p:menuitem value="网络基础"></p:menuitem>
-				<p:menuitem value="网络协议"></p:menuitem>
-				<p:menuitem value="网络应用" action="#{events.networkApply}"></p:menuitem>
-				<p:menuitem value="网络编程" action="#{events.networkProgramming}"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('NetworkAll')}"
+					action="#{events.say('网络')}"
+				 ></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('网络基础')}"
+					actionListener="#{indexView.booksByCategory('NetworkBasic')}"
+					value="网络基础"></p:menuitem>
+				<p:menuitem update="books"
+				action="#{events.say('网络协议')}"
+					actionListener="#{indexView.booksByCategory('NetworkProtocol')}"
+					value="网络协议"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('NetworkApplication')}"
+					value="网络应用" action="#{events.networkApply}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('NetworkProgram')}"
+					value="网络编程" action="#{events.networkProgramming}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="底层开发">
-				<p:menuitem value="全部" action="#{events.hardwareLowLevel}"></p:menuitem>
-				<p:menuitem value="汇编基础"></p:menuitem>
-				<p:menuitem value="Intel" action="#{events.intel}"></p:menuitem>
-				<p:menuitem value="Arm" action="#{events.arm}"></p:menuitem>
-				<p:menuitem value="驱动" action="#{events.driver}"></p:menuitem>
-				<p:menuitem value="电路" action="#{events.circuit}"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('DiCengAll')}"
+					action="#{events.say('底层开发')}"
+				></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('AssemblerBasic')}"
+					action="#{events.say('汇编基础')}"
+					value="汇编基础"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Intel')}"
+					value="Intel" action="#{events.intel}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Arm')}" value="Arm"
+					action="#{events.arm}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Deriver')}" value="驱动"
+					action="#{events.driver}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Circuit')}" value="电路"
+					action="#{events.circuit}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="应用软件">
-				<p:menuitem value="全部"></p:menuitem>
-				<p:menuitem value="PhotoShop" action="#{events.photoShop}"></p:menuitem>
-				<p:menuitem value="Flash" action="#{events.flash}"></p:menuitem>
-				<p:menuitem value="Dreamweaver" action="#{events.dreamweaver}"></p:menuitem>
-				<p:menuitem value="Word" action="#{events.word}"></p:menuitem>
-				<p:menuitem value="Excel" action="#{events.excel}"></p:menuitem>
-				<p:menuitem value="PPT" action="#{events.ppt}"></p:menuitem>
-				<p:menuitem value="Visio" action="#{events.visio}"></p:menuitem>
-				<p:menuitem value="Xmind" action="#{events.xmind}"></p:menuitem>
-				<p:menuitem value="CAD" action="#{events.cad}"></p:menuitem>
-				<p:menuitem value="3DMax" action="#{events.threeDMax}"></p:menuitem>
-				<p:menuitem value="PowerDesigner" action="#{events.powerDesigner}"></p:menuitem>
+				<p:menuitem value="全部" update="books"
+				actionListener="#{indexView.allBooksByAllCategoty('ApplicationSoftwareAll')}"
+					action="#{events.say('应用软件')}"
+				></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('PhotoShop')}"
+					value="PhotoShop" action="#{events.photoShop}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Flash')}"
+					value="Flash" action="#{events.flash}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Dreamweaver')}"
+					value="Dreamweaver" action="#{events.dreamweaver}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Word')}" value="Word"
+					action="#{events.word}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Excel')}"
+					value="Excel" action="#{events.excel}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('PPT')}" value="PPT"
+					action="#{events.ppt}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Visio')}"
+					value="Visio" action="#{events.visio}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('Xmind')}"
+					value="Xmind" action="#{events.xmind}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('CAD')}" value="CAD"
+					action="#{events.cad}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('3DMax')}"
+					value="3DMax" action="#{events.threeDMax}"></p:menuitem>
+				<p:menuitem update="books"
+					actionListener="#{indexView.booksByCategory('PowerDesigner')}"
+					value="PowerDesigner" action="#{events.powerDesigner}"></p:menuitem>
 			</p:submenu>
 
 			<p:submenu label="资源下载">
@@ -256,15 +520,12 @@
 				rendered="${sessionScope.user!=null?true:false}"
 				icon="fa fa-power-off"></p:menuitem>
 			<p:menuitem rendered="${sessionScope.user!=null?false:true}"
-				value="登录" icon="fa fa-arrow-circle-right"
-				action="/pages/login"
-				>
+				value="登录" icon="fa fa-arrow-circle-right" action="/pages/login">
 
 			</p:menuitem>
 
-			<p:menuitem
-				action="/pages/register"
-				 rendered="${sessionScope.user!=null?false:true}"
+			<p:menuitem action="/pages/register"
+				rendered="${sessionScope.user!=null?false:true}"
 				icon="fa fa-arrow-circle-o-right" value="注册"></p:menuitem>
 
 		</p:contextMenu>
@@ -273,9 +534,9 @@
 		<p:panel id="display">
 
 
-			<p:dataGrid id="books" var="book" value="#{indexView.books}" rowIndexVar="row"
-				paginator="true" paginatorPosition="top" layout="grid"
-				emptyMessage="本站暂时还没有图书"
+			<p:dataGrid id="books" var="book" value="#{indexView.books}"
+				rowIndexVar="row" paginator="true" paginatorPosition="top"
+				layout="grid" emptyMessage="本站暂时还没有收录该类图书"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,30,40,50,60,70,80,90,100" rows="20">
 
@@ -299,11 +560,13 @@
 							value="阅读"></p:commandButton>
 						<p:commandButton disabled="${sessionScope.user==null?true:false}"
 							actionListener="#{fileView.downloadBook(book.bookid)}"
-							icon="fa fa-fw fa-download" title="${sessionScope.user==null?'您还未登录不能操作':''}" value="下载">
+							icon="fa fa-fw fa-download"
+							title="${sessionScope.user==null?'您还未登录不能操作':''}" value="下载">
 						</p:commandButton>
 						<p:commandButton disabled="${sessionScope.user==null?true:false}"
 							actionListener="#{fileView.addFavoriteBook(book.bookid)}"
-							icon="fa fa-fw fa-star" title="${sessionScope.user==null?'您还未登录不能操作':''}" value="收藏"></p:commandButton>
+							icon="fa fa-fw fa-star"
+							title="${sessionScope.user==null?'您还未登录不能操作':''}" value="收藏"></p:commandButton>
 					</h:panelGrid>
 
 					<p:tooltip for="bookShow" trackMouse="true">
@@ -350,8 +613,8 @@
 				icon="icon/windows-client-download.png"></p:menuitem>
 			<p:menuitem style="color:black;" value="android客户端下载"
 				icon="icon/android.png"></p:menuitem>
-			<p:menuitem style="color:black;" value="反馈"
-				outcome="/pages/feedback" target="_blank" icon="icon/feedback.png" />
+			<p:menuitem style="color:black;" value="反馈" outcome="/pages/feedback"
+				target="_blank" icon="icon/feedback.png" />
 			<p:menuitem style="color:black;" outcome="/help" target="_blank"
 				value="帮助" icon="icon/notice.png"></p:menuitem>
 

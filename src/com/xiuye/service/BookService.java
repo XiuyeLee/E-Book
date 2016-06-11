@@ -1,6 +1,7 @@
 package com.xiuye.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,5 +87,25 @@ public class BookService implements Serializable {
 			return 0;
 		}
 		return this.bookDao.updateAddReadtime(book);
+	}
+	
+	public List<Book> getBooksByCategory(String category){
+		
+		return this.bookDao.findBookByCategory(category);
+		
+	}
+	
+	public List<Book> getBooksByCategotyList(List<String> categorys){
+		
+		
+		List<Book> books = new ArrayList<Book>();
+		
+		for(String category : categorys)
+		{
+			books.addAll(this.getBooksByCategory(category));
+		}
+		
+		return books;
+		
 	}
 }

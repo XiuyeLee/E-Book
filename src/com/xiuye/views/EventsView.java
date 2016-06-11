@@ -5,15 +5,24 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import com.xiuye.logger.Logger;
+
 
 @ManagedBean(name="events")
 @RequestScoped
 public class EventsView {
 
+	
+	private static Logger log = Logger.getLogger(EventsView.class);
+	
 
-	private void say(String info){
+	public void say(String info){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.addMessage(null, new FacesMessage(info));
+	}
+	
+	public void getValue(String value){
+		log.info("选中分类:"+value);
 	}
 	
 	public void phisics(){
