@@ -250,23 +250,12 @@ public class IndexView {
 		Iterator<Book> it = books.iterator();
 		while (it.hasNext()) {
 			Book b = it.next();
-			// String []splitStr = b.toString().split("。");
 			String bStr = b.toString().toLowerCase().trim();
 			if (bStr.contains(searchContent)) {
 
 				continue;
 			}
 
-			// for(String s : splitStr){
-			// s = s.toLowerCase().trim();
-			// if(){
-			// remove = false;
-			// break;
-			// }
-			// else{
-			// remove = true;
-			// }
-			// }
 			it.remove();
 
 		}
