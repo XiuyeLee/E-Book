@@ -34,7 +34,7 @@
 						<p:outputLabel value="${sessionScope.user.email}"></p:outputLabel>
 					</h:panelGrid>
 					<h:panelGrid columns="3">
-						<p:commandButton icon="fa fa-home" action="/index" process="@this"
+						<p:commandButton icon="fa fa-home" onclick="location.href='/E-Book/'"  process="@this"
 							value="首页"></p:commandButton>
 						<p:commandButton icon="fa fa-user" process="@this"
 							action="/pages/userinfo" value="个人主页"></p:commandButton>
