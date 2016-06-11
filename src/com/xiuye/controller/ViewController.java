@@ -26,6 +26,7 @@ import com.xiuye.service.BookService;
 import com.xiuye.service.OnlineUserService;
 import com.xiuye.service.ReadingHistoryService;
 import com.xiuye.service.UserFavoriteBookService;
+import com.xiuye.util.PdfOutputCustomPagesUtil;
 
 @Controller
 public class ViewController {
@@ -104,48 +105,50 @@ public class ViewController {
 		// response.setHeader("Content-Disposition", "attachment;filename="
 		// + filename);
 
-		BufferedInputStream bis = null;
-		FileInputStream fis = null;
-		BufferedOutputStream bos = null;
+		if (user != null) {
+			BufferedInputStream bis = null;
+			FileInputStream fis = null;
+			BufferedOutputStream bos = null;
 
-		try {
-			fis = new FileInputStream(bookpath);
-			bis = new BufferedInputStream(fis);
-
-			int length = bis.available();
-			log.info("阅读文件大小:" + length + "字节(B)");
-
-			if (user == null) {
-				length = length / 100;
-				log.info("用户不在线阅读文件大小:" + length + "字节(B)");
-			}
-
-			response.setContentLength(length);
-
-			bos = new BufferedOutputStream(response.getOutputStream());
-			int i = 0;
-
-			byte[] data = new byte[1024];
-			while (bis.read(data) != -1) {
-
-				bos.write(data);
-
-				bos.flush();
-
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
 			try {
-				fis.close();
-				bis.close();
-				// 不要关闭服务器输出，否则出错
+				fis = new FileInputStream(bookpath);
+				bis = new BufferedInputStream(fis);
 
+				int length = bis.available();
+				log.info("阅读文件大小:" + length + "字节(B)");
+
+				response.setContentLength(length);
+
+				bos = new BufferedOutputStream(response.getOutputStream());
+				int i = 0;
+
+				byte[] data = new byte[1024];
+
+				while (bis.read(data) != -1) {
+
+					bos.write(data);
+
+					bos.flush();
+
+				}
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					fis.close();
+					bis.close();
+					// 不要关闭服务器输出，否则出错
+
+				} catch (IOException e) {
+				}
 			}
+		} else {
+			// 非用户读取
+			PdfOutputCustomPagesUtil
+					.partOfPdfOutputPages(bookpath, 1, response);
 		}
 
 		int effectRows = 0;
