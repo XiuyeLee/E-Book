@@ -119,14 +119,16 @@
 			<p:layoutUnit position="center">
 
 				<p:menubar>
-					<p:menuitem value="申请改名"></p:menuitem>
+					<p:menuitem icon="fa fa-arrow-circle-up" value="申请改名"></p:menuitem>
 					<p:menuitem icon="fa fa-history"
 						actionListener="#{userinfoView.lookAtHistoryBooks}" update="@all"
 						value="查看历史"></p:menuitem>
 					<p:menuitem value="收藏的图书" icon="fa fa-star"
 						actionListener="#{userinfoView.lookAtFavoriteBooks}" update="@all"></p:menuitem>
-					<p:menuitem value="修改密码" icon="fa fa-lock"></p:menuitem>
-					<p:menuitem value="修改信息" icon="fa fa-user-md"></p:menuitem>
+					<p:menuitem outcome="/pages/modify_password" target="_blank"
+						value="修改密码" icon="fa fa-lock"></p:menuitem>
+					<p:menuitem outcome="/pages/modify_password" target="_blank"
+						value="修改信息" icon="fa fa-user-md"></p:menuitem>
 
 					<f:facet name="options">
 						<p:autoComplete placeholder="ID/书名/作者..." queryDelay="0"
