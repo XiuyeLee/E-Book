@@ -102,11 +102,12 @@ public class UserService implements Serializable {
 
 	}
 
+	@Transactional
 	public int updateUser(User user) {
 		if (user == null) {
 			return 0;
 		}
-		return this.updateUser(user);
+		return this.userDao.updateUser(user);
 	}
 	public int  deteleUser(User user){
 		if (user == null) {
@@ -115,4 +116,31 @@ public class UserService implements Serializable {
 		return this.userDao.deleteUserByUserId(user.getUserid());
 	}
 
+	public String getPasswordByUserid(String userid){
+		
+		return  this.userDao.findPasswordByUserid(userid);
+		
+	}
+	
+	public String checkUserOldPasswordCorrect(String userid,String oldPwd){
+		
+		String oldStr = this.getPasswordByUserid(userid);
+		if(oldStr.equals(oldPwd)){
+			return null;
+		}
+		else{
+			return "输入旧密码错误";
+		}
+		
+	}
+	
+	@Transactional
+	public int modifyPwd(String userid,String password){
+		
+		if(userid == null){
+			return 0;
+		}
+		return this.userDao.updateUserPwdByUserid(userid, password);
+		
+	}
 }

@@ -61,10 +61,18 @@
 	<delete id="deleteUserByUserId" parameterType="string">
 		delete from user where userid=#{userid}
 	</delete>
-	<update id="updateUserByUserid" parameterType="com.xiuye.orm.User">
+	<update id="updateUser" parameterType="com.xiuye.orm.User">
 		update user set userid = #{userid},username=#{username},password=#{password},sex=#{sex},
 		birthday=#{birthday},email=#{email},qq=#{qq},phone=#{phone},isAdmin=#{isAdmin}
 		where  userid=#{userid}
 	</update >
 
+	<select id="findPasswordByUserid" parameterType="string" resultType="string">
+		select password from user where userid = #{userid}
+	</select>
+	
+	<update id="updateUserPwdByUserid" parameterType="string">
+		update user set password=#{1} where userid = #{0};
+	</update>
+	
 </mapper>
