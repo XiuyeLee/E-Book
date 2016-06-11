@@ -156,7 +156,7 @@
 						style="text-align:center;">
 						<h:panelGrid width="100%" id="favriteBook" columns="1">
 							<p:outputLabel value="#{row}" />
-							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+							<p:graphicImage url="#{GIMView.bookCover(fBook.book.cover)}"></p:graphicImage>
 							<p:link target="_blank"
 								href="readBook.do?bookid=#{fBook.book.bookid}"
 								value="#{fBook.book.bookname}">
@@ -220,7 +220,7 @@
 						header="#{rhBook.book.bookid}" style="text-align:center;">
 						<h:panelGrid width="100%" columns="1">
 							<p:outputLabel value="#{row}"></p:outputLabel>
-							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
+							<p:graphicImage url="#{GIMView.bookCover(rhBook.book.bookid)}"></p:graphicImage>
 							<p:link target="_blank" href="https://www.baidu.com"
 								value="#{rhBook.book.bookname}">
 							</p:link>
