@@ -90,4 +90,20 @@ public class ReadingHistoryService implements Serializable{
 		return readHistoryBooks;
 	}
 
+	@Transactional
+	public int addReadingHistoryBook(ReadingHistory readingHistory ){
+		
+		if(readingHistory == null){
+			return 0;
+		}
+		return this.rhDao.insertReadingHistoryBook(readingHistory);
+		
+	}
+
+	public int getReadingHistoryCount(String userid,String bookid){
+		
+		return this.rhDao.findAllReadCount(userid, bookid);
+		
+	}
+	
 }

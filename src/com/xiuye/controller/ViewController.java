@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiuye.logger.Logger;
 import com.xiuye.orm.Book;
+import com.xiuye.orm.ReadingHistory;
 import com.xiuye.orm.User;
 import com.xiuye.orm.UserFavoriteBook;
 import com.xiuye.service.BookService;
@@ -159,6 +161,18 @@ public class ViewController {
 			ufBook.setUserid(user.getUserid());
 			effectRows = this.ufbService.addUserBookReadtimes(ufBook);
 			log.info("用户增加阅读次数:" + effectRows + "次");
+
+			int historycount = this.readingHistoryService
+					.getReadingHistoryCount(user.getUserid(), bookid);
+
+			ReadingHistory rh = new ReadingHistory();
+			rh.setUserid(user.getUserid());
+			rh.setBookid(bookid);
+			rh.setReadingdate(new Date());
+			rh.setReadtimes(historycount + 1);
+
+			effectRows = this.readingHistoryService.addReadingHistoryBook(rh);
+			log.info("历史阅读加" + effectRows + "次");
 		}
 
 		effectRows = this.bookService.addReadtime(book);
