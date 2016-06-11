@@ -81,9 +81,9 @@
 			</p:column>
 			<p:column>
 				<!-- <p:inputText size="50" placeholder="搜索" value=""></p:inputText> -->
-				<p:autoComplete size="50" placeholder="搜索" completeMethod="#{indexView}"
+				<p:autoComplete maxResults="10" value="#{indexView.searchContent}" size="50" placeholder="搜索" completeMethod="#{indexView.searching}"
 					style="margin-right:10px;"></p:autoComplete>
-				<p:commandButton value="搜索" update="books" icon="ui-icon-search"></p:commandButton>
+				<p:commandButton value="搜索" update="books" actionListener="#{indexView.search}" icon="ui-icon-search"></p:commandButton>
 			</p:column>
 		</h:panelGrid>
 		<p:menubar>
@@ -556,6 +556,7 @@
 
 					<h:panelGrid width="100%" columns="3">
 						<p:commandButton icon="fa fa-fw fa-book"
+						
 							onclick="window.open('readBook.do?bookid=#{book.bookid}')"
 							value="阅读"></p:commandButton>
 						<p:commandButton disabled="${sessionScope.user==null?true:false}"

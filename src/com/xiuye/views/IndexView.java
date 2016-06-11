@@ -2,6 +2,7 @@ package com.xiuye.views;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -50,6 +51,8 @@ public class IndexView {
 	public void init() {
 
 		books = this.bookService.getAllBooks();
+		searchStrList = new ArrayList<String>();
+		searchedBooks = new ArrayList<Book>();
 		// 因为getBooks会被jsf页面掉2次所以设置search为2个boolean数组
 		search = new boolean[2];
 	}
@@ -216,8 +219,7 @@ public class IndexView {
 
 	static {
 		PL = new String[16];
-		
-		
+
 	}
 
 	public void allBooksByAllCategoty(String value) {
@@ -232,19 +234,82 @@ public class IndexView {
 
 	}
 
-	public List<String> searching(String query){
-		
-		List<String> list = new ArrayList<String>();
-		
-		
-		
-		
-		
-		return list;
-		
-		
+	private String searchContent = "";
+
+	private List<String> searchStrList;
+
+	public void search() {
+		if (searchContent == null || this.searchContent.isEmpty()) {
+
+			books = this.bookService.getAllBooks();
+			return;
+
+		}
+		this.searchContent = this.searchContent.toLowerCase().trim();
+		log.info("得到的搜索值是:" + this.searchContent);
+		Iterator<Book> it = books.iterator();
+		while (it.hasNext()) {
+			Book b = it.next();
+			// String []splitStr = b.toString().split("。");
+			String bStr = b.toString().toLowerCase().trim();
+			if (bStr.contains(searchContent)) {
+
+				continue;
+			}
+
+			// for(String s : splitStr){
+			// s = s.toLowerCase().trim();
+			// if(){
+			// remove = false;
+			// break;
+			// }
+			// else{
+			// remove = true;
+			// }
+			// }
+			it.remove();
+
+		}
+		this.searchContent = "";
+		log.info("搜索完毕!");
+		search[0] = true;
+		search[1] = true;
 	}
-	
+
+	public List<String> searching(String query) {
+
+		log.info("正在搜索:" + query);
+		this.searchedBooks.clear();
+
+		if (query == null || query.isEmpty()) {
+			return this.searchStrList;
+		}
+		query = query.toLowerCase().trim();
+		log.info("所有书籍数组:" + books);
+		for (Book book : books) {
+			String[] split = book.toString().split("。");
+			for (String s : split) {
+				log.info("拆分子串为:" + s + "-------------");
+			}
+			log.info("拆分:" + split);
+			for (String s : split) {
+				String ts = s.toLowerCase().trim();
+				if (ts.contains(query)) {
+
+					this.searchStrList.add(s);
+					this.searchedBooks.add(book);
+
+					break;
+				}
+			}
+
+		}
+		books.clear();
+		books.addAll(searchedBooks);
+		return this.searchStrList;
+
+	}
+
 	public void booksByCategory(String value) {
 
 		books = this.bookService.getBooksByCategory(value);
@@ -254,6 +319,14 @@ public class IndexView {
 		search[0] = true;
 		search[1] = true;
 		log.info("分类搜索:" + true);
+	}
+
+	public String getSearchContent() {
+		return searchContent;
+	}
+
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
 	}
 
 }
