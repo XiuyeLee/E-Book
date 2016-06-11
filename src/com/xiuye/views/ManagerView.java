@@ -1,5 +1,6 @@
 package com.xiuye.views;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -487,4 +488,13 @@ public class ManagerView implements Serializable {
 
 	}
 
+	@Deprecated
+	public void home(){
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/index");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -13,9 +13,12 @@ public class BookDaoTest {
 		
 		BookDao bookDao = SpringUtil.getBean(BookDao.class);
 		List<Book> books = bookDao.findByBookname("C++ Primer Plus（第6版）");
+		books = bookDao.findBookByCategory(null);
+		System.out.println(books);
 		for(Book b : books){
 			System.out.println(b.getBookid()+":"+b.getBookname());
 		}
+		
 	}
 	
 }

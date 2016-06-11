@@ -26,6 +26,9 @@ public interface UserDao {
 	
 	int deleteUserByUserId(String userid);
 	
-	int updateUserByUserid(String userid);
+	int updateUser(User user);
 
+	String findPasswordByUserid(String userid);
+	
+	int updateUserPwdByUserid(String userid,String password);
 }

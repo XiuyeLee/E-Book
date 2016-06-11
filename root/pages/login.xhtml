@@ -32,10 +32,10 @@
 
 
 	<h:form>
-		<p:commandLink process="@this" style="float:right;margin-right:100px;"
-			value="注册" action="register"></p:commandLink>
+		<p:commandLink styleClass="fa fa-arrow-circle-o-right" process="@this"
+			style="float:right;margin-right:100px;" value="注册" action="register"></p:commandLink>
 		<p:commandLink process="@this" style="float:right;margin-right:10px;"
-			value="首页" action="/index"></p:commandLink>
+			value="首页" styleClass="fa fa-home" action="/index"></p:commandLink>
 		<h1 align="center" style="clear: right;">用户登录</h1>
 		<p:panelGrid columns="1" styleClass="customMarginCenter">
 			<h:panelGrid columns="2">
@@ -43,7 +43,7 @@
 				<p:outputLabel value="用户名:" for="name"></p:outputLabel>
 				<p:inputText id="name" value="#{loginView.name}" required="true"
 					requiredMessage="必须输入账号" maxlength="50" placeholder="用户名/邮箱/手机号"></p:inputText>
-				<p:outputLabel value="密码:" for="password"></p:outputLabel>
+				<p:outputLabel  value="密	码:" for="password"></p:outputLabel>
 				<p:password id="password" value="#{loginView.password}"
 					requiredMessage="必须输入密码" maxlength="20" required="true"
 					placeholder="密码"></p:password>
@@ -51,19 +51,21 @@
 
 			</h:panelGrid>
 			<h:panelGrid columns="2" cellpadding="10">
-				<p:column>
+				<h:panelGrid columns="2">
 					<p:selectBooleanCheckbox immediate="true"
-						value="#{loginView.remember}" ></p:selectBooleanCheckbox>
-					<p:outputLabel  value="记住密码"></p:outputLabel>
-				</p:column>
-				<p:column>
-					<p:link value="忘记密码" href="/pages/forgot_passwd.jsf" target="_blank"></p:link>
-				</p:column>
+						value="#{loginView.remember}"></p:selectBooleanCheckbox>
+					<p:outputLabel value="记住密码"></p:outputLabel>
+				</h:panelGrid>
+				<h:panelGrid style="text-align:center" columns="1">
+					<p:link styleClass="fa fa-mail-forward" value="忘记密码" href="/pages/forgot_passwd.jsf"
+						target="_blank"></p:link>
+				</h:panelGrid>
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton value="立即登录"
-					action="#{loginView.validateUserAccount}"  ></p:commandButton>
-				<p:commandButton process="@this" style="margin-left:60px;" value="取消" action="/index"></p:commandButton>
+				<p:commandButton value="立即登录" icon="fa fa-sign-in"
+					action="#{loginView.validateUserAccount}"></p:commandButton>
+				<p:commandButton process="@this" style="margin-left:60px;"
+					icon="fa fa-home" value="取消" action="/index"></p:commandButton>
 			</h:panelGrid>
 		</p:panelGrid>
 	</h:form>

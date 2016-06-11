@@ -18,7 +18,7 @@ import com.xiuye.orm.User;
 import com.xiuye.orm.UserFavoriteBook;
 
 @Service
-public class UserFavoriteBookService implements Serializable{
+public class UserFavoriteBookService implements Serializable {
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class UserFavoriteBookService implements Serializable{
 	private static final long serialVersionUID = 4045732154913170400L;
 
 	private static Logger log = Logger.getLogger(UserFavoriteBookService.class);
-	
+
 	@Resource
 	private UserFavoriteBookDao ufBookDao;
 
@@ -42,12 +42,12 @@ public class UserFavoriteBookService implements Serializable{
 
 		for (UserFavoriteBook uf : ufBooks) {
 			FavoriteBook fb = new FavoriteBook();
-			
+
 			Book b = this.bookDao.findBookByBookid(uf.getBookid());
-			
+
 			fb.setBook(b);
 			fb.setUfBook(uf);
-			
+
 			fbs.add(fb);
 
 		}
@@ -87,13 +87,44 @@ public class UserFavoriteBookService implements Serializable{
 		return list;
 
 	}
-	
+
 	@Transactional
-	public void deleteUserFavoriteBook(FavoriteBook fb){
-		
-		int effectRows = this.ufBookDao.deleteUserFavoriteBookByUseridAndBookid(fb.getUfBook().getUserid(), fb.getUfBook().getBookid());
-		
-		log.info("删除收藏图书:"+effectRows+"条");
+	public void deleteUserFavoriteBook(FavoriteBook fb) {
+
+		int effectRows = this.ufBookDao
+				.deleteUserFavoriteBookByUseridAndBookid(fb.getUfBook()
+						.getUserid(), fb.getUfBook().getBookid());
+
+		log.info("删除收藏图书:" + effectRows + "条");
 	}
 
+	public boolean checkRepeatFavoriteBook(String bookid, User user) {
+
+		UserFavoriteBook ufBook = this.ufBookDao
+				.findUserFavoriteBookByUseridAndBookid(user.getUserid(), bookid);
+		if (ufBook == null) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	public int addFavoriteBook(UserFavoriteBook ufBook) {
+		if (ufBook == null) {
+			return 0;
+		}
+
+		return this.ufBookDao.insertFavoriteBook(ufBook);
+	}
+
+	public int addUserBookReadtimes(UserFavoriteBook ufBook){
+		if (ufBook == null) {
+			return 0;
+		}
+		
+		return this.ufBookDao.updateAddFavoriteBookReadtime(ufBook);
+		
+	}
+	
 }

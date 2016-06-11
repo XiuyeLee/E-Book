@@ -7,11 +7,14 @@ import com.xiuye.orm.ReadingHistory;
 public interface ReadingHistoryDao {
 
 	List<ReadingHistory> findAll();
-	
+
 	List<ReadingHistory> findReadingHistoryBookByUserid(String userid);
-	
-	int deleteReadingHistoryBookByUseridAndBookid(String userid,String bookid);
-	
+
+	int deleteReadingHistoryBookByUseridAndBookid(String userid, String bookid);
+
 	int insertReadingHistoryBook(ReadingHistory readingBook);
+
 	int deleteReadingHistoryBooksByUserid(String userid);
+
+	int findAllReadCount(String userid, String bookid);
 }
