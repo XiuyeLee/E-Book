@@ -38,11 +38,13 @@
 			<p:layoutUnit position="north" resizable="true">
 				<h:panelGrid columns="2" width="100%">
 					<p:outputLabel value="欢迎您，尊敬的用户:"></p:outputLabel>
-					<h:panelGrid columns="3"  cellspacing="10" style="float:right">
+					<h:panelGrid columns="3" cellspacing="10" style="float:right">
 						<p:link value="首页" styleClass="fa fa-home" href="/"></p:link>
-						<p:commandLink styleClass="fa fa-gears" action="#{userinfoView.managerInfo}" value="管理系统"
+						<p:commandLink styleClass="fa fa-gears"
+							action="#{userinfoView.managerInfo}" value="管理系统"
 							rendered="${sessionScope.user.isAdmin}"></p:commandLink>
-						<p:link class="loginOut" href="/" styleClass="fa fa-power-off" value="退出">
+						<p:link class="loginOut" href="/" styleClass="fa fa-power-off"
+							value="退出">
 						</p:link>
 					</h:panelGrid>
 				</h:panelGrid>
@@ -96,12 +98,14 @@
 			<p:layoutUnit position="west" resizable="true" size="300">
 
 				<p:accordionPanel activeIndex="1" multiple="true">
-					<p:tab title="通知">
+					<p:tab titleStyle="width:100%" titleStyleClass="fa fa-bell"
+						title="通知">
 						<p:dataList emptyMessage="现在还没有通知">
 
 						</p:dataList>
 					</p:tab>
-					<p:tab title="读书历史">
+					<p:tab titleStyle="width:100%" titleStyleClass="fa fa-history"
+						title="读书历史">
 						<p:dataList value="#{userinfoView.readHistoryBooks}" var="rhBook"
 							emptyMessage="现在还没有读书历史">
 							<p:outputLabel value="#{rhBook.book.bookname}" />
@@ -116,10 +120,14 @@
 
 				<p:menubar>
 					<p:menuitem value="申请改名"></p:menuitem>
-					<p:menuitem actionListener="#{userinfoView.lookAtHistoryBooks}"
-						update="@all" value="查看历史"></p:menuitem>
-					<p:menuitem value="收藏的图书"
+					<p:menuitem icon="fa fa-history"
+						actionListener="#{userinfoView.lookAtHistoryBooks}" update="@all"
+						value="查看历史"></p:menuitem>
+					<p:menuitem value="收藏的图书" icon="fa fa-star"
 						actionListener="#{userinfoView.lookAtFavoriteBooks}" update="@all"></p:menuitem>
+					<p:menuitem value="修改密码" icon="fa fa-lock"></p:menuitem>
+					<p:menuitem value="修改信息" icon="fa fa-user-md"></p:menuitem>
+
 					<f:facet name="options">
 						<p:autoComplete placeholder="ID/书名/作者..." queryDelay="0"
 							immediate="true" maxResults="10"
@@ -128,14 +136,14 @@
 							style="margin-right:10px;"></p:autoComplete>
 						<p:commandButton actionListener="#{userinfoView.search}"
 							update="@all" icon="ui-icon-search" value="搜索"></p:commandButton>
+
 					</f:facet>
 				</p:menubar>
 
 				<p:dataGrid rowIndexVar="row"
 					rendered="#{!userinfoView.historyOrFavorite}" var="fBook"
-					value="#{userinfoView.favoriteBooks}"  rows="20"
-					paginator="true" layout="grid" paginatorPosition="bottom"
-					emptyMessage="现在还没有读书历史"
+					value="#{userinfoView.favoriteBooks}" rows="20" paginator="true"
+					layout="grid" paginatorPosition="bottom" emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,20,30">
 					<f:facet name="header">
@@ -147,7 +155,8 @@
 						<h:panelGrid width="100%" id="favriteBook" columns="1">
 							<p:outputLabel value="#{row}" />
 							<p:graphicImage url="#{GIMView.defaultImageUrl}"></p:graphicImage>
-							<p:link target="_blank" href="readBook.do?bookid=#{fBook.book.bookid}"
+							<p:link target="_blank"
+								href="readBook.do?bookid=#{fBook.book.bookid}"
 								value="#{fBook.book.bookname}">
 							</p:link>
 						</h:panelGrid>
@@ -155,8 +164,9 @@
 							<p:commandButton update="@all"
 								actionListener="#{userinfoView.deleteFavoriteBook(fBook)}"
 								value="删除" icon="ui-icon-trash"></p:commandButton>
-							<p:commandButton actionListener="#{fileView.downloadBook(fBook.book.bookid)}" value="下载" ajax="false"
-								icon="fa fa-fw fa-download">
+							<p:commandButton
+								actionListener="#{fileView.downloadBook(fBook.book.bookid)}"
+								value="下载" ajax="false" icon="fa fa-fw fa-download">
 								<!-- <p:fileDownload value=""></p:fileDownload> -->
 							</p:commandButton>
 						</h:panelGrid>
@@ -197,9 +207,8 @@
 
 				<p:dataGrid rowIndexVar="row"
 					rendered="#{userinfoView.historyOrFavorite}" var="rhBook"
-					value="#{userinfoView.readHistoryBooks}"  rows="20"
-					paginator="true" layout="grid" paginatorPosition="bottom"
-					emptyMessage="现在还没有读书历史"
+					value="#{userinfoView.readHistoryBooks}" rows="20" paginator="true"
+					layout="grid" paginatorPosition="bottom" emptyMessage="现在还没有读书历史"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,20,30">
 					<f:facet name="header">

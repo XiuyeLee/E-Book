@@ -28,9 +28,9 @@
 	<p:growl autoUpdate="true"></p:growl>
 	<h:form>
 		<p:commandLink process="@this" style="float:right;margin-right:100px;"
-			value="直接登录" action="login"></p:commandLink>
+			value="直接登录" styleClass="fa fa-arrow-circle-right" action="login"></p:commandLink>
 		<p:commandLink process="@this" style="float:right;margin-right:10px;"
-			value="首页" action="/index"></p:commandLink>
+			value="首页" styleClass="fa fa-home" action="/index"></p:commandLink>
 		<h1 align="center" style="clear: right;">用户注册</h1>
 		<p:panelGrid id="p1" columns="1" styleClass="customMarginCenter">
 
@@ -112,10 +112,10 @@
 						disabled="#{registerView.checkAgreeProtocol()}"
 						action="#{registerView.register}" value="确认注册"
 						icon="ui-icon-check"></p:commandButton>
-					<p:commandButton value="清空" actionListener="#{registerView.clear}" update="p1" process="@this">
+					<p:commandButton value="清空" icon="fa fa-flash" actionListener="#{registerView.clear}" update="p1" process="@this">
 						<p:resetInput target="p1"></p:resetInput>
 					</p:commandButton>
-					<p:commandButton value="取消" process="@this" action="/index"></p:commandButton>
+					<p:commandButton value="取消" icon="fa fa-home" process="@this" action="/index"></p:commandButton>
 				</h:panelGrid>
 			</p:row>
 		</p:panelGrid>
