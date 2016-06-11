@@ -95,7 +95,7 @@ public class BookService implements Serializable {
 		
 	}
 	
-	public List<Book> getBooksByCategotyList(List<String> categorys){
+	public List<Book> getBooksByCategotyArray(String[] categorys){
 		
 		
 		List<Book> books = new ArrayList<Book>();
