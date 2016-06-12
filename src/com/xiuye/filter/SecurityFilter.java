@@ -46,8 +46,8 @@ public class SecurityFilter implements Filter {
 
 		String uri = req.getRequestURI();// '/E-Book/'
 		String url = req.getRequestURL().toString();// 'http://www.opensourcebookstore.com:8080/E-Book/'
-		System.out.println("uri:" + uri);
-		System.out.println("url:" + url);
+		//System.out.println("uri:" + uri);
+		//System.out.println("url:" + url);
 
 		try {
 			if (user == null) {

@@ -36,10 +36,10 @@ public class Logger {
 	// private static final Logger instance = new Logger();
 	// }
 	public void info(String message) {
-		if (!CLOSEINFO) {
-
-			System.out.println("INFO:" + message + " 类对象:" + clazz
-					+  " 时间:"	+ new Date());
-		}
+//		if (!CLOSEINFO) {
+//
+////			System.out.println("INFO:" + message + " 类对象:" + clazz
+////					+  " 时间:"	+ new Date());
+//		}
 	}
 }
