@@ -127,11 +127,11 @@ public class ManagerView implements Serializable {
 		log.info("开始搜索");
 		log.info("129:" + this.searchContent);
 
-		for (Book b : this.searchedBooks) {
-
-			System.out.println("150:" + b);
-
-		}
+//		for (Book b : this.searchedBooks) {
+//
+//			System.out.println("150:" + b);
+//
+//		}
 
 	}
 
@@ -367,9 +367,9 @@ public class ManagerView implements Serializable {
 		} else {
 			books = bookService.getAllBooks();
 		}
-		for(Book b : books){
-			System.out.println("366:"+b);
-		}
+		//for(Book b : books){
+			//System.out.println("366:"+b);
+		//}
 		return books;
 	}
 

@@ -36,7 +36,7 @@ public class FileView {
 	}
 
 	public StreamedContent getFile() {
-		System.out.println(file.getName());
+		//System.out.println(file.getName());
 		return file;
 	}
 
