@@ -30,6 +30,7 @@ import com.xiuye.service.OnlineUserService;
 import com.xiuye.service.ReadingHistoryService;
 import com.xiuye.service.UserFavoriteBookService;
 import com.xiuye.util.PdfOutputCustomPagesUtil;
+import com.xiuye.util.PdfToImageUtil;
 
 @Controller
 public class ViewController {
@@ -253,6 +254,20 @@ public class ViewController {
 
 	}
 
+	@RequestMapping("/bookCover2.do")
+	@ResponseBody
+	public void bookCover2(String bookid,HttpServletResponse response){
+		
+		bookid = URLDecoder.decode(bookid);
+		
+		Book book = this.bookService.getBookByBookid(bookid);
+		
+		String path = book.getPath();
+		
+		PdfToImageUtil.outPutCover(path, response);
+		
+	}
+	
 	@RequestMapping("/bookCover.do")
 	@ResponseBody
 	public void bookCover(String cover, HttpServletResponse response) {
@@ -274,7 +289,8 @@ public class ViewController {
 				bos.flush();
 
 			}
-
+				
+			return;
 		} catch (FileNotFoundException e) {
 			log.info("文件没找到:bookCover原因:"+e.getMessage());
 			//e.printStackTrace();

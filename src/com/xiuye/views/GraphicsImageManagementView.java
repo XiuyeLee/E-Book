@@ -1,5 +1,6 @@
 package com.xiuye.views;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import javax.faces.bean.ManagedBean;
@@ -28,6 +29,16 @@ public class GraphicsImageManagementView {
 		cover = URLEncoder.encode(cover);
 		
 		return "bookCover.do?cover="+cover;
+		
+	}
+	public String bookCover2(String bookid){
+		if(bookid == null || bookid.isEmpty()){
+			return this.defaultImageUrl;
+		}
+		
+		bookid = URLDecoder.decode(bookid);
+		
+		return "bookCover2.do?bookid="+bookid;
 		
 	}
 	
