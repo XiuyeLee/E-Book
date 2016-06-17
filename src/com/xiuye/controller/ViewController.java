@@ -137,11 +137,11 @@ public class ViewController {
 				}
 
 			} catch (FileNotFoundException e) {
-				log.info("文件没找到:readBook原因:"+e.getMessage());
-				//e.printStackTrace();
+				log.info("文件没找到:readBook原因:" + e.getMessage());
+				// e.printStackTrace();
 			} catch (IOException e) {
-				log.info("IO异常操作:readBook原因:"+e.getMessage());
-				//e.printStackTrace();
+				log.info("IO异常操作:readBook原因:" + e.getMessage());
+				// e.printStackTrace();
 			} finally {
 				try {
 					fis.close();
@@ -237,11 +237,11 @@ public class ViewController {
 			}
 
 		} catch (FileNotFoundException e) {
-			log.info("文件没找到:downloadBook原因:"+e.getMessage());
-			//e.printStackTrace();
+			log.info("文件没找到:downloadBook原因:" + e.getMessage());
+			// e.printStackTrace();
 		} catch (IOException e) {
-			log.info("IO异常操作:downloadBook原因:"+e.getMessage());
-			//e.printStackTrace();
+			log.info("IO异常操作:downloadBook原因:" + e.getMessage());
+			// e.printStackTrace();
 		} finally {
 			try {
 				fis.close();
@@ -256,23 +256,34 @@ public class ViewController {
 
 	@RequestMapping("/bookCover2.do")
 	@ResponseBody
-	public void bookCover2(String bookid,HttpServletResponse response){
-		
+	public void bookCover2(String bookid, HttpServletResponse response) {
+
 		bookid = URLDecoder.decode(bookid);
-		
+
 		Book book = this.bookService.getBookByBookid(bookid);
-		
+
 		String path = book.getPath();
-		
+
 		PdfToImageUtil.outPutCover(path, response);
-		
+
 	}
-	
+
 	@RequestMapping("/bookCover.do")
 	@ResponseBody
 	public void bookCover(String cover, HttpServletResponse response) {
 
-		cover = URLDecoder.decode(cover);
+		
+		
+		//System.out.println("ViewController:解码前:"+cover);
+		
+		try {
+			cover = URLDecoder.decode(cover,"GBK");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		
+	//	System.out.println("ViewController:解码后:"+cover);
+		
 		BufferedInputStream bis = null;
 		try {
 			bis = new BufferedInputStream(new FileInputStream(cover));
@@ -289,13 +300,13 @@ public class ViewController {
 				bos.flush();
 
 			}
-				
+
 			return;
 		} catch (FileNotFoundException e) {
-			log.info("文件没找到:bookCover原因:"+e.getMessage());
+			log.info("文件没找到:bookCover原因:" + e.getMessage());
 			//e.printStackTrace();
 		} catch (IOException e) {
-			log.info("IO异常操作:bookCover原因:"+e.getMessage());
+			log.info("IO异常操作:bookCover原因:" + e.getMessage());
 			//e.printStackTrace();
 		}
 
@@ -307,13 +318,14 @@ public class ViewController {
 				}
 
 		}
-		
+
 		/**
 		 * 上面错误的时候就加在下面的作为默认封面
 		 * 
 		 */
 		try {
-			bis = new BufferedInputStream(new FileInputStream("F:/ComputerScience_and_TechnologyDocument/Cover/book.png"));
+			bis = new BufferedInputStream(new FileInputStream(
+					"F:/ComputerScience_and_TechnologyDocument/Cover/book.png"));
 			int length = bis.available();
 			response.setContentLength(length);
 			BufferedOutputStream bos = new BufferedOutputStream(
